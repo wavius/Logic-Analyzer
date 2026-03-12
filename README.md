@@ -1,2 +1,2 @@
-# Logic-Analyzer-DE1-SoC
+# Logic-Analyzer
 Logic analyzer implemented on the DE1-SoC
