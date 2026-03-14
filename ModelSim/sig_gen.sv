@@ -18,7 +18,7 @@ module sig_gen (
   
   localparam FREQ_CLOCK      = 1_000_000; // CLOCK frequency
   
-  localparam BURST_PATTERN   = 0b1001_1010; // BURST pattern
+  localparam BURST_PATTERN   = 8'b1001_1010; // BURST pattern
   localparam BURST_WIDTH     = 8;           // Number of bits in BURST_PATTERN
   localparam FREQ_BURST      = 100_000;     // BURST frequency
   localparam FREQ_PULSE      = 1_000_000;   // Frequency of individual pulses within BURST
