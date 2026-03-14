@@ -1,15 +1,16 @@
-module sig_gen (
+module signal_generator (
   // Inputs
   input logic CLOCK_50M,
   input logic NRESET,
   
   // Outputs
   output logic HEARTBEAT, // 1MHz 
-  output logic BURST,     // 10KHz bursts with 1MHz pulses
-  output logic CLOCK,     // 1MHz
+  output logic BURST,     // 10KHz bursts with 1MHz pulse
+  output logic CLOCK,     // 1MHz clock
   output logic LOGIC1,    // Set to logic voltage
   output logic LOGIC0     // Set to GND
-);
+); 
+
   // Local parameters
   localparam SYS_CLOCK       = 50_000_000; // 50MHz
   

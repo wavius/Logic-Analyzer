@@ -1,5 +1,5 @@
 module top (
-    // Inputs
+    // Inputs 
     input  logic       CLOCK_50,
     input  logic [3:0] KEY,
 
@@ -27,7 +27,7 @@ module top (
 );
 
     // Instantiate the signal generator
-    sig_gen S0 (
+    signal_generator S0 (
         .CLOCK_50M (CLOCK_50),
         .NRESET    (KEY[0]),  
         
