@@ -1,4 +1,13 @@
-module signal_generator (
+module signal_generator #(
+  // Signal frequencies
+  parameter FREQ_HEARTBEAT; // HEARTBEAT frequency
+  
+  parameter FREQ_CLOCK;     // CLOCK frequency
+  
+  parameter BURST_PATTERN;  // BURST pattern
+  parameter FREQ_BURST;     // BURST frequency
+  parameter FREQ_PULSE;     // Frequency of individual pulses within BURST
+)(
   // Inputs
   input logic CLOCK_50M,
   input logic NRESET,
@@ -15,14 +24,7 @@ module signal_generator (
   localparam SYS_CLOCK       = 50_000_000; // 50MHz
   
   // Signal frequencies
-  localparam FREQ_HEARTBEAT  = 1_000_000; // HEARTBEAT frequency
-  
-  localparam FREQ_CLOCK      = 1_000_000; // CLOCK frequency
-  
-  localparam BURST_PATTERN   = 8'b1001_1010; // BURST pattern
   localparam BURST_WIDTH     = 8;           // Number of bits in BURST_PATTERN
-  localparam FREQ_BURST      = 100_000;     // BURST frequency
-  localparam FREQ_PULSE      = 1_000_000;   // Frequency of individual pulses within BURST
   
   // Counter targets
   localparam COUNT_HEARTBEAT = SYS_CLOCK / FREQ_HEARTBEAT;
@@ -49,7 +51,7 @@ module signal_generator (
 
   // CLOCK generator
   logic [$clog2(COUNT_CLOCK)-1:0] Q1;
-  always_ff @(posedge CLOCK_50M, negedge NRESET) begin
+  always_ff @(posedge CLOCK_50M, negedge NRESET) begin
     if (!NRESET) begin
       Q1    <= 0;
       CLOCK <= 0;

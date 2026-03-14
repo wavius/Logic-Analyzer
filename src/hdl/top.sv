@@ -27,7 +27,15 @@ module top (
 );
 
     // Instantiate the signal generator
-    signal_generator S0 (
+    signal_generator #(
+      .FREQ_HEARTBEAT (1_000_000),    // HEARTBEAT frequency
+  
+      .FREQ_CLOCK     (1_000_000),    // CLOCK frequency
+  
+      .BURST_PATTERN  (8'b0110_1010), // BURST pattern
+      .FREQ_BURST     (100_000),      // BURST frequency
+      .FREQ_PULSE;    (1_000_000)     // Frequency of individual pulses within BURST
+    ) S0 (
         .CLOCK_50M (CLOCK_50),
         .NRESET    (KEY[0]),  
         
