@@ -1,30 +1,26 @@
 module signal_generator #(
-  // Signal frequencies
-  parameter FREQ_HEARTBEAT; // HEARTBEAT frequency
-  
-  parameter FREQ_CLOCK;     // CLOCK frequency
-  
-  parameter BURST_PATTERN;  // BURST pattern
-  parameter FREQ_BURST;     // BURST frequency
-  parameter FREQ_PULSE;     // Frequency of individual pulses within BURST
+  // Signal frequencies 
+  parameter FREQ_HEARTBEAT, // Heartbeat frequency
+  parameter FREQ_CLOCK,     // Clock frequency
+  parameter BURST_PATTERN,  // Burst pattern
+  parameter FREQ_BURST,     // Burst frequency
+  parameter FREQ_PULSE      // Frequency of individual pulses within burst
 )(
   // Inputs
-  input logic CLOCK_50M,
-  input logic NRESET,
+  input  logic clock_50m,
+  input  logic nreset,
   
   // Outputs
-  output logic HEARTBEAT, // 1MHz 
-  output logic BURST,     // 10KHz bursts with 1MHz pulse
-  output logic CLOCK,     // 1MHz clock
-  output logic LOGIC1,    // Set to logic voltage
-  output logic LOGIC0     // Set to GND
+  output logic heartbeat, // 1MHz 
+  output logic burst,     // 10KHz bursts with 1MHz pulse
+  output logic clock,     // 1MHz clock
+  output logic logic1,    // Set to logic voltage
+  output logic logic0     // Set to GND
 ); 
 
   // Local parameters
   localparam SYS_CLOCK       = 50_000_000; // 50MHz
-  
-  // Signal frequencies
-  localparam BURST_WIDTH     = 8;           // Number of bits in BURST_PATTERN
+  localparam BURST_WIDTH     = 8;          // Number of bits in BURST_PATTERN
   
   // Counter targets
   localparam COUNT_HEARTBEAT = SYS_CLOCK / FREQ_HEARTBEAT;
@@ -32,82 +28,82 @@ module signal_generator #(
   localparam COUNT_BURST     = SYS_CLOCK / FREQ_BURST;
   localparam COUNT_PULSE     = SYS_CLOCK / FREQ_PULSE;
 
-  // HEARBEAT generator
-  logic [$clog2(COUNT_HEARTBEAT)-1:0] Q0; // ceiling log_2 (COUNT_HEARTBEAT)
-  always_ff @(posedge CLOCK_50M, negedge NRESET) begin
-    if (!NRESET) begin
-      Q0        <= 0;
-      HEARTBEAT <= 0;
+  // heartbeat generator
+  logic [$clog2(COUNT_HEARTBEAT)-1:0] q0; 
+  always_ff @(posedge clock_50m, negedge nreset) begin
+    if (!nreset) begin
+      q0        <= 0;
+      heartbeat <= 0;
     end else begin
-      if (Q0 == COUNT_HEARTBEAT - 1) begin
-        Q0        <= 0;
-        HEARTBEAT <= 1; // Create a pulse that is high for one clock cycle
+      if (q0 == COUNT_HEARTBEAT - 1) begin
+        q0        <= 0;
+        heartbeat <= 1; // Create a pulse that is high for one clock cycle
       end else begin
-        Q0        <= Q0 + 1;
-        HEARTBEAT <= 0;
+        q0        <= q0 + 1;
+        heartbeat <= 0;
       end
     end
   end
 
-  // CLOCK generator
-  logic [$clog2(COUNT_CLOCK)-1:0] Q1;
-  always_ff @(posedge CLOCK_50M, negedge NRESET) begin
-    if (!NRESET) begin
-      Q1    <= 0;
-      CLOCK <= 0;
+  // clock generator
+  logic [$clog2(COUNT_CLOCK)-1:0] q1;
+  always_ff @(posedge clock_50m, negedge nreset) begin
+    if (!nreset) begin
+      q1    <= 0;
+      clock <= 0;
     end else begin
-      if (Q1 == ((COUNT_CLOCK / 2) - 1)) begin
-        Q1    <= 0;
-        CLOCK <= ~CLOCK; // Create a clock signal by toggling high and low
+      if (q1 == ((COUNT_CLOCK / 2) - 1)) begin
+        q1    <= 0;
+        clock <= ~clock; // Create a clock signal by toggling high and low
       end else begin
-        Q1 <= Q1 + 1;
+        q1 <= q1 + 1;
       end
     end
   end
 
-  // BURST generator
-  logic [$clog2(COUNT_BURST)-1:0] Q2;     // Burst frequency counter
-  logic [$clog2(COUNT_PULSE)-1:0] P2;     // Pulse frequency counter
-  logic [$clog2(BURST_WIDTH + 1)-1:0] L2; // Number of bits required to store BURST_WIDTH
-  logic [BURST_WIDTH-1:0] PATTERN;        // Patern width counter
-  always_ff @(posedge CLOCK_50M, negedge NRESET) begin
-    if (!NRESET) begin
-      Q2      <= 0;
-      P2      <= 0;
-      L2      <= 0;
-      PATTERN <= BURST_PATTERN;
-      BURST   <= 0;
+  // burst generator
+  logic [$clog2(COUNT_BURST)-1:0] q2;     // Burst frequency counter
+  logic [$clog2(COUNT_PULSE)-1:0] p2;     // Pulse frequency counter
+  logic [$clog2(BURST_WIDTH + 1)-1:0] l2; // Number of bits required to store BURST_WIDTH
+  logic [BURST_WIDTH-1:0] pattern;        // Pattern width counter
+  always_ff @(posedge clock_50m, negedge nreset) begin
+    if (!nreset) begin
+      q2      <= 0;
+      p2      <= 0;
+      l2      <= 0;
+      pattern <= BURST_PATTERN;
+      burst   <= 0;
     end
     else begin
       // Burst timer
-      if (Q2 == (COUNT_BURST - 1)) begin
-        Q2      <= 0;             // Reset burst counter
-        L2      <= 0;             // Reset width counter
-        PATTERN <= BURST_PATTERN; // Reset pattern
+      if (q2 == (COUNT_BURST - 1)) begin
+        q2      <= 0;             // Reset burst counter
+        l2      <= 0;             // Reset width counter
+        pattern <= BURST_PATTERN; // Reset pattern
       end else begin
-        Q2 <= Q2 + 1;
+        q2 <= q2 + 1;
       end
 
       // Pulse timer and shift logic
-      if (L2 < BURST_WIDTH) begin
-        if (P2 == COUNT_PULSE - 1) begin
-          BURST   <= PATTERN[BURST_WIDTH-1]; // Set burst to MSB in pattern
-          PATTERN <= PATTERN << 1;           // Bit shift pattern to get next bit
-          L2      <= L2 + 1;                 // Increment width counter 
-          P2      <= 0;                      // Reset pulse frequency counter
+      if (l2 < BURST_WIDTH) begin
+        if (p2 == COUNT_PULSE - 1) begin
+          burst   <= pattern[BURST_WIDTH-1]; // Set burst to MSB in pattern
+          pattern <= pattern << 1;           // Bit shift pattern to get next bit
+          l2      <= l2 + 1;                 // Increment width counter 
+          p2      <= 0;                      // Reset pulse frequency counter
         end else begin
-          P2 <= P2 + 1;
+          p2 <= p2 + 1;
         end  
       end else begin
-        BURST <= 0;
+        burst <= 0;
       end
     end
   end
 
   // Logic 1
-  assign LOGIC1 = 1;
+  assign logic1 = 1;
 
   // Logic 0
-  assign LOGIC0 = 0;
+  assign logic0 = 0;
 
 endmodule
