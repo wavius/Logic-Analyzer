@@ -1,0 +1,12 @@
+# Ignore VS Code settings
+.vscode/
+
+# Ignore compiled binaries (for Nios V)
+*.elf
+*.o
+*.obj
+
+# Ignore Quartus temporary files
+db/
+incremental_db/
+output_files/
