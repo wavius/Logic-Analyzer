@@ -15,4 +15,6 @@ void wait_for_vsync();
 // clears whole screen
 void clear_screen();
 
+int getXres();
+
 #endif

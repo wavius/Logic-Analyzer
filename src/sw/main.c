@@ -1,15 +1,16 @@
-#include "../software/address_map_niosV.h"
 #include "vga_driver.h"
 
 int main(void) {
     // TEST TO GET A RED LINE ON VGA
     vga_init();
-    clear_screen();
 
-    // draw a red horizontal line
-    for (int i = 0; i < 320; i++)
-        plot_pixel(i, 120, 0xF800);
+    while (1) {
+        for (int x = 0; x < 320; x++) {
+            plot_pixel(x, 120, 0xFFFF);
+        }
 
-    while (1);
+        wait_for_vsync();
+    }
+
     return 0;
 }
