@@ -4,10 +4,6 @@
 
 #include "../../DE1-SoC/software/address_map_niosV.h"
 
-// ----- Screen constants ----- //
-#define SCREEN_W 320
-#define SCREEN_H 240
-
 /********************************
  *  Structs
  ********************************/
@@ -72,72 +68,6 @@ void plot_pixel(int x, int y, uint16_t color) {
     volatile uint16_t* pixel_addr;
     pixel_addr = (volatile uint16_t*)(pixel_buffer_start + (y << 10) + (x << 1));
     *pixel_addr = color;
-}
-
-// draw a horizontal line
-void draw_hline(int x1, int x2, int y, uint16_t color) {
-    for (int x = x1; x <= x2; x++)
-        plot_pixel(x, y, color);
-}
-
-// draw a vertical line
-void draw_vline(int x, int y1, int y2, uint16_t color) {
-    for (int y = y1; y <= y2; y++)
-        plot_pixel(x, y, color);
-}
-
-// draw a filled rectangle (to draw bars / labels)
-void fill_rect(int x, int y, int w, int h, uint16_t color) {
-    for (int j = 0; j < h; j++)
-        for (int i = 0; i < w; i++)
-            plot_pixel(x + i, y + j, color);
-}
-
-/********************************
- * Major functions
- ********************************/
-// very basic implementation for the time being
-void draw_logic_ui_frame() {
-    // Top bar
-    fill_rect(0, 0, SCREEN_W, 20, 0x39E7);  // grey
-
-    // Left label column
-    fill_rect(0, 20, 52, SCREEN_H - 20, 0x2104);  // darker grey
-
-    // Channel separators (4 lanes)
-    for (int i = 0; i < 4; i++) {
-        int y = 20 + i * 50;
-        draw_hline(0, SCREEN_W - 1, y, 0xFFFF);  // white line
-    }
-
-    // Vertical grid lines
-    for (int x = 60; x < SCREEN_W; x += 40)
-        draw_vline(x, 20, SCREEN_H - 1, 0x4208);  // faint grey
-}
-
-void draw_digital_waveform(const uint8_t* samples, int count, int x0, int y0, int w, int h, uint16_t color) {
-    int y_high = y0 + 10;
-    int y_low = y0 + h - 10;
-
-    int prev = samples[0];
-
-    for (int x = 0; x < w; x++) {
-        int idx = (x * count) / w;
-        int cur = samples[idx];
-
-        int y = cur ? y_high : y_low;
-
-        // horizontal segment
-        plot_pixel(x0 + x, y, color);
-
-        // vertical edge
-        if (x > 0 && cur != prev) {
-            int y_prev = prev ? y_high : y_low;
-            draw_vline(x0 + x, y_prev, y, color);
-        }
-
-        prev = cur;
-    }
 }
 
 /*

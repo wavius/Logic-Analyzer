@@ -2,7 +2,7 @@ INSTALL := C:/intelFPGA_pro/24.1
 
 MAIN	:= main.c 
 HDRS	:= vga_driver.h ../../DE1-SoC/software/address_map_niosV.h
-SRCS	:= main.c vga_driver.c
+SRCS	:= main.c vga_driver.c draw_screen.c
 
 SHELL	:= cmd.exe
 
