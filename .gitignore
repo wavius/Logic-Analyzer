@@ -6,6 +6,9 @@
 *.o
 *.obj
 
+# Ignore Debugger Configs
+*.ini
+
 # Ignore Quartus temporary files
 db/
 incremental_db/
