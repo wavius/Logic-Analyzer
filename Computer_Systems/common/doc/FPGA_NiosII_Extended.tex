@@ -1,0 +1,26 @@
+
+An overview of the Nios II processor can be found in the document {\it Introduction to the
+Nios~II Processor}, which is available in the
+\texttt{Computer Organization System Design} section of the 
+{\small \href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org}} website.
+An easy way to begin working with the \systemName~and the Nios~II
+processor is to make use of a utility called the {\it \productNameMed{}}.  It
+provides an easy way to assemble/compile Nios II programs 
+written in either assembly language or the C language. The Monitor 
+Program, which can be downloaded from the
+{\small \href{https://www.fpgacademy.org/tools.html} {FPGAcademy.org}} website,
+is an application program that 
+runs on the host computer connected to the \DEBoard~board.  The Monitor Program can be 
+used to control
+the execution of code on Nios~II, list (and edit) the contents of processor registers, 
+display/edit the contents of memory on the \DEBoard~board, and similar operations.
+The Monitor Program includes the \systemName~as a predesigned system that can be
+downloaded onto the \DEBoard~board, as well as several sample programs in assembly language and
+C that show how to use the \systemName's peripherals.
+Some images that show how the \systemName~is integrated with the 
+Monitor Program are described in Section~\ref{sec:monitor_program}.
+
+All of the I/O peripherals in the \systemName~are
+accessible by the processor as memory mapped devices, 
+using the address ranges that are given in the following subsections.
+

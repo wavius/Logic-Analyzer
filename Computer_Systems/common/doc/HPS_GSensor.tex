@@ -1,0 +1,11 @@
+\subsection{G-Sensor}
+\label{sec:hps_gsensor}
+The \systemName~includes a 3D accelerometer (G-sensor) that is connected to the HPS. The accelerometer can be configured to produce two interrupt signals. One of
+these signals is
+used in our system and is connected to an I/O port on the HPS called GPIO2.
+This I/O port has the same structure as GPIO1 which was described in Section \ref{sec:hps_gpio1}. The base address of GPIO2 is {\sf 0xFF70A000}. The accelerometer interrupt signal
+is connected to bit 5 in the data register of GPIO2. 
+The accelerometer generates an interrupt by driving
+the interrupt signal high. The "interrupt"
+signal is not connected to the generic interrupt controller (GIC) of the HPS, so to
+check for interrupts the bit must be polled.

@@ -1,0 +1,123 @@
+\subsubsection{Double Buffering}
+\label{sec:double_buffer}
+
+As mentioned above, a pixel buffer controller reads data out of the pixel buffer so that it 
+can be displayed on the screen. This pixel buffer controller 
+includes a programming interface in the form of a set of registers, as
+illustrated in Table~\ref{tab:pixel_ctrl}. The register at address {\sf 0xFF203020} is called 
+the {\it Buffer} register, and the register at address  {\sf 0xFF203024} is the 
+{\it Backbuffer} register. Each of these registers stores the starting address of a pixel 
+buffer.  The Buffer register holds the address of the pixel buffer that is displayed on
+the screen. As mentioned above, in the default configuration of the \systemName~this 
+Buffer register is set to the address {\sf 0x\baseAddressOffset 8000000}, which points to the start of the FPGA 
+on-chip memory.  The default value of the Backbuffer register is also {\sf 0x\baseAddressOffset 8000000},
+which means that there is only one pixel buffer. But software can modify the address
+stored in the Backbuffer register, thereby creating a second pixel buffer. The pixel
+buffer can be located in the SDRAM memory in the \systemName, which has 
+the base address {\sf 0x\baseAddressOffset 0000000}. 
+An image can be drawn into the second buffer by writing to its pixel addresses.
+This image is not displayed on the screen until a pixel buffer {\it swap} is performed, 
+as explained below.
+
+A pixel buffer swap is caused by writing the value 1 to the Buffer register. This write
+operation does not directly modify the content of the Buffer register, but instead causes
+the contents of the Buffer and Backbuffer registers to be swapped. The swap operation does
+not happen right away; it occurs at the end of a screen-drawing cycle, after the last 
+pixel in the bottom-right corner has been displayed. This time instance is referred to as
+the {\it vertical synchronization} time, and occurs every 1/60 seconds. Software can poll the
+value of the $S$ bit in the {\it Status} register, at address {\sf 0xFF20302C}, to see when 
+the vertical synchronization has happened. Writing the value 1 into the Buffer register
+causes $S$ to be set to 1. Then, when the swap of the Buffer and Backbuffer registers 
+has been completed $S$ is reset back to 0.  
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|l|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+            \textbf{Address}
+            & \multicolumn{1}{c|}{\textbf{Register}}
+            & \multirow{2}{*}{\textbf{R/W}}
+            & \multicolumn{9}{c|}{\textbf{Bit Description}}
+        \\\cline{4-12}
+            & \multicolumn{1}{c|}{\textbf{Name}}
+            &
+            & \textbf{31\ldots24}
+            & \textbf{23\ldots16}
+            & \textbf{15\ldots12}
+            & \textbf{11\ldots8}
+            & \textbf{7\ldots6}
+            & \textbf{5\ldots3}
+            & \textbf{2}
+            & \textbf{1}
+            & \textbf{0}
+        \\\hline
+            0xFF203020
+            & \texttt{Buffer}
+            & R
+            & \multicolumn{9}{c|}{Buffer's start address}
+        \\\hline
+            0xFF203024
+            & \texttt{BackBuffer}
+            & R/W
+            & \multicolumn{9}{c|}{Back buffer's start address}
+        \\\hline
+            0xFF203028
+            & \texttt{Resolution}
+            & R
+            & \multicolumn{2}{c|}{Y}
+            & \multicolumn{7}{c|}{X}
+        \\\hline
+            \multirow{2}{*}{0xFF20302C}
+            & \texttt{Status}
+            & R
+            & m
+            & n
+            & {\footnotesize \it (1)}
+            & BS
+				& SB
+            & {\footnotesize \it (1)}
+            & EN
+            & A
+            & S
+        \\\cline{2-12}
+
+            & \texttt{Control}
+            & W
+            & \multicolumn{6}{c|}{\footnotesize \it (1)}
+				& EN
+            & \multicolumn{2}{c|}{\footnotesize \it (1)}
+        \\\hline
+                \multicolumn{11}{l}{}
+        \\
+                \multicolumn{11}{l}{\footnotesize \it{Notes: }}
+        \\
+                \multicolumn{11}{l}{\footnotesize{(1) Reserved. Read values are undefined. Write zero.}}
+    \end{tabular}
+		\caption{Pixel Buffer Controller}
+		\label{tab:pixel_ctrl}
+\end{table}
+
+In a typical application the pixel buffer controller is used as follows. While the image
+contained in the pixel buffer that is pointed to by the Buffer register is being displayed, 
+a new image is drawn into the pixel buffer pointed to by the Backbuffer register. When this new
+image is ready to be displayed, a pixel buffer swap is performed. Then, the pixel buffer 
+that is now pointed to by the Backbuffer register, which was already displayed, is cleared and 
+the next new image is drawn. In this way, the next image to be displayed is always drawn in
+the ``back'' pixel buffer, and the two pixel buffer pointers are swapped when the new image 
+is ready to be displayed. Each time a swap is performed software has to synchronize with
+the video-out port by waiting until the $S$ bit in the Status register becomes 0.
+
+As shown in Table~\ref{tab:pixel_ctrl} the {\it Status} register contains additional information
+other than the $S$ bit. The fields $n$ and $m$ give the number of address bits used for
+the $X$ and $Y$ pixel coordinates, respectively. The $BS$ field specifies the number of
+data bits per symbol minus one. The $SB$ field specifies the number of symbols per beat minus one. The $A$ field allows 
+the selection of two different ways of forming pixel addresses. If configured with $A=0$, then 
+the pixel controller expects addresses to contain $X$ and $Y$ fields, as we have used in this
+section. But if $A=1$, then the controller expects addresses to be consecutive
+values starting from 0 and ending at the total number of pixels$ - 1$. The $EN$ field is used to enable or disable the DMA controller. If this bit is set to 0, the DMA controller will be turned off.
+
+In Table~\ref{tab:pixel_ctrl} the default values of the status register fields in the \systemName~are used when forming pixel addresses. The defaults are $n=9$,  $m=8$,
+and $A = 0$. If the pixel buffer controller is changed to provide different values of
+these fields, then the way in which pixel addresses are formed has to be modified accordingly. 
+The programming interface also includes a {\it Resolution} register, shown 
+in Table~\ref{tab:pixel_ctrl}, that contains the X and Y resolution of the pixel buffer(s).  

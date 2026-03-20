@@ -1,0 +1,75 @@
+\subsection{Using Interrupts with Assembly Language Code}
+
+An example of assembly language code for the \systemName~that uses interrupts is
+shown in Listing \ref{lst:interrupt_example_s}, which has three main parts. The beginning
+part of the code 
+sets up the exception vector table. This code must be in a special assembler section called
+.{\bf section}, as shown.  The entries in the table provide branches
+to the various exception service routines; they are discussed later in this section.
+
+When this code is executed on the \DEBoard~board
+it displays a rotating pattern on the LEDs. The pattern's rotation can be toggled through pressing the pushbutton KEYs.
+Different types of interrupts are used in the code. The LEDs are controlled by interrupts from the FPGA
+interval timer, and the KEYs are also handled through interrupts.
+
+The main program initializes the A9 banked stack pointer (sp) registers for interrupt (IRQ) mode 
+and supervisor (SVC) mode, because these are the processor modes that are
+used in the program. The code then calls subroutines to initialize the HPS timer, FPGA
+interval timer, and FPGA pushbutton KEYs. Finally, the code initializes the HPS GPIO1
+port, enables IRQ interrupts in the A9 processor, and then enters an infinite loop. 
+The loop code turns on and off a green light whenever 
+the global variable named {\it tick} is set to 1. This variable is set to 1 by the 
+exception service routine for the HPS timer, which is described later in this section.
+
+Following are the subroutines used to initialize the timers and 
+pushbutton KEYs.  The CONFIG\_HPS\_TIMER routine sets up the HPS timer 0 so that it will produce an
+interrupt every one second. Since this timer uses a 100 MHz clock, the timer {\it load} register
+is initialized to the value $100 \times 10^6$. The CONFIG\_INTERVAL\_TIMER routine
+configures the FPGA interval timer to produce interrupts every 50 msec. Since this timer
+uses a 100 MHz clock, the required starting count value is $5 \times 10^6$. The
+CONFIG\_KEYS routine sets up the FPGA KEYs parallel port to produce an interrupt when any
+KEY is pressed.
+
+The last portion of the code shows the global data used by the program.
+It includes the {\it tick} variable that was discussed for the code earlier, and other variables. 
+The {\it pattern} variable holds the bit-pattern that is written, the {\it key\_pressed} variable indicates which FPGA KEY has been recently pressed, and
+the {\it shift\_dir} variable specifies the direction of shifting for the HEX displays.
+
+Also included in part {\it c} of Listing \ref{lst:interrupt_example_s} is the subroutine that initializes the GIC.
+This code performs the minimum-required steps needed to configure the three interrupts used 
+in the program, by writing to the {\it processor targets} (ICDIPTRn) registers in the GIC, and 
+the {\it set enable} (ICDISERn) registers. For the HPS timer, the registers used have
+addresses {\sf 0xFFFED8C4} and {\sf 0xFFFED118}, as shown in the listing. For the FPGA
+interval timer and KEYs, the register addresses are {\sf 0xFFFED848} and {\sf 0xFFFED108}.
+Instructions for calculating these addresses, and determining the bit patterns to write
+into them can be found in the document {\it Using the ARM Generic Interrupt Controller}, available
+as one of the \texttt{Computer Organization System Design} tutorials on the
+\href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org} website.
+The last part of the code in 
+this section enables the CPU Interface and Distributor in the GIC.
+
+The exception service routines for the main program in Listing~\ref{lst:interrupt_example_s} 
+are given in Listing~\ref{lst:exception_handler_s}. 
+The first part of the listing gives the IRQ exception handler. This routine first reads
+from the {\it interrupt acknowledge} register in the GIC to determine the interrupt ID
+of the peripheral that caused the interrupt. The code then checks which of the 
+three possible sources of interrupt has occurred, and calls the corresponding interrupt 
+service routine for the HPS timer, FPGA interval timer, or FPGA KEY parallel port.  
+These interrupt service routine are shown in Listings~\ref{lst:hps_timer_isr_s}
+to \ref{lst:interval_timer_isr_s}.
+
+Finally, the exception handler in Listing~\ref{lst:exception_handler_s} writes to 
+the {\it end-of-interrupt} register in the GIC to clear the interrupt, and then returns 
+to the main program by using the instruction ``SUBS PC, LR, \#4''.
+
+The latter part of Listing~\ref{lst:exception_handler_s} shows handlers for exceptions that correspond to 
+the reset exception, various types of error conditions, and the FIQ interrupt.
+The reset handler shows a branch to the start of the main program in 
+Listing~\ref{lst:interrupt_example_s}. This handler is just an indicator of the
+result of performing a reset of the A9 processor---the actual reset process involves
+executing code from a special boot ROM on the processor, and then executing a program
+called the {\it pre-loader} before actually starting the main program. 
+The other handlers in the latter part of Listing~\ref{lst:exception_handler_s}, which are just 
+loops that branch to themselves, are intended to serve as placeholders for code that would 
+handle the corresponding exceptions.
+

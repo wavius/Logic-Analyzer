@@ -1,0 +1,10 @@
+\subsection{Floating-point Hardware}
+\label{sec:fp}
+
+The Nios~II processor in the \systemName~includes hardware support for
+floating-point addition, subtraction, multiplication, and division. To use this support in
+a C program, variables must be declared with the type {\it float}. A simple example of 
+such code is given in Listing~\ref{lst:fp}. When this code is compiled, it is necessary to
+pass the special argument {\sf -mcustom-fpu-cfg=60-2} to the C compiler, to instruct it to 
+use the floating-point hardware support.
+

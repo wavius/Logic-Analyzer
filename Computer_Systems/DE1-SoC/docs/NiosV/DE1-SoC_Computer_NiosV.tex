@@ -1,0 +1,554 @@
+\documentclass[11pt, twoside, pdftex]{article}
+
+% This include all the settings that we should use for the document
+\newcommand{\PDFTitle}{Altera\textsuperscript{\textregistered} DE10-Lite Computer with Nios~V}
+\newcommand{\commonFiles}{../../../common/doc}
+\newcommand{\commonFigs}{../../../common/figs}
+\newcommand{\sampleProgramsPath}{../../../sample_programs}
+\newcommand{\commonPath}{../../../../../Tutorials/Common}
+\newcommand{\includesPath}{../../software}
+\newcommand{\templatePath}{../../../../../Tutorials/Common}
+\input{\templatePath/Docs/defaulttext.tex}
+\input{\templatePath/Docs/preamble.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add title
+\newcommand{\doctitle}{DE1-SoC Computer System with Nios\textsuperscript{\textregistered} V}
+\newcommand{\dochead}{DE1-SoC Computer System with Nios\textsuperscript{\textregistered} V}
+% Usually no need to change these two lines
+%\title{\fontfamily{phv}\selectfont{\doctitle} }
+%\chead{ \small{\textsc{\bfseries \dochead} } }
+% Customizations
+\newcommand{\DEBoard}{DE1-SoC}
+\newcommand{\systemName}{DE1-SoC Computer}
+\newcommand{\systemNameFull}{DE1-SoC Computer with Nios~V}
+\newcommand{\systemBuilder}{Platform Designer}
+\newcommand{\FPGADeviceFamily}{Cyclone\textsuperscript{\textregistered} V SoC}
+\newcommand{\processor}{Nios~V}
+\newcommand{\baseAddressOffset}{0}
+\newcommand{\BaseAddressOffset}{0}
+\newcommand{\GIC}{processor}
+\newcommand{\videoOutDevice}{VGA}
+\newcommand{\PixelBufferInfo}{320240_16}
+\newcommand{\expansionPortA}{JP1}
+\newcommand{\expansionPortB}{JP2}
+\newcommand{\processorStyle}{defaultNiosVStyle}
+\newcommand{\processorLower}{niosv}
+
+%%\newcommand{\red}[1]{{\color{red}\sf{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%
+%%% DOCUMENT START
+%\begin{document}
+\begin{document}
+\begin{table}
+    \centering
+    \begin{tabular}{p{5cm}p{4cm}}
+        % \hspace{-3cm}\includegraphics[width=0.4\textwidth]{\headerlogofilepath{\templatepath/figures}}
+        \hspace{-3cm}
+        &
+        \raisebox{1\height}{\parbox[h]{0.5\textwidth}{\large\fontfamily{phv}\selectfont{\textsf{\doctitle}}}}
+    \end{tabular}
+    \label{tab:logo}
+\end{table}
+
+\colorbox[rgb]{0,0.384,0.816}{\parbox[h]{\textwidth}{\color{white}\textsf{\textit{\textBar}}}}
+
+\thispagestyle{plain}
+
+\input{\commonFiles/Introduction.tex}
+
+To support such experiments, the computer system contains
+an embedded processor, memory, basic I/O devices like switches and lights,
+audio and video devices, and various other I/O peripherals. 
+The FPGA programming file that implements this system, as well as its 
+design source files, can be obtained from its 
+\href{https://github.com/fpgacademy/Design_Examples/tree/main/Computer_Systems} 
+{GitHub repository}.
+
+\section{\systemNameFull~Contents}
+
+A block diagram that displays the components available in the {\it \systemNameFull}~is shown 
+in Figure~\ref{fig:block_diagram}. The \processor\textsuperscript{\textregistered} 
+processor and ports connected to its peripherals are implemented in the {\it Field-Programmable Gate Array}
+(FPGA) part of Altera's \FPGADeviceFamily~chip, which is the part of the figure that has a blue color in
+the background.  The peripheral ports include: memory, timer modules, audio-in/out, 
+video-in/out, PS/2, analog-to-digital, infrared receive/transmit, and parallel ports connected to switches and 
+lights.  
+
+As indicated in Figure \ref{fig:block_diagram}, in addition to the FPGA the \FPGADeviceFamily~chip
+also contains a {\it Hard Processor System} (HPS), which is the area in the figure
+with a grey background.  The HPS comprises an ARM* Cortex* A9 dual-core processor and a set of peripheral 
+devices. The HPS is not part of the {\it \systemNameFull}, but instructions for using the HPS with the 
+ARM processor can be found in the document entitled {\it \systemName~System with ARM* Cortex* A9},
+which is available on the \href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org} website.
+
+\begin{figure}[h!]
+   \begin{center}
+        \includegraphics[height=.4\paperheight]{figures/fig_block_diagram.pdf}
+   \end{center}
+   \caption{Block diagram of the {\it \systemNameFull}.}
+	\label{fig:block_diagram}
+\end{figure}
+
+\subsection{Getting Started with the \systemNameFull}
+
+To make use of the {\it \systemNameFull} you need to be able to assemble software programs 
+for the {\processor} processor and then execute these programs in the computer system. There are 
+two main approaches for getting started: using a simulation of the computer system, or
+using an FPGA board that implements the computer system in hardware.
+
+\subsubsection {Using the CPUlator Simulator}
+
+The {\it CPUlator} is a powerful and easy-to-use functional simulator that runs inside a
+web browser. It simulates the behavior of a whole computer system, including the
+processor, memory, and many types of I/O devices. The CPUlator simulator supports a variety
+of different computer systems, including the {\it \systemNameFull}. 
+
+The CPUlator user interface displays all of the information that a programmer needs to
+develop and debug software code running on the {\it \systemNameFull}. It shows (and allows
+you to edit) the values in the processor general-purpose and control registers, as well as the 
+contents of memories in the computer system and the values of memory-mapped I/O device 
+registers. The CPUlator allows software code, written either in assembly language or the 
+C language, to be entered into the simulator, assembled to produce machine code, loaded 
+into memory, and then executed. The user can set breakpoints in the machine code, 
+single-step instructions, and perform any of the usual operations that are supported in 
+typical debugging environments. A screen capture of the CPUlator user interface is shown 
+in Figure~\ref{fig:CPUlator}. It displays the processor registers on the 
+left-hand side (by default) of the screen,
+the program code in the middle, and graphical representations of I/O devices on the 
+right-hand side.
+
+\begin{figure}[h!]
+   \begin{center}
+        \includegraphics[scale=.66]{figures/CPUlator.pdf}
+   \end{center}
+   \caption{The CPUlator.}
+	\label{fig:CPUlator}
+\end{figure}
+
+\subsubsection {Using an FPGA Hardware Board}
+
+The {\it \systemNameFull} can be implemented using a {\DEBoard} hardware
+board.  An easy way to begin working with this hardware system is to make use of the tools
+provided with the GNU Project Debugger (GDB) for Nios~V. Detailed instructions for setting up 
+these GDB tools are given in the tutorial called {\it Using GDB with Nios V}, which is available
+as part of the \texttt{Computer Organization and System Design} tutorials in the 
+{\small \href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org}} website.
+
+\subsection{Nios\textsuperscript{\textregistered} V processor}
+\label{sec:niosV}
+The Altera Nios\textsuperscript{\textregistered}~V processor 
+is an implementation of the 32-bit RISC-V processor architecture. Three versions of 
+Nios~V exist, each with different features and capabilities.  Documentation for these 
+three versions, designated as {\it compact} (Nios~V/c), {\it microcontroller} (Nios~V/m),
+and {\it general purpose} (Nios~V/g), can be found by searching on the Internet for keywords 
+such as \texttt{Nios~V versions}. The {\it \systemNameFull}~includes 
+the Nios~V/g version. An overview of the \processor~processor can be found in the 
+document {\it Introduction to \processor}, which is available in the 
+Tutorials tab of the 
+{\small \href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org}} website.
+
+\subsubsection{Nios~V Machine Timer and Software Interrupt Registers}
+\label{sec:mtimer}
+Nios~V includes a 64-bit internal timer that can be used by application programmers. 
+The timer is reset to 0 when the {\DEBoard} board is powered on, and then monotonically
+increases at the system clock rate, which is 100~MHz. The timer is accessible via two 
+memory-mapped registers, 
+called {\it mtime} (machine time) and {\it mtimecmp} (machine time compare). The 
+{\it mtime} register provides the current timer value, and the {\it mtimecmp} register 
+can be used to cause a timer interrupt. A Nios~V timer interrupt will be pending whenever 
+the value of {\it mtime} reaches or exceeds the value of {\it mtimecmp}. Interrupts are 
+discussed in Section~\ref{sec:exceptions}.
+
+Since they are 64-bits wide, both {\it mtime} and {\it mtimecmp} comprise two 32-bit 
+memory-mapped registers, one for the {\it low} word and the other for the {\it high} word. 
+Nios~V also contains a memory-mapped register called {\it msip} (machine software interrupt
+pending), which can be used by an application programmer to cause a {\it software interrupt}.
+
+The {\it mtime}, {\it mtimecmp} and {\it msip} memory-mapped registers are 
+are illustrated in Figure~\ref{fig:mm_control}, which gives the assigned address of each 
+register in the {\it \systemNameFull}.
+
+\begin{figure}[h]
+   \begin{center}
+      \includegraphics[scale=.9]{figures/mm_control_registers.pdf}
+   \caption{Nios~V memory-mapped registers.} 
+	 \label{fig:mm_control}
+	 \end{center}
+\end{figure}
+
+\subsection{Memory Components}
+
+The {\it \systemNameFull} has SDRAM and DDR3 memory ports, as well as two memory modules 
+implemented using the on-chip memory inside the FPGA. These memories are described below.
+
+\input{\commonFiles/FPGA_SDRAM.tex}
+\input{\commonFiles/FPGA_DDR3.tex}
+\input{\commonFiles/FPGA_OnChip_Memory.tex}
+\input{\commonFiles/FPGA_Char_Buffer.tex}
+
+\input{\commonFiles/FPGA_PP.tex}
+\input{\commonFiles/FPGA_PP_Red_LEDs_10.tex}
+\input{\commonFiles/FPGA_PP_7_Segs_6.tex}
+\input{\commonFiles/FPGA_PP_Switches_10.tex}
+\input{\commonFiles/FPGA_PP_Keys_4.tex}
+\input{\commonFiles/FPGA_PP_Dual_40_Pin_Headers.tex}
+\input{\commonFiles/FPGA_PP_Examples.tex}
+
+\input{\commonFiles/FPGA_JTAG_UART.tex}
+
+\input{\commonFiles/FPGA_Interval_Timers.tex}
+
+\newpage
+\section{Exceptions and Interrupts}
+\label{sec:exceptions}
+
+The reset address of the {\processor} processor in the {\it \systemNameFull} is set to
+{\sf 0x00000000}. The address used for the trap handler for all other exceptions and 
+interrupts can be set by the programmer (by writing to the {\it mtvec} control register). 
+Table \ref{tab:irq} gives the assignment of IRQ numbers to each of the I/O peripherals in 
+the system. The rest of this section describes the interrupt behavior associated 
+with the Nios V machine timer, the FPGA interval timer, parallel ports, and serial ports.
+
+\begin{table}[h]
+    \begin{center}
+    \begin{tabular}{l|l}
+            \textbf{Device Name} &
+            \textbf{IRQ \#}
+        \\\hline
+            Nios V software interrupt & 3 \\
+            Nios V machine timer & 7 \\
+            Interval timer & 16 \\
+            Second Interval timer & 17 \\
+            Pushbutton KEY port & 18 \\
+            Audio port & 21 \\
+            PS/2 port & 22 \\
+            PS/2 port dual & 23 \\
+            JTAG port & 24 \\
+			IrDA port & 25 \\
+            Serial port & 26 \\
+            JP1 Expansion port & 27 \\
+            JP2 Expansion port & 28 \\
+    \end{tabular}
+    \caption{Hardware IRQ interrupt assignment for the {\it \systemNameFull}.}
+	 \label{tab:irq}
+    \end{center}
+\end{table}
+
+\subsection{Interrupts from the Nios V Software Interrupts and Machine Timer}
+The IRQ numbers for the Nios V software interrupts register and machine timer are not
+system dependent and are part of the processor specification. The procedure that can be used
+to set up and handle these interrupts is described in the 
+document {\it Introduction to \processor}, which is available as part of the 
+\texttt{Computer Organization and System Design} tutorials in the 
+{\small \href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org}} website.
+
+\input{\commonFiles/Interrupts_FPGA_Interval_Timer.tex}
+\input{\commonFiles/Interrupts_FPGA_PP.tex}
+\input{\commonFiles/Interrupts_FPGA_PP_Keys.tex}
+\input{\commonFiles/Interrupts_FPGA_JTAG_UART.tex}
+
+\subsection{Using Interrupts with Assembly Language Code}
+
+An example of assembly language code for the {\it \systemNameFull} that uses interrupts is
+shown in Listing \ref{lst:interrupt_example_s}. When this code is executed on the
+{\DEBoard} board it first sets up interrupts from three devices: the Nios~V machine timer, 
+an FPGA interval timer, and the pushbutton KEY port. The code to initialize these devices
+is given in Lines 141 to 175 in Part ($d$) of Listing \ref{lst:interrupt_example_s}. 
+Line 24 in Listing \ref{lst:interrupt_example_s}($a$) initializes the stack pointer to
+the bottom of the 64~MB SDRAM on the {\DEBoard}, and Lines 25 to 27 initialize the
+three interrupting devices. Interrupts are enabled in Lines 30 to 37. First, the address of
+the trap handler routine is written into the {\it mtvec} register, and then software
+interrupts, machine timer, interval timer, and KEY port interrupts are
+enabled by setting bits $b_3$, $b_7$, $b_{16}$ and $b_{18}$, respectively, of the 
+machine interrupt enable ({\it mie}) register. 
+Finally, interrupts are enabled in Nios~V by setting bit $b_3$ of the {\it mstatus} register.
+
+Next, in Lines 40 to 42 the program makes a software 
+interrupt occur, to illustrate how this is done. Finally, the main program loops in
+between Lines 51 and 57 while responding to interrupts from the timers and the 
+KEY pushbutton port. 
+
+The trap handler is given in Lines 59 to 89. After first saving registers that will be
+modified, it reads the value of the {\it mcause} register. Based on this value, the trap
+handler calls the appropriate interrupt service routine. 
+
+The interrupt service routine for the software interrupt, in Lines 91 to 97, 
+turns on most of the red lights in the \red{LEDR} port, to provide a visual indication of 
+its execution. 
+
+The interrupt service routine for the Nios V machine timer, in Lines 99 to 114,
+adjusts the {\it mtimecmp} value for the next interrupt, and 
+increments a counter variable. The main program displays this counter as a binary number 
+on the red lights \red{LEDR}, which will increment for every timer interrupt.
+
+The interrupt service routine for the FPGA interval timer, in Lines 116 to 129,
+increments a one-digit decimal counter. The main program displays this counter on the 
+7-segment display \red{HEX0}. The counter either increments or decrements,
+in the range \red{0} to \red{9}.  When a KEY is pressed, its corresponding 
+interrupt service routine, in Lines 131 to 139, reverses the direction of counting on \red{HEX0}. 
+
+The remaining lines of code, in Listing~\ref{lst:interrupt_example_s}($e$),
+provide a subroutine for converting decimal digits to 7-segment display codes,
+and define the global variables that are used in the program.
+
+\subsection{Using Interrupts with C Code}
+
+An example of C code for the {\it \systemNameFull} that uses interrupts is shown in 
+Listing \ref{lst:interrupt_example_C}. This code performs the same operations as
+the code in Listing \ref{lst:interrupt_example_s}. Lines 1 to 22 in the code declare some symbols, 
+function prototypes, and global variables that are needed in the program. The function
+prototype for the {\it handler} subroutine, which is the trap handler in this program, is
+assigned the attribute \texttt{interrupt ("machine")}. This attribute instructs the C compiler 
+to generate the appropriate assembly-language code for an interrupt handler: it saves and 
+restores all registers that could be modified while the interrupt is being handled, and it 
+returns to the interrupted program by using the \texttt{mret} instruction. 
+
+The main program declares pointers for accessing I/O devices in Lines 45 to 47. These
+pointers are given the \texttt{volatile} keyword, which tells the compiler that the
+value of the variables may change at any time, even if not modified in the code where
+they are declared (in this case the values may be modified by the interrupt service routines). 
+Lines 49 to 51 in the code call subroutines that enable interrupts in the Nios V machine
+timer, the FPGA interval timer, and the KEY port. 
+
+Interrupts are enabled in the C code in lines 53 to 66 by inserting assembly-language code 
+using the GNU C-compiler's \texttt{\_\_asm\_\_} inline assembly feature. The steps performed by
+these lines of code are the same as those in Lines 29 to 37 of 
+Listing~\ref{lst:interrupt_example_s}.
+
+Inline assembly-language code is also used in the {\it handler} routine, in Line 84 in 
+Part ($b$) of Listing~\ref{lst:interrupt_example_C}, to read the Nios~V {\it mcause} register.
+The handler then calls the appropriate interrupt service routine. As mentioned above, the
+{\it handler} saves and restores all temporary registers, and returns to the main program 
+using the \texttt{mret} instruction, because the
+handler is declared with the \texttt{interrupt ("machine")} attribute.
+
+% Section: Media Components
+\section{Media Components}
+\label{sec:multi}
+
+This section describes the audio in/out, video-out, video-in, PS/2, IrDA*, and ADC ports,
+as well as floating point support.
+
+\input{\commonFiles/Media_FPGA_Audio.tex}
+\input{\commonFiles/Media_FPGA_Video_Out.tex}
+
+\input{\commonFiles/Media_FPGA_Video_In.tex}
+\input{\commonFiles/Media_FPGA_AV_Config.tex}
+\input{\commonFiles/Media_FPGA_PS2.tex}
+\input{\commonFiles/Media_FPGA_IrDA_Serial.tex}
+\input{\commonFiles/FPGA_ADC.tex}
+
+\subsection{Floating-point Hardware}
+\label{sec:fp}
+
+The Nios~V/g processor in the includes hardware support for
+floating-point addition, subtraction, multiplication, and division. To use this support in
+a C program, variables must be declared with the type {\it float}. A simple example of 
+such code is given in Listing~\ref{lst:fp}. When this code is compiled, it may be necessary 
+to pass special argument to the C compiler to instruct it to 
+use the floating-point hardware support.
+
+% Section: Modifying the System
+\input{\commonFiles/System_Modifying.tex}
+\begin{table}[h]
+    \begin{center}
+    \begin{tabular}{l|l}
+            \textbf{I/O Peripheral}
+            & \textbf{Qsys Core}
+        \\\hline
+            \rule{0in}{0.2in}SDRAM
+            & SDRAM Controller
+        \\
+            On-chip memory character buffer
+				& Character Buffer for VGA Display
+        \\
+            Red LED parallel port
+				& Parallel Port
+        \\
+            7-segment displays parallel port
+				& Parallel Port
+        \\
+            Expansion parallel ports
+				& Parallel Port
+        \\
+            Slider switch parallel port
+				& Parallel Port
+        \\
+            Pushbutton parallel port
+				& Parallel Port
+        \\
+            PS/2 port
+				& PS2 Controller
+        \\
+            JTAG port
+				& JTAG UART
+        \\
+            Serial port
+				& RS232 UART
+        \\
+            IrDA port
+				& IrDA UART
+        \\
+            Interval timer
+				& Interval timer 
+        \\
+            System ID
+				& System ID Peripheral
+        \\
+            Audio/video configuration port
+				& Audio and Video Config
+        \\
+            Audio port
+				& Audio
+        \\
+            Video port
+				& Pixel Buffer DMA Controller
+        \\
+            Video In port
+				& DMA Controller
+        \\
+    \end{tabular}
+    \caption{{\systemBuilder} cores used in the {\it \systemNameFull}.}
+    \label{tab:sopcnames}
+    \end{center}
+\end{table}
+\clearpage
+
+% Section: Making the System the Default Configuration
+\input{\commonFiles/System_Default_Config.tex}
+
+\section{Memory Layout}
+
+\noindent
+Table \ref{tab:memorylayout} summarizes the memory map used in the \systemName.
+~\\
+~\\
+
+\begin{table}[h]
+    \begin{center}
+    \begin{tabular}{c|c|l}
+            \textbf{Base Address}
+            & \textbf{End Address}
+            & \textbf{I/O Peripheral}
+				\\\hline\vspace{-3mm}\\
+            0x00000000
+            & 0x03FFFFFF
+            & SDRAM
+        \\
+            0x08000000
+            & 0x0803FFFF
+            & FPGA On-chip Memory
+        \\
+            0x09000000
+            & 0x09001FFF
+            & FPGA On-chip Memory Character Buffer
+        \\
+            0xFF200000
+            & 0xFF20000F
+            & Red LEDs
+        \\
+            0xFF200020
+            & 0xFF20002F
+            & 7-segment HEX3$-$HEX0 Displays
+        \\
+            0xFF200030
+            & 0xFF20003F
+            & 7-segment HEX5$-$HEX4 Displays
+
+        \\
+            0xFF200040
+            & 0xFF20004F
+            & Slider Switches
+        \\
+            0xFF200050
+            & 0xFF20005F
+            & Pushbutton KEYs
+        \\
+            0xFF200060
+            & 0xFF20006F
+            & JP1 Expansion
+        \\
+            0xFF200070
+            & 0xFF20007F
+            & JP2 Expansion
+        \\
+            0xFF200100
+            & 0xFF200107
+            & PS/2
+        \\
+            0xFF200108
+            & 0xFF20010F
+            & PS/2 Dual
+        \\
+            0xFF201000
+            & 0xFF201007
+            & JTAG UART
+        \\
+            0xFF201020
+            & 0xFF201027
+				& Infrared (IrDA)
+        \\
+            0xFF202000
+            & 0xFF20201F
+            & Interval Timer
+        \\
+            0xFF202020
+            & 0xFF20202F
+            & Second Interval Timer
+        \\
+            0xFF202100
+            & 0xFF202114
+            & Nios V Machine Timer and Software Interrupts Registers
+        \\
+            0xFF203000
+            & 0xFF20301F
+            & Audio/video Configuration
+        \\
+            0xFF203020
+            & 0xFF20302F
+            & Pixel Buffer Control
+        \\
+            0xFF203030
+            & 0xFF203037
+            & Character Buffer Control
+        \\
+            0xFF203040
+            & 0xFF20304F
+            & Audio
+        \\
+            0xFF203060
+            & 0xFF203070
+            & Video-in
+        \\
+            0xFF204000
+            & 0xFF20401F
+            & ADC
+        \\
+    \end{tabular}
+    \caption{Memory layout used in the \systemName.}
+    \label{tab:memorylayout}
+    \end{center}
+\end{table}
+
+% Section: AMP Integration
+% \input{\commonFiles/AMP_Integration.tex}
+\clearpage
+
+% Appendix
+\input{\commonFiles/appendix.tex}
+\input{\commonFiles/Code_FPGA_PP_Examples.tex}
+\input{\commonFiles/Code_FPGA_JTAG_UART.tex}
+\input{\commonFiles/Code_Interrupts_NiosV.tex}
+\input{\commonFiles/Code_Media_FPGA_Audio.tex}
+\input{\commonFiles/Code_Media_FPGA_Video_Out.tex}
+\input{\commonFiles/Code_Media_FPGA_PS2.tex}
+\input{\commonFiles/Code_Media_FPGA_FP.tex}
+\input{\commonFiles/Code_IncludeFiles.tex}
+
+\input{\templatePath/Docs/copyright.tex}
+
+\end{document}
+

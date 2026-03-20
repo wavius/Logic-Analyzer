@@ -1,0 +1,6 @@
+HPS timer 0: 100 MHz
+HPS timer 1: 100 MHz
+HPS timer 2: 25 MHz
+HPS timer 3: 25 MHz
+
+MPCore private timer: 200 MHz

@@ -1,0 +1,33 @@
+\subsection{Using Interrupts with C Language Code}
+
+An example of C language code for the \systemName~that uses interrupts is
+shown in Listing \ref{lst:interrupt_example_C}. This code performs exactly the same
+operations as the code described in Listing \ref{lst:interrupt_example_s}. 
+
+To enable interrupts the code in Listing \ref{lst:interrupt_example_C} uses {\it macros} 
+that provide access to the Nios II status 
+and control registers.  A collection of such macros, which can be used in any C program,
+are provided in Listing \ref{lst:macros}. 
+
+The reset and exception handlers for the main program in Listing \ref{lst:interrupt_example_C} 
+are given in Listing \ref{lst:exception_handler_C}. 
+The function called {\it the\_reset} provides a simple reset mechanism by
+performing a branch to the main program. The function named {\it the\_exception} 
+represents a general exception handler that can be used with any C program. It includes 
+assembly language code to check if the exception is caused by an external interrupt, and, 
+if so, calls a C language routine named {\it interrupt\_handler}. This routine can then 
+perform whatever action is needed for the specific application. In 
+Listing~\ref{lst:exception_handler_C}, the {\it interrupt\_handler} code first 
+determines which exception has occurred, by using a macro from Listing~\ref{lst:macros} 
+that reads the content of the Nios II interrupt pending register.  The interrupt service 
+routine that is invoked for the interval timer is shown in \ref{lst:interval_timer_isr_C}, 
+and the interrupt service routine for the pushbutton switches appears in 
+Listing~\ref{lst:pushbutton_isr_C}.
+
+The source code files shown in Listing \ref{lst:interrupt_example_s} to
+Listing~\ref{lst:pushbutton_isr_C} are distributed as part of the  
+\productNameMed{}. The files can be found under the heading {\it sample programs}, 
+and are identified by the name {\it Interrupt Example}.
+
+
+

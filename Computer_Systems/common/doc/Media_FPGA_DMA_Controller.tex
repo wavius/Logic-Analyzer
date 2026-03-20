@@ -1,0 +1,88 @@
+\subsubsection{DMA Controller for Video}
+\label{sec:dma_video}
+
+The data provided by the Video-In core is stored into memory using a DMA Controller for Video. When
+operating in {\it Stream to Memory} mode, the DMA stores the incoming frames to memory. 
+Table~\ref{tab:video_dma} describes the registers used in the DMA Controller.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|l|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+            \textbf{Address}
+            & \multicolumn{1}{c|}{\textbf{Register}}
+            & \multirow{2}{*}{\textbf{R/W}}
+            & \multicolumn{9}{c|}{\textbf{Bit Description}}
+        \\\cline{4-12}
+            & \multicolumn{1}{c|}{\textbf{Name}}
+            &
+            & \textbf{31\ldots24}
+            & \textbf{23\ldots16}
+            & \textbf{15\ldots12}
+            & \textbf{11\ldots8}
+            & \textbf{7\ldots6}
+            & \textbf{5\ldots3}
+            & \textbf{2}
+            & \textbf{1}
+            & \textbf{0}
+        \\\hline
+            0xFF203060
+            & \texttt{Buffer}
+            & R
+            & \multicolumn{9}{c|}{Buffer's start address}
+        \\\hline
+            0xFF203064
+            & \texttt{BackBuffer}
+            & R/W
+            & \multicolumn{9}{c|}{Back buffer's start address}
+        \\\hline
+            0xFF203068
+            & \texttt{Resolution}
+            & R
+            & \multicolumn{2}{c|}{Y}
+            & \multicolumn{7}{c|}{X}
+        \\\hline
+            \multirow{2}{*}{0xFF20306C}
+            & \texttt{Status}
+            & R
+            & m
+            & n
+            & {\footnotesize \it (1)}
+            & BS
+				& SB
+            & {\footnotesize \it (1)}
+            & EN
+            & A
+            & S
+        \\\cline{2-12}
+
+            & \texttt{Control}
+            & W
+            & \multicolumn{6}{c|}{\footnotesize \it (1)}
+				& EN
+            & \multicolumn{2}{c|}{\footnotesize \it (1)}
+        \\\hline
+                \multicolumn{11}{l}{}
+        \\
+                \multicolumn{11}{l}{\footnotesize \it{Notes: }}
+        \\
+                \multicolumn{11}{l}{\footnotesize{(1) Reserved. Read values are undefined. Write zero.}}
+    \end{tabular}
+		\caption{Video DMA Controller}
+		\label{tab:video_dma}
+\end{table}
+
+The incoming video is stored to memory, starting at the address specified in the {\it Buffer} register. The 
+{\it BackBuffer} register is used to store an alternate memory location. To change where the video is stored, 
+the new location should first be written into the {\it BackBuffer}. Then the value in the {\it BackBuffer} and
+{\it Buffer} registers can be switched by performing a write to the {\it Buffer} register. 
+
+Bit 2 of the {\it Status/Control} register, {\it EN}, is used to enable or disable the Video DMA controller.
+In the \systemName, the DMA controller is disabled by default. To enable the DMA controller, write a 
+1 into this location. The Video DMA Controller will then begin storing the video into the location specified 
+in the {\it Buffer} register.
+
+The default value stored in the {\it Buffer} register is {\sf 0x08000000}. This address is also used as the 
+source for the Video-Out port, as described in Section~\ref{sec:video_out}, allowing the Video In stream to be 
+displayed on the VGA. If the Video-Out is intended to display a different signal, than the address stored in 
+the Video DMA Controller's {\it Buffer} register should be changed. 

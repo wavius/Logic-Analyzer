@@ -1,0 +1,14 @@
+\subsubsection{Slider Switch Parallel Port}
+
+The {\it SW}$_{9-0}$ slider switches on the DE1-SoC board are connected to an input parallel
+port.  As illustrated in Figure~\ref{fig:slider_port}, this port 
+comprises a 10-bit read-only {\it Data} register, which is mapped to address {\sf 0xFF200040}.
+
+\begin{figure}[h!]
+   \begin{center}
+       \includegraphics{figures/fig_slider_port.pdf}
+   \end{center}
+   \caption{{\it Data} register in the slider switch parallel port.}
+	\label{fig:slider_port}
+\end{figure}
+

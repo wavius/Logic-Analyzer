@@ -1,0 +1,42 @@
+\subsubsection{Expansion Parallel Port}
+
+The \systemName~includes one bidirectional parallel port that is connected to the
+{\it \ExpansionPortA} expansion header on the \DEBoard~board. This parallel port
+includes the four 32-bit registers that were described previously for 
+Figure~\ref{fig:parallel_port}. The base address of this port is {\sf 0xFF200060}.
+Figure \ref{fig:expansion_port}$a$ gives a diagram of 
+the {\it JP1} expansion connector on the \DEBoard~board, and shows how the respective parallel port {\it Data} register bits, 
+$D_{31-0}$, are assigned to the pins on the connector. The figure shows that bit $D_0$ of
+the parallel port is assigned to the pin at the top right corner of the
+connector, bit $D_1$ is assigned below this, and so on. Note that some of the pins on
+{\it \ExpansionPortA} are not usable as input/output connections, and are 
+therefore not used by the parallel ports. Also, only 32 of the 36 data pins that appear on
+each connector can be used.
+
+\begin{figure}[h!]
+   \begin{center}
+       \includegraphics{../../../common/figs/FPGA_PP_Expansion_and_Arduino.pdf}
+   \end{center}
+   \caption{Assignment of parallel port bits to pins.}
+	\label{fig:expansion_port}
+\end{figure}
+
+\subsubsection{Arduino* Expansion Parallel Port}
+
+The \systemName~includes a bidirectional parallel port that is connected to the
+Arduino* Uno R3 expansion header {\it JP2}/{\it JP3} on 
+the \DEBoard~board.  This parallel port has the base address {\sf 0xFF200100} and includes the 
+four 32-bit registers that were described previously for Figure~\ref{fig:parallel_port}.
+The mapping of data bits from this port to the pins on {\it JP2} and {\it JP3} 
+is illustrated in part~$b$ of Figure~\ref{fig:expansion_port}.
+This mapping connects data bit 0 in the {\it Data} register 
+to the signal {\it Arduino\_IO0}, data bit 1 to {\it Arduino\_IO1}, and so on.  
+
+The \systemName~also includes a one-bit output parallel port that is connected to the
+{\it Arduino\_Reset\_n} pin on header {\it JP8} on the \DEBoard~board.  
+Data bit 0 of this one-bit output port is connected to pin 3 of {\it JP8}, which is the 
+{\it Arduino\_Reset\_n} signal.  The address of this port is {\sf 0xFF200110}.
+
+More details about the Arduino Uno R3 expansion header can be found in the 
+\DEBoard~Board User Manual.
+

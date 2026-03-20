@@ -1,0 +1,10 @@
+\subsection{Interrupts from the serial port UART}
+
+We introduced the data and {\it Control} registers associated with the serial port UART in Figure
+\ref{fig:serial_port}, in section \ref{sec:serial_port}.
+The {\it RE} and {\it WE} bits in the {\it Control} register in Figure \ref{fig:serial_port} are used to 
+enable processor interrupts associated with the receive and transmit FIFOs. When enabled, 
+interrupts are generated when {\it RAVAIL} for the receive FIFO, or {\it WSPACE} for
+the transmit FIFO, exceeds 31. Pending interrupts are indicated in the {\it Control}
+register's {\it RI} and {\it WI} bits, and can be cleared by writing or reading data
+to/from the UART.

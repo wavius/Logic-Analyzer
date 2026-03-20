@@ -1,0 +1,22 @@
+\subsection{Using Interrupts with Assembly Language Code}
+
+An example of assembly language code for the \systemName~that uses interrupts is
+shown in Listing \ref{lst:interrupt_example_s}. When this code is executed on the \DEBoard~board
+it displays a rotating pattern on the LEDs. The pattern's rotation can be toggled through pressing the pushbutton KEYs. Two types
+of interrupts are used in the code. The LEDs are controlled by an interrupt
+service routine for the interval timer, and another interrupt service routine is used to
+handle the pushbutton keys. The speed of the rotation is set in the main
+program, by using a counter value in the interval timer that causes an interrupt to occur
+every 50 msec.
+
+The reset and exception handlers for the main program in Listing \ref{lst:interrupt_example_s} 
+are given in Listing \ref{lst:exception_handler_s}. The reset handler simply jumps to the
+{\it \_start} symbol in the main program. The exception handler first checks if the
+exception that has occurred is an external interrupt or an internal one. In the case of an
+internal exception, such as an illegal instruction opcode or a trap instruction, the
+handler simply exits, because it does not handle these cases. For external exceptions, it 
+calls either the interval timer interrupt service routine, for a level 0 interrupt, or the
+pushbutton key interrupt service routine for level 1. These routines are shown in Listings
+\ref{lst:interval_timer_isr_s} and \ref{lst:pushbutton_isr_s}, respectively.
+
+

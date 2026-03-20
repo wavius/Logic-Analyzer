@@ -1,0 +1,379 @@
+2026.03.19.04:34:54 Info: Doing: <b>qsys-script --script=../../common/scripts/gen_niosvg_computer_system.tcl</b>
+2026.03.19.04:35:00 Info: create_system Computer_System
+2026.03.19.04:35:03 Info: set_project_property DEVICE_FAMILY Cyclone V
+2026.03.19.04:35:03 Info: set_project_property DEVICE 5CSEMA5F31C6
+2026.03.19.04:35:03 Info: add_instance System_CLK clock_source 
+2026.03.19.04:35:05 Info: set_instance_parameter_value System_CLK clockFrequency 100000000
+2026.03.19.04:35:05 Info: set_instance_parameter_value System_CLK clockFrequencyKnown true
+2026.03.19.04:35:05 Info: set_instance_parameter_value System_CLK resetSynchronousEdges NONE
+2026.03.19.04:35:05 Info: set_interface_property sys_clk_ref EXPORT_OF System_CLK.clk_in
+2026.03.19.04:35:05 Info: set_interface_property sys_clk EXPORT_OF System_CLK.clk_in_reset
+2026.03.19.04:35:05 Info: add_instance VGA_CLK clock_source 
+2026.03.19.04:35:05 Info: set_instance_parameter_value VGA_CLK clockFrequency 25000000
+2026.03.19.04:35:05 Info: set_instance_parameter_value VGA_CLK clockFrequencyKnown true
+2026.03.19.04:35:05 Info: set_instance_parameter_value VGA_CLK resetSynchronousEdges NONE
+2026.03.19.04:35:05 Info: set_interface_property vga_clk_ref EXPORT_OF VGA_CLK.clk_in
+2026.03.19.04:35:05 Info: set_interface_property vga_clk EXPORT_OF VGA_CLK.clk_in_reset
+2026.03.19.04:35:05 Info: add_instance NiosVg intel_niosv_g 
+2026.03.19.04:35:13 Info: set_instance_parameter_value NiosVg dataCacheSize 1024
+2026.03.19.04:35:13 Info: set_instance_parameter_value NiosVg instCacheSize 1024
+2026.03.19.04:35:13 Info: set_instance_parameter_value NiosVg enableFPU true
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg enableDebug true
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg enableDebugReset true
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg enableECCLite false
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg useResetReq false
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg resetSlave Absolute
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg resetOffset 0
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg peripheralRegionABase -16777216
+2026.03.19.04:35:14 Info: set_instance_parameter_value NiosVg peripheralRegionASize 16777216
+2026.03.19.04:35:15 Info: set_instance_parameter_value NiosVg peripheralRegionBBase 134217728
+2026.03.19.04:35:15 Info: set_instance_parameter_value NiosVg peripheralRegionBSize 134217728
+2026.03.19.04:35:16 Info: add_connection System_CLK.clk NiosVg.clk
+2026.03.19.04:35:17 Info: add_connection System_CLK.clk_reset NiosVg.reset
+2026.03.19.04:35:17 Info: add_connection System_CLK.clk_reset NiosVg.ndm_reset_in
+2026.03.19.04:35:17 Info: add_connection NiosVg.dbg_reset_out NiosVg.ndm_reset_in
+2026.03.19.04:35:17 Info: add_connection NiosVg.data_manager NiosVg.timer_sw_agent
+2026.03.19.04:35:17 Info: set_connection_parameter_value NiosVg.data_manager/NiosVg.timer_sw_agent baseAddress 0xFF202100
+2026.03.19.04:35:18 Info: add_connection NiosVg.instruction_manager NiosVg.dm_agent
+2026.03.19.04:35:18 Info: set_connection_parameter_value NiosVg.instruction_manager/NiosVg.dm_agent baseAddress 0x0a000000
+2026.03.19.04:35:18 Info: add_connection NiosVg.data_manager NiosVg.dm_agent
+2026.03.19.04:35:18 Info: set_connection_parameter_value NiosVg.data_manager/NiosVg.dm_agent baseAddress 0x0a000000
+2026.03.19.04:35:18 Info: lock_avalon_base_address NiosVg.timer_sw_agent
+2026.03.19.04:35:18 Info: lock_avalon_base_address NiosVg.dm_agent
+2026.03.19.04:35:18 Info: add_instance JTAG_to_FPGA_Bridge altera_jtag_avalon_master 
+2026.03.19.04:35:24 Info: add_connection System_CLK.clk JTAG_to_FPGA_Bridge.clk
+2026.03.19.04:35:24 Info: add_connection System_CLK.clk_reset JTAG_to_FPGA_Bridge.clk_reset
+2026.03.19.04:35:24 Info: add_instance SDRAM sdram_64mb 
+2026.03.19.04:35:24 Info: set_interface_property sdram EXPORT_OF SDRAM.wire
+2026.03.19.04:35:24 Info: add_connection System_CLK.clk SDRAM.clk
+2026.03.19.04:35:24 Info: add_connection System_CLK.clk_reset SDRAM.reset
+2026.03.19.04:35:24 Info: add_connection NiosVg.instruction_manager SDRAM.s1
+2026.03.19.04:35:24 Info: set_connection_parameter_value NiosVg.instruction_manager/SDRAM.s1 baseAddress 0x0
+2026.03.19.04:35:24 Info: add_connection JTAG_to_FPGA_Bridge.master SDRAM.s1
+2026.03.19.04:35:24 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/SDRAM.s1 baseAddress 0x0
+2026.03.19.04:35:24 Info: add_connection NiosVg.data_manager SDRAM.s1
+2026.03.19.04:35:25 Info: set_connection_parameter_value NiosVg.data_manager/SDRAM.s1 baseAddress 0x0
+2026.03.19.04:35:25 Info: lock_avalon_base_address SDRAM.s1
+2026.03.19.04:35:25 Info: add_instance Onchip_SRAM altera_avalon_onchip_memory2 
+2026.03.19.04:35:25 Info: set_instance_parameter_value Onchip_SRAM dualPort true
+2026.03.19.04:35:25 Info: set_instance_parameter_value Onchip_SRAM memorySize 262144
+2026.03.19.04:35:25 Info: set_instance_parameter_value Onchip_SRAM singleClockOperation true
+2026.03.19.04:35:25 Info: add_connection System_CLK.clk Onchip_SRAM.clk1
+2026.03.19.04:35:26 Info: add_connection System_CLK.clk_reset Onchip_SRAM.reset1
+2026.03.19.04:35:26 Info: add_connection JTAG_to_FPGA_Bridge.master Onchip_SRAM.s1
+2026.03.19.04:35:26 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Onchip_SRAM.s1 baseAddress 0x8000000
+2026.03.19.04:35:26 Info: add_connection NiosVg.data_manager Onchip_SRAM.s1
+2026.03.19.04:35:26 Info: set_connection_parameter_value NiosVg.data_manager/Onchip_SRAM.s1 baseAddress 0x8000000
+2026.03.19.04:35:26 Info: add_connection NiosVg.instruction_manager Onchip_SRAM.s2
+2026.03.19.04:35:26 Info: set_connection_parameter_value NiosVg.instruction_manager/Onchip_SRAM.s2 baseAddress 0x8000000
+2026.03.19.04:35:27 Info: lock_avalon_base_address Onchip_SRAM.s1
+2026.03.19.04:35:27 Info: lock_avalon_base_address Onchip_SRAM.s2
+2026.03.19.04:35:27 Info: add_instance LEDs altera_avalon_pio 
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs bitClearingEdgeCapReg false
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs bitModifyingOutReg false
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs captureEdge false
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs direction Output
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs edgeType RISING
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs generateIRQ false
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs irqType LEVEL
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs resetValue 0
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs simDoTestBenchWiring false
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs simDrivenValue 0
+2026.03.19.04:35:27 Info: set_instance_parameter_value LEDs width 10
+2026.03.19.04:35:27 Info: set_interface_property leds EXPORT_OF LEDs.external_connection
+2026.03.19.04:35:27 Info: add_connection System_CLK.clk LEDs.clk
+2026.03.19.04:35:27 Info: add_connection System_CLK.clk_reset LEDs.reset
+2026.03.19.04:35:27 Info: add_connection JTAG_to_FPGA_Bridge.master LEDs.s1
+2026.03.19.04:35:27 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/LEDs.s1 baseAddress 0xff200000
+2026.03.19.04:35:28 Info: add_connection NiosVg.data_manager LEDs.s1
+2026.03.19.04:35:28 Info: set_connection_parameter_value NiosVg.data_manager/LEDs.s1 baseAddress 0xff200000
+2026.03.19.04:35:28 Info: lock_avalon_base_address LEDs.s1
+2026.03.19.04:35:28 Info: add_instance HEX3_HEX0 altera_avalon_pio 
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 bitClearingEdgeCapReg false
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 bitModifyingOutReg false
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 captureEdge false
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 direction Output
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 edgeType RISING
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 generateIRQ false
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 irqType LEVEL
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 resetValue 0
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 simDoTestBenchWiring false
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 simDrivenValue 0
+2026.03.19.04:35:28 Info: set_instance_parameter_value HEX3_HEX0 width 32
+2026.03.19.04:35:28 Info: set_interface_property hex3_hex0 EXPORT_OF HEX3_HEX0.external_connection
+2026.03.19.04:35:28 Info: add_connection System_CLK.clk HEX3_HEX0.clk
+2026.03.19.04:35:28 Info: add_connection System_CLK.clk_reset HEX3_HEX0.reset
+2026.03.19.04:35:28 Info: add_connection JTAG_to_FPGA_Bridge.master HEX3_HEX0.s1
+2026.03.19.04:35:28 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/HEX3_HEX0.s1 baseAddress 0xff200020
+2026.03.19.04:35:28 Info: add_connection NiosVg.data_manager HEX3_HEX0.s1
+2026.03.19.04:35:29 Info: set_connection_parameter_value NiosVg.data_manager/HEX3_HEX0.s1 baseAddress 0xff200020
+2026.03.19.04:35:29 Info: lock_avalon_base_address HEX3_HEX0.s1
+2026.03.19.04:35:29 Info: add_instance HEX5_HEX4 altera_avalon_pio 
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 bitClearingEdgeCapReg false
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 bitModifyingOutReg false
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 captureEdge false
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 direction Output
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 edgeType RISING
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 generateIRQ false
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 irqType LEVEL
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 resetValue 0
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 simDoTestBenchWiring false
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 simDrivenValue 0
+2026.03.19.04:35:29 Info: set_instance_parameter_value HEX5_HEX4 width 16
+2026.03.19.04:35:29 Info: set_interface_property hex5_hex4 EXPORT_OF HEX5_HEX4.external_connection
+2026.03.19.04:35:29 Info: add_connection System_CLK.clk HEX5_HEX4.clk
+2026.03.19.04:35:29 Info: add_connection System_CLK.clk_reset HEX5_HEX4.reset
+2026.03.19.04:35:29 Info: add_connection JTAG_to_FPGA_Bridge.master HEX5_HEX4.s1
+2026.03.19.04:35:29 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/HEX5_HEX4.s1 baseAddress 0xff200030
+2026.03.19.04:35:29 Info: add_connection NiosVg.data_manager HEX5_HEX4.s1
+2026.03.19.04:35:30 Info: set_connection_parameter_value NiosVg.data_manager/HEX5_HEX4.s1 baseAddress 0xff200030
+2026.03.19.04:35:30 Info: lock_avalon_base_address HEX5_HEX4.s1
+2026.03.19.04:35:30 Info: add_instance Slider_Switches altera_avalon_pio 
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches bitClearingEdgeCapReg false
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches bitModifyingOutReg false
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches captureEdge false
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches direction Input
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches edgeType RISING
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches generateIRQ false
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches irqType LEVEL
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches resetValue 0
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches simDoTestBenchWiring true
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches simDrivenValue 0
+2026.03.19.04:35:30 Info: set_instance_parameter_value Slider_Switches width 10
+2026.03.19.04:35:30 Info: set_interface_property slider_switches EXPORT_OF Slider_Switches.external_connection
+2026.03.19.04:35:30 Info: add_connection System_CLK.clk Slider_Switches.clk
+2026.03.19.04:35:30 Info: add_connection System_CLK.clk_reset Slider_Switches.reset
+2026.03.19.04:35:30 Info: add_connection JTAG_to_FPGA_Bridge.master Slider_Switches.s1
+2026.03.19.04:35:30 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Slider_Switches.s1 baseAddress 0xff200040
+2026.03.19.04:35:30 Info: add_connection NiosVg.data_manager Slider_Switches.s1
+2026.03.19.04:35:30 Info: set_connection_parameter_value NiosVg.data_manager/Slider_Switches.s1 baseAddress 0xff200040
+2026.03.19.04:35:30 Info: lock_avalon_base_address Slider_Switches.s1
+2026.03.19.04:35:30 Info: add_instance Pushbuttons altera_avalon_pio 
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons bitClearingEdgeCapReg true
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons bitModifyingOutReg false
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons captureEdge true
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons direction Input
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons edgeType FALLING
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons generateIRQ true
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons irqType EDGE
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons resetValue 0
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons simDoTestBenchWiring true
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons simDrivenValue 0
+2026.03.19.04:35:30 Info: set_instance_parameter_value Pushbuttons width 4
+2026.03.19.04:35:30 Info: set_interface_property pushbuttons EXPORT_OF Pushbuttons.external_connection
+2026.03.19.04:35:30 Info: add_connection System_CLK.clk Pushbuttons.clk
+2026.03.19.04:35:31 Info: add_connection System_CLK.clk_reset Pushbuttons.reset
+2026.03.19.04:35:31 Info: add_connection JTAG_to_FPGA_Bridge.master Pushbuttons.s1
+2026.03.19.04:35:31 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Pushbuttons.s1 baseAddress 0xff200050
+2026.03.19.04:35:31 Info: add_connection NiosVg.data_manager Pushbuttons.s1
+2026.03.19.04:35:31 Info: set_connection_parameter_value NiosVg.data_manager/Pushbuttons.s1 baseAddress 0xff200050
+2026.03.19.04:35:31 Info: add_connection NiosVg.platform_irq_rx Pushbuttons.irq
+2026.03.19.04:35:31 Info: set_connection_parameter_value NiosVg.platform_irq_rx/Pushbuttons.irq irqNumber 2
+2026.03.19.04:35:31 Info: lock_avalon_base_address Pushbuttons.s1
+2026.03.19.04:35:31 Info: add_instance Expansion_JP1 altera_avalon_pio 
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 bitClearingEdgeCapReg true
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 bitModifyingOutReg false
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 captureEdge true
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 direction Bidir
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 edgeType FALLING
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 generateIRQ true
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 irqType EDGE
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 resetValue 0
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 simDoTestBenchWiring true
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 simDrivenValue 0
+2026.03.19.04:35:31 Info: set_instance_parameter_value Expansion_JP1 width 32
+2026.03.19.04:35:31 Info: set_interface_property expansion_jp1 EXPORT_OF Expansion_JP1.external_connection
+2026.03.19.04:35:31 Info: add_connection System_CLK.clk Expansion_JP1.clk
+2026.03.19.04:35:32 Info: add_connection System_CLK.clk_reset Expansion_JP1.reset
+2026.03.19.04:35:32 Info: add_connection JTAG_to_FPGA_Bridge.master Expansion_JP1.s1
+2026.03.19.04:35:32 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Expansion_JP1.s1 baseAddress 0xff200060
+2026.03.19.04:35:32 Info: add_connection NiosVg.data_manager Expansion_JP1.s1
+2026.03.19.04:35:32 Info: set_connection_parameter_value NiosVg.data_manager/Expansion_JP1.s1 baseAddress 0xff200060
+2026.03.19.04:35:32 Info: add_connection NiosVg.platform_irq_rx Expansion_JP1.irq
+2026.03.19.04:35:32 Info: set_connection_parameter_value NiosVg.platform_irq_rx/Expansion_JP1.irq irqNumber 11
+2026.03.19.04:35:32 Info: lock_avalon_base_address Expansion_JP1.s1
+2026.03.19.04:35:32 Info: add_instance Expansion_JP2 altera_avalon_pio 
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 bitClearingEdgeCapReg true
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 bitModifyingOutReg false
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 captureEdge true
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 direction Bidir
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 edgeType FALLING
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 generateIRQ true
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 irqType EDGE
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 resetValue 0
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 simDoTestBenchWiring true
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 simDrivenValue 0
+2026.03.19.04:35:32 Info: set_instance_parameter_value Expansion_JP2 width 32
+2026.03.19.04:35:32 Info: set_interface_property expansion_jp2 EXPORT_OF Expansion_JP2.external_connection
+2026.03.19.04:35:32 Info: add_connection System_CLK.clk Expansion_JP2.clk
+2026.03.19.04:35:32 Info: add_connection System_CLK.clk_reset Expansion_JP2.reset
+2026.03.19.04:35:32 Info: add_connection JTAG_to_FPGA_Bridge.master Expansion_JP2.s1
+2026.03.19.04:35:32 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Expansion_JP2.s1 baseAddress 0xff200070
+2026.03.19.04:35:32 Info: add_connection NiosVg.data_manager Expansion_JP2.s1
+2026.03.19.04:35:32 Info: set_connection_parameter_value NiosVg.data_manager/Expansion_JP2.s1 baseAddress 0xff200070
+2026.03.19.04:35:32 Info: add_connection NiosVg.platform_irq_rx Expansion_JP2.irq
+2026.03.19.04:35:32 Info: set_connection_parameter_value NiosVg.platform_irq_rx/Expansion_JP2.irq irqNumber 12
+2026.03.19.04:35:32 Info: lock_avalon_base_address Expansion_JP2.s1
+2026.03.19.04:35:32 Info: add_instance PS2_Port altera_up_avalon_ps2 
+2026.03.19.04:35:33 Info: set_interface_property ps2_port EXPORT_OF PS2_Port.external_interface
+2026.03.19.04:35:33 Info: add_connection System_CLK.clk PS2_Port.clk
+2026.03.19.04:35:33 Info: add_connection System_CLK.clk_reset PS2_Port.reset
+2026.03.19.04:35:33 Info: add_connection JTAG_to_FPGA_Bridge.master PS2_Port.avalon_ps2_slave
+2026.03.19.04:35:33 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/PS2_Port.avalon_ps2_slave baseAddress 0xff200100
+2026.03.19.04:35:33 Info: add_connection NiosVg.data_manager PS2_Port.avalon_ps2_slave
+2026.03.19.04:35:33 Info: set_connection_parameter_value NiosVg.data_manager/PS2_Port.avalon_ps2_slave baseAddress 0xff200100
+2026.03.19.04:35:33 Info: add_connection NiosVg.platform_irq_rx PS2_Port.interrupt
+2026.03.19.04:35:33 Info: set_connection_parameter_value NiosVg.platform_irq_rx/PS2_Port.interrupt irqNumber 6
+2026.03.19.04:35:33 Info: lock_avalon_base_address PS2_Port.avalon_ps2_slave
+2026.03.19.04:35:33 Info: add_instance PS2_Port_Dual altera_up_avalon_ps2 
+2026.03.19.04:35:33 Info: set_interface_property ps2_port_dual EXPORT_OF PS2_Port_Dual.external_interface
+2026.03.19.04:35:33 Info: add_connection System_CLK.clk PS2_Port_Dual.clk
+2026.03.19.04:35:33 Info: add_connection System_CLK.clk_reset PS2_Port_Dual.reset
+2026.03.19.04:35:33 Info: add_connection JTAG_to_FPGA_Bridge.master PS2_Port_Dual.avalon_ps2_slave
+2026.03.19.04:35:33 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/PS2_Port_Dual.avalon_ps2_slave baseAddress 0xff200108
+2026.03.19.04:35:33 Info: add_connection NiosVg.data_manager PS2_Port_Dual.avalon_ps2_slave
+2026.03.19.04:35:34 Info: set_connection_parameter_value NiosVg.data_manager/PS2_Port_Dual.avalon_ps2_slave baseAddress 0xff200108
+2026.03.19.04:35:34 Info: add_connection NiosVg.platform_irq_rx PS2_Port_Dual.interrupt
+2026.03.19.04:35:34 Info: set_connection_parameter_value NiosVg.platform_irq_rx/PS2_Port_Dual.interrupt irqNumber 7
+2026.03.19.04:35:34 Info: lock_avalon_base_address PS2_Port_Dual.avalon_ps2_slave
+2026.03.19.04:35:34 Info: add_instance JTAG_UART_NiosV altera_avalon_jtag_uart 
+2026.03.19.04:35:34 Info: add_connection System_CLK.clk JTAG_UART_NiosV.clk
+2026.03.19.04:35:34 Info: add_connection System_CLK.clk_reset JTAG_UART_NiosV.reset
+2026.03.19.04:35:34 Info: add_connection JTAG_to_FPGA_Bridge.master JTAG_UART_NiosV.avalon_jtag_slave
+2026.03.19.04:35:34 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/JTAG_UART_NiosV.avalon_jtag_slave baseAddress 0xff201000
+2026.03.19.04:35:34 Info: add_connection NiosVg.data_manager JTAG_UART_NiosV.avalon_jtag_slave
+2026.03.19.04:35:34 Info: set_connection_parameter_value NiosVg.data_manager/JTAG_UART_NiosV.avalon_jtag_slave baseAddress 0xff201000
+2026.03.19.04:35:34 Info: add_connection NiosVg.platform_irq_rx JTAG_UART_NiosV.irq
+2026.03.19.04:35:34 Info: set_connection_parameter_value NiosVg.platform_irq_rx/JTAG_UART_NiosV.irq irqNumber 8
+2026.03.19.04:35:34 Info: lock_avalon_base_address JTAG_UART_NiosV.avalon_jtag_slave
+2026.03.19.04:35:34 Info: add_instance IrDA altera_up_avalon_irda 
+2026.03.19.04:35:34 Info: set_interface_property irda EXPORT_OF IrDA.external_interface
+2026.03.19.04:35:34 Info: add_connection System_CLK.clk IrDA.clk
+2026.03.19.04:35:35 Info: add_connection System_CLK.clk_reset IrDA.reset
+2026.03.19.04:35:35 Info: add_connection JTAG_to_FPGA_Bridge.master IrDA.avalon_irda_slave
+2026.03.19.04:35:35 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/IrDA.avalon_irda_slave baseAddress 0xff201020
+2026.03.19.04:35:35 Info: add_connection NiosVg.data_manager IrDA.avalon_irda_slave
+2026.03.19.04:35:35 Info: set_connection_parameter_value NiosVg.data_manager/IrDA.avalon_irda_slave baseAddress 0xff201020
+2026.03.19.04:35:35 Info: add_connection NiosVg.platform_irq_rx IrDA.interrupt
+2026.03.19.04:35:35 Info: set_connection_parameter_value NiosVg.platform_irq_rx/IrDA.interrupt irqNumber 9
+2026.03.19.04:35:35 Info: lock_avalon_base_address IrDA.avalon_irda_slave
+2026.03.19.04:35:35 Info: add_instance Interval_Timer_NiosV altera_avalon_timer 
+2026.03.19.04:35:35 Info: set_instance_parameter_value Interval_Timer_NiosV period 125.0
+2026.03.19.04:35:35 Info: add_connection System_CLK.clk Interval_Timer_NiosV.clk
+2026.03.19.04:35:35 Info: add_connection System_CLK.clk_reset Interval_Timer_NiosV.reset
+2026.03.19.04:35:35 Info: add_connection JTAG_to_FPGA_Bridge.master Interval_Timer_NiosV.s1
+2026.03.19.04:35:35 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Interval_Timer_NiosV.s1 baseAddress 0xff202000
+2026.03.19.04:35:35 Info: add_connection NiosVg.data_manager Interval_Timer_NiosV.s1
+2026.03.19.04:35:36 Info: set_connection_parameter_value NiosVg.data_manager/Interval_Timer_NiosV.s1 baseAddress 0xff202000
+2026.03.19.04:35:36 Info: add_connection NiosVg.platform_irq_rx Interval_Timer_NiosV.irq
+2026.03.19.04:35:36 Info: set_connection_parameter_value NiosVg.platform_irq_rx/Interval_Timer_NiosV.irq irqNumber 0
+2026.03.19.04:35:36 Info: lock_avalon_base_address Interval_Timer_NiosV.s1
+2026.03.19.04:35:36 Info: add_instance Interval_Timer_NiosV_2 altera_avalon_timer 
+2026.03.19.04:35:36 Info: set_instance_parameter_value Interval_Timer_NiosV_2 period 125.0
+2026.03.19.04:35:36 Info: add_connection System_CLK.clk Interval_Timer_NiosV_2.clk
+2026.03.19.04:35:36 Info: add_connection System_CLK.clk_reset Interval_Timer_NiosV_2.reset
+2026.03.19.04:35:36 Info: add_connection JTAG_to_FPGA_Bridge.master Interval_Timer_NiosV_2.s1
+2026.03.19.04:35:36 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Interval_Timer_NiosV_2.s1 baseAddress 0xff202020
+2026.03.19.04:35:36 Info: add_connection NiosVg.data_manager Interval_Timer_NiosV_2.s1
+2026.03.19.04:35:36 Info: set_connection_parameter_value NiosVg.data_manager/Interval_Timer_NiosV_2.s1 baseAddress 0xff202020
+2026.03.19.04:35:36 Info: add_connection NiosVg.platform_irq_rx Interval_Timer_NiosV_2.irq
+2026.03.19.04:35:36 Info: set_connection_parameter_value NiosVg.platform_irq_rx/Interval_Timer_NiosV_2.irq irqNumber 1
+2026.03.19.04:35:36 Info: lock_avalon_base_address Interval_Timer_NiosV_2.s1
+2026.03.19.04:35:36 Info: add_instance SysID altera_avalon_sysid_qsys 
+2026.03.19.04:35:36 Info: add_connection System_CLK.clk SysID.clk
+2026.03.19.04:35:36 Info: add_connection System_CLK.clk_reset SysID.reset
+2026.03.19.04:35:36 Info: add_connection JTAG_to_FPGA_Bridge.master SysID.control_slave
+2026.03.19.04:35:36 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/SysID.control_slave baseAddress 0xff202040
+2026.03.19.04:35:36 Info: add_connection NiosVg.data_manager SysID.control_slave
+2026.03.19.04:35:37 Info: set_connection_parameter_value NiosVg.data_manager/SysID.control_slave baseAddress 0xff202040
+2026.03.19.04:35:37 Info: lock_avalon_base_address SysID.control_slave
+2026.03.19.04:35:37 Info: add_instance AV_Config altera_up_avalon_audio_and_video_config 
+2026.03.19.04:35:37 Info: set_instance_parameter_value AV_Config board DE1-SoC
+2026.03.19.04:35:37 Info: set_instance_parameter_value AV_Config eai true
+2026.03.19.04:35:37 Info: set_instance_parameter_value AV_Config line_in_bypass true
+2026.03.19.04:35:37 Info: set_instance_parameter_value AV_Config bit_length 32
+2026.03.19.04:35:37 Info: set_instance_parameter_value AV_Config sampling_rate 8 kHz
+2026.03.19.04:35:38 Info: set_interface_property av_config EXPORT_OF AV_Config.external_interface
+2026.03.19.04:35:38 Info: add_connection System_CLK.clk AV_Config.clk
+2026.03.19.04:35:38 Info: add_connection System_CLK.clk_reset AV_Config.reset
+2026.03.19.04:35:38 Info: add_connection JTAG_to_FPGA_Bridge.master AV_Config.avalon_av_config_slave
+2026.03.19.04:35:38 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/AV_Config.avalon_av_config_slave baseAddress 0xff203000
+2026.03.19.04:35:38 Info: add_connection NiosVg.data_manager AV_Config.avalon_av_config_slave
+2026.03.19.04:35:38 Info: set_connection_parameter_value NiosVg.data_manager/AV_Config.avalon_av_config_slave baseAddress 0xff203000
+2026.03.19.04:35:38 Info: lock_avalon_base_address AV_Config.avalon_av_config_slave
+2026.03.19.04:35:38 Info: add_instance ADC altera_up_avalon_adc 
+2026.03.19.04:35:38 Info: set_instance_parameter_value ADC board DE1-SoC
+2026.03.19.04:35:38 Info: set_instance_parameter_value ADC board_rev Autodetect
+2026.03.19.04:35:38 Info: set_instance_parameter_value ADC sclk_freq 12.5
+2026.03.19.04:35:38 Info: set_instance_parameter_value ADC numch_ 8
+2026.03.19.04:35:38 Info: set_interface_property adc EXPORT_OF ADC.external_interface
+2026.03.19.04:35:38 Info: add_connection System_CLK.clk ADC.clk
+2026.03.19.04:35:38 Info: add_connection System_CLK.clk_reset ADC.reset
+2026.03.19.04:35:38 Info: add_connection JTAG_to_FPGA_Bridge.master ADC.adc_slave
+2026.03.19.04:35:38 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/ADC.adc_slave baseAddress 0xff204000
+2026.03.19.04:35:38 Info: add_connection NiosVg.data_manager ADC.adc_slave
+2026.03.19.04:35:39 Info: set_connection_parameter_value NiosVg.data_manager/ADC.adc_slave baseAddress 0xff204000
+2026.03.19.04:35:39 Info: lock_avalon_base_address ADC.adc_slave
+2026.03.19.04:35:39 Info: add_instance VGA_Subsystem VGA_Subsystem 
+2026.03.19.04:35:50 Info: set_interface_property vga EXPORT_OF VGA_Subsystem.vga
+2026.03.19.04:35:50 Info: add_connection System_CLK.clk VGA_Subsystem.sys_clk
+2026.03.19.04:35:50 Info: add_connection System_CLK.clk_reset VGA_Subsystem.sys_reset
+2026.03.19.04:35:50 Info: add_connection VGA_CLK.clk VGA_Subsystem.vga_clk
+2026.03.19.04:35:51 Info: add_connection VGA_CLK.clk_reset VGA_Subsystem.vga_reset
+2026.03.19.04:35:51 Info: add_connection JTAG_to_FPGA_Bridge.master VGA_Subsystem.char_buffer_control_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/VGA_Subsystem.char_buffer_control_slave baseAddress 0xff203030
+2026.03.19.04:35:51 Info: add_connection NiosVg.data_manager VGA_Subsystem.char_buffer_control_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value NiosVg.data_manager/VGA_Subsystem.char_buffer_control_slave baseAddress 0xff203030
+2026.03.19.04:35:51 Info: add_connection JTAG_to_FPGA_Bridge.master VGA_Subsystem.char_buffer_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/VGA_Subsystem.char_buffer_slave baseAddress 0x9000000
+2026.03.19.04:35:51 Info: add_connection NiosVg.data_manager VGA_Subsystem.char_buffer_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value NiosVg.data_manager/VGA_Subsystem.char_buffer_slave baseAddress 0x9000000
+2026.03.19.04:35:51 Info: add_connection JTAG_to_FPGA_Bridge.master VGA_Subsystem.pixel_dma_control_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/VGA_Subsystem.pixel_dma_control_slave baseAddress 0xff203020
+2026.03.19.04:35:51 Info: add_connection NiosVg.data_manager VGA_Subsystem.pixel_dma_control_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value NiosVg.data_manager/VGA_Subsystem.pixel_dma_control_slave baseAddress 0xff203020
+2026.03.19.04:35:51 Info: add_connection VGA_Subsystem.pixel_dma_master SDRAM.s1
+2026.03.19.04:35:51 Info: set_connection_parameter_value VGA_Subsystem.pixel_dma_master/SDRAM.s1 baseAddress 0x00000000
+2026.03.19.04:35:51 Info: add_connection VGA_Subsystem.pixel_dma_master Onchip_SRAM.s2
+2026.03.19.04:35:51 Info: set_connection_parameter_value VGA_Subsystem.pixel_dma_master/Onchip_SRAM.s2 baseAddress 0x08000000
+2026.03.19.04:35:51 Info: add_connection JTAG_to_FPGA_Bridge.master VGA_Subsystem.rgb_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/VGA_Subsystem.rgb_slave baseAddress 0xff203010
+2026.03.19.04:35:51 Info: add_connection NiosVg.data_manager VGA_Subsystem.rgb_slave
+2026.03.19.04:35:51 Info: set_connection_parameter_value NiosVg.data_manager/VGA_Subsystem.rgb_slave baseAddress 0xff203010
+2026.03.19.04:35:51 Info: lock_avalon_base_address VGA_Subsystem.char_buffer_control_slave
+2026.03.19.04:35:51 Info: lock_avalon_base_address VGA_Subsystem.char_buffer_slave
+2026.03.19.04:35:51 Info: lock_avalon_base_address VGA_Subsystem.pixel_dma_control_slave
+2026.03.19.04:35:51 Info: lock_avalon_base_address VGA_Subsystem.rgb_slave
+2026.03.19.04:35:51 Info: add_instance Audio_Subsystem Audio_Subsystem 
+2026.03.19.04:35:56 Info: set_interface_property audio_pll_ref_clk EXPORT_OF Audio_Subsystem.audio_pll_ref_clk
+2026.03.19.04:35:56 Info: set_interface_property audio_pll_ref_reset EXPORT_OF Audio_Subsystem.audio_pll_ref_reset
+2026.03.19.04:35:56 Info: set_interface_property audio_pll_clk EXPORT_OF Audio_Subsystem.audio_pll_clk
+2026.03.19.04:35:56 Info: set_interface_property audio EXPORT_OF Audio_Subsystem.audio
+2026.03.19.04:35:56 Info: add_connection System_CLK.clk Audio_Subsystem.sys_clk
+2026.03.19.04:35:56 Info: add_connection System_CLK.clk_reset Audio_Subsystem.sys_reset
+2026.03.19.04:35:56 Info: add_connection JTAG_to_FPGA_Bridge.master Audio_Subsystem.audio_slave
+2026.03.19.04:35:56 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Audio_Subsystem.audio_slave baseAddress 0xff203040
+2026.03.19.04:35:56 Info: add_connection NiosVg.data_manager Audio_Subsystem.audio_slave
+2026.03.19.04:35:57 Info: set_connection_parameter_value NiosVg.data_manager/Audio_Subsystem.audio_slave baseAddress 0xff203040
+2026.03.19.04:35:57 Info: add_connection NiosVg.platform_irq_rx Audio_Subsystem.audio_irq
+2026.03.19.04:35:57 Info: set_connection_parameter_value NiosVg.platform_irq_rx/Audio_Subsystem.audio_irq irqNumber 5
+2026.03.19.04:35:57 Info: lock_avalon_base_address Audio_Subsystem.audio_slave
+2026.03.19.04:35:57 Info: add_instance Video_In_Subsystem Video_In_Subsystem 
+2026.03.19.04:36:00 Info: set_interface_property video_in EXPORT_OF Video_In_Subsystem.video_in
+2026.03.19.04:36:00 Info: add_connection System_CLK.clk Video_In_Subsystem.sys_clk
+2026.03.19.04:36:00 Info: add_connection System_CLK.clk_reset Video_In_Subsystem.sys_reset
+2026.03.19.04:36:00 Info: add_connection JTAG_to_FPGA_Bridge.master Video_In_Subsystem.video_in_edge_detection_control_slave
+2026.03.19.04:36:00 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Video_In_Subsystem.video_in_edge_detection_control_slave baseAddress 0xff203070
+2026.03.19.04:36:00 Info: add_connection NiosVg.data_manager Video_In_Subsystem.video_in_edge_detection_control_slave
+2026.03.19.04:36:00 Info: set_connection_parameter_value NiosVg.data_manager/Video_In_Subsystem.video_in_edge_detection_control_slave baseAddress 0xff203070
+2026.03.19.04:36:00 Info: add_connection JTAG_to_FPGA_Bridge.master Video_In_Subsystem.video_in_dma_control_slave
+2026.03.19.04:36:00 Info: set_connection_parameter_value JTAG_to_FPGA_Bridge.master/Video_In_Subsystem.video_in_dma_control_slave baseAddress 0xff203060
+2026.03.19.04:36:00 Info: add_connection NiosVg.data_manager Video_In_Subsystem.video_in_dma_control_slave
+2026.03.19.04:36:00 Info: set_connection_parameter_value NiosVg.data_manager/Video_In_Subsystem.video_in_dma_control_slave baseAddress 0xff203060
+2026.03.19.04:36:00 Info: add_connection Video_In_Subsystem.video_in_dma_master Onchip_SRAM.s1
+2026.03.19.04:36:00 Info: set_connection_parameter_value Video_In_Subsystem.video_in_dma_master/Onchip_SRAM.s1 baseAddress 0x08000000
+2026.03.19.04:36:00 Info: add_connection Video_In_Subsystem.video_in_dma_master SDRAM.s1
+2026.03.19.04:36:00 Info: set_connection_parameter_value Video_In_Subsystem.video_in_dma_master/SDRAM.s1 baseAddress 0x00000000
+2026.03.19.04:36:00 Info: lock_avalon_base_address Video_In_Subsystem.video_in_edge_detection_control_slave
+2026.03.19.04:36:00 Info: lock_avalon_base_address Video_In_Subsystem.video_in_dma_control_slave
+2026.03.19.04:36:00 Info: save_system Computer_System.qsys

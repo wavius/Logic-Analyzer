@@ -1,0 +1,11 @@
+\subsection{Interrupts from the FPGA Interval Timer}
+
+Figure \ref{fig:interval_port}, in Section \ref{sec:interval_port}, shows six registers that
+are associated with the interval timer. As we said in Section \ref{sec:interval_port}, the
+{\it TO}~bit in the {\it Status} register is set to 1 when the timer reaches a count value of 0.
+It is possible to generate an interrupt when this occurs, by using the {\it ITO}~bit in 
+the {\it Control} register. Setting the {\it ITO}~bit to 1 causes an interrupt request to 
+be sent to the \GIC~whenever {\it TO} becomes 1. After an interrupt occurs, it can be cleared 
+by writing any value into the {\it Status} register.
+
+

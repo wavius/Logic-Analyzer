@@ -1,0 +1,15 @@
+\subsubsection{Green LED Parallel Port}
+
+The green lights {\it LED}$_{7-0}$ on the \DEBoard~board
+are driven by an output parallel port, as illustrated in Figure~\ref{fig:LED_port}. The port
+contains an 8-bit {\it Data} register, which has the
+address {\sf 0xFF200000}.  This register can be written or read by the processor using word 
+accesses, and the upper bits not used in the registers are ignored.
+
+\begin{figure}[h!]
+   \begin{center}
+       \includegraphics{../../../common/figs/FPGA_PP_Green_LEDs_8.pdf}
+   \end{center}
+   \caption{Output parallel port for {\it LED}.}
+	\label{fig:LED_port}
+\end{figure}

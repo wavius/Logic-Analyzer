@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="Media_FPGA_ADC_Conn_Lite.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.0186728"
+     inkscape:cx="370.04511"
+     inkscape:cy="328.6813"
+     inkscape:window-width="3440"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="392.83235"
+       y="167.93212"
+       width="167.93212"
+       height="354.1931"
+       id="rect68" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       id="text61-2-6-9"
+       xml:space="preserve"
+       x="121.70103"
+       y="101.95245"
+       style="font-size:4.23333px;stroke-width:0.352778"
+       inkscape:export-filename="Media_FPGA_ADC_Conn_Lite.pdf"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         id="tspan62-3-50-0"
+         style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         x="121.70103"
+         y="101.95245">Pin 1</tspan></text>
+    <text
+       id="text61-2-6-9-7"
+       xml:space="preserve"
+       x="131.89876"
+       y="95.053696"
+       style="font-size:4.23333px;stroke-width:0.352778"><tspan
+         id="tspan62-3-50-0-9"
+         style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         x="131.89876"
+         y="95.053696">JP8</tspan></text>
+    <text
+       id="text61-2-6-2-8"
+       xml:space="preserve"
+       x="140.44322"
+       y="126.66584"
+       style="font-size:4.23333px;stroke-width:0.352778"><tspan
+         sodipodi:role="line"
+         id="tspan67"
+         x="140.44322"
+         y="126.66584"><tspan
+           id="tspan62-3-50-4-9"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="140.44322"
+           y="126.66584">Pin 6</tspan></tspan></text>
+    <path
+       id="path81-7"
+       d="m 128.82478,128.90934 h 0.52917 V 97.84198 h -0.52917 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       id="path81-7-9"
+       d="m 138.97172,128.77827 h 0.52917 V 97.841957 h -0.52917 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path82-3-4"
+       d="m 129.0298,98.371133 h 10.20895 v -0.52917 H 129.0298 Z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path84"
+       d="m 128.90687,129.02465 h 10.44992 v -0.52917 h -10.44992 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <g
+       id="g1"
+       transform="translate(-0.18651137)">
+      <text
+         id="text114"
+         xml:space="preserve"
+         x="131.54247"
+         y="102.40663"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan115"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="131.54247"
+           y="102.40663">Ch</tspan></text>
+      <text
+         id="text115"
+         xml:space="preserve"
+         x="135.41594"
+         y="103.18979"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan116"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="135.41594"
+           y="103.18979">0</tspan></text>
+    </g>
+    <g
+       id="g3"
+       transform="translate(-11.396881,4.2125916)">
+      <g
+         id="g1-8"
+         transform="translate(11.217811,5.36663)">
+        <text
+           id="text114-2"
+           xml:space="preserve"
+           x="131.54247"
+           y="102.40663"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan115-4"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="131.54247"
+             y="102.40663">Ch</tspan></text>
+        <text
+           id="text115-5"
+           xml:space="preserve"
+           x="135.41594"
+           y="103.18979"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan116-5"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="135.41594"
+             y="103.18979">2</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g5"
+       transform="translate(-27.280573,13.77693)">
+      <g
+         id="g1-5"
+         transform="translate(27.092821,5.36663)">
+        <text
+           id="text114-27"
+           xml:space="preserve"
+           x="131.54247"
+           y="102.40663"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan115-6"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="131.54247"
+             y="102.40663">Ch</tspan></text>
+        <text
+           id="text115-1"
+           xml:space="preserve"
+           x="135.41594"
+           y="103.18979"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan116-4"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="135.41594"
+             y="103.18979">4</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g1-1"
+       transform="translate(-0.07675063,4.7970522)">
+      <g
+         id="g2">
+        <text
+           id="text114-6"
+           xml:space="preserve"
+           x="131.54247"
+           y="102.40663"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan115-8"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="131.54247"
+             y="102.40663">Ch</tspan></text>
+        <text
+           id="text115-57"
+           xml:space="preserve"
+           x="135.41594"
+           y="103.18979"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan116-6"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="135.41594"
+             y="103.18979">1</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g6"
+       transform="translate(-10.307541,11.665049)">
+      <g
+         id="g1-7"
+         transform="translate(10.159477,12.245798)">
+        <text
+           id="text114-9"
+           xml:space="preserve"
+           x="131.54247"
+           y="102.40663"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan115-5"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="131.54247"
+             y="102.40663">Ch</tspan></text>
+        <text
+           id="text115-4"
+           xml:space="preserve"
+           x="135.41594"
+           y="103.18979"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan116-3"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="135.41594"
+             y="103.18979">5</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4"
+       transform="translate(-17.694175,8.9798782)">
+      <g
+         id="g1-4"
+         transform="translate(17.567815,5.36663)">
+        <text
+           id="text114-1"
+           xml:space="preserve"
+           x="131.54247"
+           y="102.40663"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan115-1"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="131.54247"
+             y="102.40663">Ch</tspan></text>
+        <text
+           id="text115-3"
+           xml:space="preserve"
+           x="135.41594"
+           y="103.18979"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan116-8"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="135.41594"
+             y="103.18979">3</tspan></text>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text68"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect68);display:inline;fill:none;stroke:#000000" />
+  </g>
+</svg>

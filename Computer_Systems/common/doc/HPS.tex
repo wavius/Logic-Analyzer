@@ -1,0 +1,44 @@
+\subsection{Hard Processor System}
+\label{sec:hps}
+The hard processor system (HPS), as shown in Figure~\ref{fig:block_diagram}, includes an 
+ARM Cortex A9 dual-core processor. The A9 dual-core processor features two 32-bit CPUs 
+and associated subsystems that are implemented as hardware circuits in the 
+Cyclone V SoC chip.  An overview of the ARM A9 processor can be found in the 
+document {\it Introduction to the ARM Processor}, which is 
+available in the \texttt{Computer Organization System Design} section of the 
+\href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org} website.
+All of the I/O peripherals in the \systemName~are
+accessible by the processor as memory mapped devices, 
+using the address ranges that are given in this document. A summary of the address map can
+be found in Section {\ref{sec:mm}.
+
+The easiest way to begin working with the \systemName~and the ARM processor is to use the
+\href{https://cpulator.01xz.net/?sys=arm-de1soc} {CPUlator for {\it \systemNameFull}}.
+The {\it CPUlator} is a powerful and easy-to-use functional simulator that runs inside a
+web browser. It simulates the behavior of a whole computer system, including the
+processor, memory, and many types of I/O devices. The CPUlator simulator supports a variety
+of different computer systems, including the {\it \systemNameFull}. 
+The CPUlator user interface displays all of the information that a programmer needs to
+develop and debug software code running on the {\it \systemNameFull}. It shows (and allows
+you to edit) the values in the processor general-purpose and control registers, as well as the 
+contents of memories in the computer system and the values of memory-mapped I/O device 
+registers. The CPUlator allows software code, written either in assembly language or the 
+C language, to be entered into the simulator, assembled to produce machine code, loaded 
+into memory, and then executed. The user can set breakpoints in the machine code, 
+single-step instructions, and perform any of the usual operations that are supported in 
+typical debugging environments.
+
+A good way to develop software code that runs on the actual \systemNameFull~hardware
+is to make use of a utility called the {\it \productNameMed{}}.  It
+provides an easy way to assemble/compile ARM A9 programs written in either assembly language or 
+the C language. The Monitor Program, which can be downloaded from 
+the \href{https://www.fpgacademy.org/tools.html} {FPGAcademy.org} website, is 
+an application program that runs on the host computer connected to the \DEBoard~board.  
+The Monitor Program can be used to control the execution of code on the ARM A9, list (and edit) 
+the contents of processor registers, display/edit the contents of memory on the \DEBoard~
+board, and similar operations.  The Monitor Program includes the \systemName~as a 
+pre-designed system that can be downloaded onto the \DEBoard~board, as well as several sample 
+programs in assembly language and C that show how to use the \systemName's peripherals.
+Section~\ref{sec:monitor_program} describes how the \systemName~is integrated with the 
+Monitor Program.
+

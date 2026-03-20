@@ -1,0 +1,14 @@
+\section{Exceptions and Interrupts}
+\label{sec:exceptions}
+
+The reset address of the Nios II processor in the \systemName~is set to
+{\sf 0x00000000}. The address used for all other general exceptions, such as 
+divide by zero, and hardware IRQ interrupts 
+is {\sf 0x00000020}. Since the Nios II processor uses the same address for general
+exceptions and hardware IRQ interrupts, the
+Exception Handler software must determine the source of the exception by examining the
+appropriate processor status register. Table \ref{tab:irq}
+gives the assignment of IRQ numbers to each of the I/O peripherals in the \systemName.
+The rest of this section describes the interrupt behavior associated with the interval
+timer, parallel ports, and serial ports in the \systemName. 
+

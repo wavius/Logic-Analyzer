@@ -1,0 +1,12 @@
+\subsection{Interrupts from the ARM* A9* Private Timer}
+
+Figure~\ref{fig:MPCORE_timer}, in Section~\ref{sec:ARM_timers}, shows four registers that
+are associated with the A9 private timer. As we said in Section \ref{sec:ARM_timers}, bit
+{\it F} in the {\it Interrupt status} register is set to 1 when the timer reaches a count 
+value of 0. It is possible to generate an A9 interrupt when this occurs, by using bit {\it I}
+of the {\it Control} register.  Setting bit {\it I} to 1 causes the timer to send an
+interrupt signal to the GIC whenever the timer reaches a count value of 0. 
+The {\it F} bit can be cleared to 0 by writing writing a 1 into the 
+{\it Interrupt status} register.
+
+

@@ -1,0 +1,15 @@
+\subsubsection{Arduino* Expansion Parallel Port}
+
+The \systemName~includes a bidirectional parallel port that is connected to the
+Arduino* Uno R3 expansion header on the \DEBoard~board.  This parallel port includes the 
+four 32-bit registers that were described previously for Figure~\ref{fig:parallel_port}. The 
+base address of the port is {\sf 0xFF200100}. The {\it Data} register bits in this port are 
+connected to the Arduino expansion header {\it User I/O}. Thus, bit 0 in the {\it Data} register
+connects to the signal {\it Arduino\_IO0}, bit 1 to {\it Arduino\_IO1}, and so on.  
+
+The \systemName~also includes a one-bit output port that is connected to the
+Arduino Uno R3 expansion header on the \DEBoard~board.  This one-bit port has a data 
+register that is connected to the {\it Arduino\_Reset\_N} signal on the \DEBoard~board.
+The address of this port is {\sf 0xFF200110}.
+
+More details about the Arduino Uno R3 expansion header can be found in the \DEBoard~Board User Manual.

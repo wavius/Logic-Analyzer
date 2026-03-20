@@ -1,0 +1,36 @@
+\subsection{Video-in Port}
+\label{sec:video_in}
+
+The {\it \systemNameFull} includes a video-in port for use with the composite video-in
+connector on the \DEBoard~board. The video analog-to-digital converter (ADC) connected to this
+port is configured to support an NTSC video source. The video-in port provides frames of video 
+at a resolution of 320 {\sf x} 240 pixels.  These video frames can be displayed on a 
+monitor by using the video-out port described in Section~\ref{sec:video_out}.  The video-in 
+port writes each frame of the video-in data into the pixel buffer described in 
+Section~\ref{sec:pixel_buffer}. The video-in port can be configured to provide two types
+of images: either the ``raw'' image provided by the video ADC, or a version of this image
+in which only ``edges'' that are detected in the image are drawn.
+
+The video-in port has a programming interface that consists of two registers, as
+illustrated in Figure~\ref{fig:video_in}. The {\it Control} register at the address
+{\sf 0xFF20306C} is used to enable or disable the video input. If the {\it EN} bit in this
+register is set to 0, then the video-in core does not store any data into the pixel
+buffer. Setting {\it EN} to 1 and then changing {\it EN} to 0 can be used to capture a 
+still picture from the video-in port.
+
+The register at address {\sf 0xFF203070} is used to enable or disable edge detection.
+Setting the {\it E} bit in this register to 1 causes the input video to passed through
+hardware circuits that detect edges in the images. The image stored in the pixel buffer
+will then consist of dark areas that are punctuated by lighter lines along the edges that
+have been detected.  Setting $E=0$ causes a normal image to be stored into the pixel
+buffer.
+
+\begin{figure}[h!]
+   \begin{center}
+       \includegraphics{../../../common/figs/Media_FPGA_Video_In.pdf}
+   \end{center}
+   \caption{The video-in port programming interface.}
+	\label{fig:video_in}
+\end{figure}
+
+\input{\commonFiles/Media_FPGA_DMA_Controller.tex}

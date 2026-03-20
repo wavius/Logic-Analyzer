@@ -1,0 +1,1247 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="FPGA_Expansion_and_Ardiono.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.0186728"
+     inkscape:cx="370.0451"
+     inkscape:cy="330.16742"
+     inkscape:window-width="3440"
+     inkscape:window-height="1351"
+     inkscape:window-x="3431"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="392.83235"
+       y="167.93212"
+       width="167.93212"
+       height="354.1931"
+       id="rect68" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       id="text57-5"
+       xml:space="preserve"
+       x="59.911793"
+       y="143.21948"
+       style="font-size:4.23333px;stroke-width:0.352778"
+       inkscape:export-filename="FPGA_Expansion_and_Arduino.pdf"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         id="tspan58-5"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         x="59.911793"
+         y="143.21948">(a) JP1 40-pin Header</tspan></text>
+    <text
+       id="text57-5-5"
+       xml:space="preserve"
+       x="106.43487"
+       y="143.21948"
+       style="font-size:4.23333px;stroke-width:0.352778"><tspan
+         id="tspan58-5-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         x="106.43487"
+         y="143.21948">(b) JP2 10-pin/JP3 8-pin Arduino Header</tspan></text>
+    <g
+       id="g70"
+       transform="translate(0.24222942)">
+      <path
+         id="path2"
+         d="m 66.834719,96.047006 h 6.265333 v -8.0645 h -6.265333 z"
+         style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <path
+         id="path3"
+         d="m 66.834719,58.306846 h 6.265333 v -8.0645 h -6.265333 z"
+         style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <path
+         id="path4"
+         d="m 66.834719,112.28184 h 15.176499 v -3.83116 H 66.834719 Z"
+         style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <path
+         id="path5"
+         d="m 66.834719,75.070846 h 15.176499 v -3.85234 H 66.834719 Z"
+         style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <path
+         id="path6"
+         d="m 66.580719,133.53318 h 0.529167 V 49.776676 h -0.529167 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <path
+         id="path7"
+         d="m 66.834719,50.305846 h 15.451666 v -0.52917 H 66.834719 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <path
+         id="path8"
+         d="m 81.757218,133.78718 h 0.529167 V 50.051846 h -0.529167 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <path
+         id="path9"
+         d="m 66.580719,133.78718 h 15.430499 v -0.52917 H 66.580719 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <text
+         id="text9"
+         xml:space="preserve"
+         x="76.148048"
+         y="53.480801"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan9"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="76.148048"
+           y="53.480801">D</tspan></text>
+      <text
+         id="text10"
+         xml:space="preserve"
+         x="78.434052"
+         y="54.285168"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan10"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="78.434052"
+           y="54.285168">0</tspan></text>
+      <text
+         id="text11"
+         xml:space="preserve"
+         x="76.148048"
+         y="57.608341"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan11"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="76.148048"
+           y="57.608341">D</tspan></text>
+      <text
+         id="text12"
+         xml:space="preserve"
+         x="78.434052"
+         y="58.391499"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan12"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="78.434052"
+           y="58.391499">1</tspan></text>
+      <text
+         id="text13"
+         xml:space="preserve"
+         x="68.549217"
+         y="61.714664"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan13"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="61.714664">D</tspan></text>
+      <text
+         id="text14"
+         xml:space="preserve"
+         x="70.83522"
+         y="62.497837"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan14"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="62.497837">2</tspan></text>
+      <text
+         id="text15"
+         xml:space="preserve"
+         x="76.148048"
+         y="61.714664"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan15"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="76.148048"
+           y="61.714664">D</tspan></text>
+      <text
+         id="text16"
+         xml:space="preserve"
+         x="78.434052"
+         y="62.497837"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan16"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="78.434052"
+           y="62.497837">3</tspan></text>
+      <text
+         id="text17"
+         xml:space="preserve"
+         x="68.549217"
+         y="65.820992"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan17"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="65.820992">D</tspan></text>
+      <text
+         id="text18"
+         xml:space="preserve"
+         x="70.83522"
+         y="66.625336"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan18"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="66.625336">4</tspan></text>
+      <text
+         id="text19"
+         xml:space="preserve"
+         x="76.148048"
+         y="65.820992"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan19"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="76.148048"
+           y="65.820992">D</tspan></text>
+      <text
+         id="text20"
+         xml:space="preserve"
+         x="78.434052"
+         y="66.625336"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan20"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="78.434052"
+           y="66.625336">5</tspan></text>
+      <text
+         id="text21"
+         xml:space="preserve"
+         x="68.549217"
+         y="69.948494"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan21"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="69.948494">D</tspan></text>
+      <text
+         id="text22"
+         xml:space="preserve"
+         x="70.83522"
+         y="70.731667"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan22"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="70.731667">6</tspan></text>
+      <text
+         id="text23"
+         xml:space="preserve"
+         x="76.148048"
+         y="69.948494"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan23"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="76.148048"
+           y="69.948494">D</tspan></text>
+      <text
+         id="text24"
+         xml:space="preserve"
+         x="78.434052"
+         y="70.731667"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan24"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="78.434052"
+           y="70.731667">7</tspan></text>
+      <text
+         id="text25"
+         xml:space="preserve"
+         x="69.522888"
+         y="74.054832"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan25"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="69.522888"
+           y="74.054832">Unused</tspan><tspan
+           id="tspan26"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.54911"
+           y="82.288567">D</tspan></text>
+      <text
+         id="text26"
+         xml:space="preserve"
+         x="70.83522"
+         y="83.092964"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan27"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="83.092964">10</tspan></text>
+      <text
+         id="text27"
+         xml:space="preserve"
+         x="75.513054"
+         y="82.288658"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan28"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="82.288658">D</tspan></text>
+      <text
+         id="text28"
+         xml:space="preserve"
+         x="77.799049"
+         y="83.092964"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan29"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           dx="0 -0.084581994"
+           y="83.092964">11</tspan></text>
+      <text
+         id="text29"
+         xml:space="preserve"
+         x="68.549217"
+         y="86.394997"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan30"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="86.394997">D</tspan></text>
+      <text
+         id="text30"
+         xml:space="preserve"
+         x="70.83522"
+         y="87.199333"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan31"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="87.199333">12</tspan></text>
+      <text
+         id="text31"
+         xml:space="preserve"
+         x="75.513054"
+         y="86.394997"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan32"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="86.394997">D</tspan></text>
+      <text
+         id="text32"
+         xml:space="preserve"
+         x="77.799049"
+         y="87.199333"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan33"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="87.199333">13</tspan></text>
+      <text
+         id="text33"
+         xml:space="preserve"
+         x="75.513054"
+         y="90.522499"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan34"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="90.522499">D</tspan></text>
+      <text
+         id="text34"
+         xml:space="preserve"
+         x="77.799049"
+         y="91.305672"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan35"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="91.305672">14</tspan></text>
+      <text
+         id="text35"
+         xml:space="preserve"
+         x="75.513054"
+         y="94.628838"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan36"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="94.628838">D</tspan></text>
+      <text
+         id="text36"
+         xml:space="preserve"
+         x="77.799049"
+         y="95.433159"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan37"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="95.433159">15</tspan></text>
+      <text
+         id="text37"
+         xml:space="preserve"
+         x="68.549217"
+         y="98.75634"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan38"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="98.75634">D</tspan></text>
+      <text
+         id="text38"
+         xml:space="preserve"
+         x="70.83522"
+         y="99.539497"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan39"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="99.539497">16</tspan></text>
+      <text
+         id="text39"
+         xml:space="preserve"
+         x="75.513054"
+         y="98.75634"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan40"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="98.75634">D</tspan></text>
+      <text
+         id="text40"
+         xml:space="preserve"
+         x="77.799049"
+         y="99.539497"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan41"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="99.539497">17</tspan></text>
+      <text
+         id="text41"
+         xml:space="preserve"
+         x="68.549217"
+         y="102.69334"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan42"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="102.69334">D</tspan></text>
+      <text
+         id="text42"
+         xml:space="preserve"
+         x="70.83522"
+         y="103.47649"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan43"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="103.47649">18</tspan></text>
+      <text
+         id="text43"
+         xml:space="preserve"
+         x="75.513054"
+         y="102.69334"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan44"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="102.69334">D</tspan></text>
+      <text
+         id="text44"
+         xml:space="preserve"
+         x="77.799049"
+         y="103.47649"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan45"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="103.47649">19</tspan></text>
+      <text
+         id="text45"
+         xml:space="preserve"
+         x="68.549217"
+         y="115.20283"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan46"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="115.20283">D</tspan></text>
+      <text
+         id="text46"
+         xml:space="preserve"
+         x="70.83522"
+         y="116.00716"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan47"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="116.00716">22</tspan></text>
+      <text
+         id="text47"
+         xml:space="preserve"
+         x="75.513054"
+         y="115.20283"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan48"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="115.20283">D</tspan></text>
+      <text
+         id="text48"
+         xml:space="preserve"
+         x="77.799049"
+         y="116.00716"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan49"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="116.00716">23</tspan></text>
+      <text
+         id="text49"
+         xml:space="preserve"
+         x="68.549217"
+         y="119.33033"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan50"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="119.33033">D</tspan></text>
+      <text
+         id="text50"
+         xml:space="preserve"
+         x="70.83522"
+         y="120.11349"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan51"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="120.11349">24</tspan></text>
+      <text
+         id="text51"
+         xml:space="preserve"
+         x="75.513054"
+         y="119.33033"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan52"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="119.33033">D</tspan></text>
+      <text
+         id="text52"
+         xml:space="preserve"
+         x="77.799049"
+         y="120.11349"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan53"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="120.11349">25</tspan></text>
+      <text
+         id="text53"
+         xml:space="preserve"
+         x="68.549217"
+         y="123.43667"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan54"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="123.43667">D</tspan></text>
+      <text
+         id="text54"
+         xml:space="preserve"
+         x="70.83522"
+         y="124.24099"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan55"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="124.24099">26</tspan></text>
+      <text
+         id="text55"
+         xml:space="preserve"
+         x="75.513054"
+         y="123.43667"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan56"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="123.43667">D</tspan></text>
+      <text
+         id="text56"
+         xml:space="preserve"
+         x="77.799049"
+         y="124.24099"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan57"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="124.24099">27</tspan></text>
+      <text
+         id="text57"
+         xml:space="preserve"
+         x="68.549217"
+         y="127.56417"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan58"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="127.56417">D</tspan></text>
+      <text
+         id="text58"
+         xml:space="preserve"
+         x="70.83522"
+         y="128.34734"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan59"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="128.34734">28</tspan></text>
+      <text
+         id="text59"
+         xml:space="preserve"
+         x="75.513054"
+         y="127.56417"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan60"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="127.56417">D</tspan></text>
+      <text
+         id="text60"
+         xml:space="preserve"
+         x="77.799049"
+         y="128.34734"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan61"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="128.34734">29</tspan></text>
+      <text
+         id="text61"
+         xml:space="preserve"
+         x="68.549217"
+         y="131.6705"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan62"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="131.6705">D</tspan></text>
+      <text
+         id="text61-2"
+         xml:space="preserve"
+         x="58.995663"
+         y="53.248104"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan62-3"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="58.995663"
+           y="53.248104">Pin 1</tspan></text>
+      <text
+         id="text61-2-8"
+         xml:space="preserve"
+         x="83.672272"
+         y="131.95746"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan62-3-5"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="83.672272"
+           y="131.95746">Pin 40</tspan></text>
+      <text
+         id="text62"
+         xml:space="preserve"
+         x="70.83522"
+         y="132.47484"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan63"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="132.47484">30</tspan></text>
+      <text
+         id="text63"
+         xml:space="preserve"
+         x="75.513054"
+         y="131.6705"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan64"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="131.6705">D</tspan></text>
+      <text
+         id="text64"
+         xml:space="preserve"
+         x="77.799049"
+         y="132.47484"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan65"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="132.47484">31</tspan></text>
+      <text
+         id="text70"
+         xml:space="preserve"
+         x="70.83522"
+         y="79.007835"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan71"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="79.007835">8</tspan></text>
+      <text
+         id="text71"
+         xml:space="preserve"
+         x="75.513054"
+         y="78.203499"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan72"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="78.203499">D</tspan></text>
+      <text
+         id="text72"
+         xml:space="preserve"
+         x="77.799049"
+         y="79.007835"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan73"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="79.007835">9</tspan></text>
+      <text
+         id="text73"
+         xml:space="preserve"
+         x="68.549217"
+         y="106.82084"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan74"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="68.549217"
+           y="106.82084">D</tspan></text>
+      <text
+         id="text74"
+         xml:space="preserve"
+         x="70.83522"
+         y="107.62516"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan75"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="70.83522"
+           y="107.62516">20</tspan></text>
+      <text
+         id="text75"
+         xml:space="preserve"
+         x="75.513054"
+         y="106.82084"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan76"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="75.513054"
+           y="106.82084">D</tspan></text>
+      <text
+         id="text76"
+         xml:space="preserve"
+         x="77.799049"
+         y="107.62516"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan77"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="77.799049"
+           y="107.62516">21</tspan></text>
+    </g>
+    <text
+       id="text61-2-6"
+       xml:space="preserve"
+       x="121.70103"
+       y="53.248104"
+       style="font-size:4.23333px;stroke-width:0.352778"><tspan
+         id="tspan62-3-50"
+         style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         x="121.70103"
+         y="53.248104">Pin 1</tspan></text>
+    <text
+       id="text61-2-6-9"
+       xml:space="preserve"
+       x="121.70103"
+       y="101.95245"
+       style="font-size:4.23333px;stroke-width:0.352778"><tspan
+         id="tspan62-3-50-0"
+         style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         x="121.70103"
+         y="101.95245">Pin 1</tspan></text>
+    <text
+       id="text61-2-6-2"
+       xml:space="preserve"
+       x="140.44322"
+       y="91.396294"
+       style="font-size:4.23333px;stroke-width:0.352778"><tspan
+         id="tspan62-3-50-4"
+         style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+         x="140.44322"
+         y="91.396294">Pin 10</tspan></text>
+    <text
+       id="text61-2-6-2-8"
+       xml:space="preserve"
+       x="140.44322"
+       y="131.4283"
+       style="font-size:4.23333px;stroke-width:0.352778"><tspan
+         sodipodi:role="line"
+         id="tspan67"
+         x="140.44322"
+         y="131.4283"><tspan
+           id="tspan62-3-50-4-9"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="140.44322"
+           y="131.4283">Pin 8</tspan></tspan></text>
+    <path
+       id="path81"
+       d="m 129.08692,93.688523 h 0.52917 V 49.776678 h -0.52917 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352777" />
+    <path
+       id="path82"
+       d="m 129.29194,50.305846 h 10.20895 v -0.52917 h -10.20895 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path82-3"
+       d="m 129.29194,93.927114 h 10.20895 v -0.52917 h -10.20895 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path83"
+       d="m 138.97172,93.418246 h 0.52917 V 50.051845 h -0.52917 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path81-7"
+       d="m 128.82478,133.62779 h 0.52917 V 97.84198 h -0.52917 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path81-7-9"
+       d="m 138.97172,133.49671 h 0.52917 V 97.841957 h -0.52917 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path82-3-4"
+       d="m 129.0298,98.371133 h 10.20895 v -0.52917 H 129.0298 Z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <path
+       id="path84"
+       d="m 128.90687,133.78718 h 10.44992 v -0.52917 h -10.44992 z"
+       style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+    <g
+       id="g71"
+       transform="translate(0.52916667)">
+      <path
+         id="path3-0"
+         d="m 130.55171,63.35018 h 6.26533 v -3.739257 h -6.26533 z"
+         style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778" />
+      <text
+         id="text61-2-6-4"
+         xml:space="preserve"
+         x="130.89075"
+         y="66.951569"
+         style="font-size:4.23333px;stroke-width:0.352778"><tspan
+           id="tspan62-3-50-9"
+           style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+           x="130.89075"
+           y="66.951569">Gnd</tspan></text>
+      <g
+         id="g1"
+         transform="translate(5.1207725,-7.9375003)">
+        <text
+           id="text90"
+           xml:space="preserve"
+           x="126.20716"
+           y="61.714664"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan90"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="126.20716"
+             y="61.714664">D</tspan></text>
+        <text
+           id="text91"
+           xml:space="preserve"
+           x="128.49321"
+           y="62.497837"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan91"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="128.49321"
+             y="62.497837">15</tspan></text>
+      </g>
+      <g
+         id="g2"
+         transform="translate(5.081085,-7.9375003)">
+        <text
+           id="text94"
+           xml:space="preserve"
+           x="126.20716"
+           y="65.820992"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan94"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="126.20716"
+             y="65.820992">D</tspan></text>
+        <text
+           id="text95"
+           xml:space="preserve"
+           x="128.49321"
+           y="66.625336"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan95"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="128.49321"
+             y="66.625336">14</tspan></text>
+      </g>
+      <g
+         id="g3"
+         transform="translate(5.1424766,1.0583333)">
+        <text
+           id="text98"
+           xml:space="preserve"
+           x="126.20716"
+           y="69.948494"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan98"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="126.20716"
+             y="69.948494">D</tspan></text>
+        <text
+           id="text99"
+           xml:space="preserve"
+           x="128.49321"
+           y="70.731667"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan99"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="128.49321"
+             y="70.731667">13</tspan></text>
+      </g>
+      <g
+         id="g5"
+         transform="translate(5.869341,1.0583333)">
+        <text
+           id="text102"
+           xml:space="preserve"
+           x="125.57222"
+           y="78.055321"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan103"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="78.055321">D</tspan></text>
+        <text
+           id="text103"
+           xml:space="preserve"
+           x="127.85822"
+           y="78.859627"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan104"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             dx="0 -0.084581994"
+             y="78.859627">11</tspan></text>
+      </g>
+      <g
+         id="g6"
+         transform="translate(5.7172892,1.0583333)">
+        <text
+           id="text106"
+           xml:space="preserve"
+           x="125.57222"
+           y="82.161659"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan107"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="82.161659">D</tspan></text>
+        <text
+           id="text107"
+           xml:space="preserve"
+           x="127.85822"
+           y="82.965996"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan108"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="82.965996">10</tspan></text>
+      </g>
+      <g
+         id="g7"
+         transform="translate(6.361591,1.0583333)">
+        <text
+           id="text108"
+           xml:space="preserve"
+           x="125.57222"
+           y="86.289162"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan109"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="86.289162">D</tspan></text>
+        <text
+           id="text109"
+           xml:space="preserve"
+           x="127.85822"
+           y="87.072334"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan110"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="87.072334">9</tspan></text>
+      </g>
+      <g
+         id="g8"
+         transform="translate(6.3801945,-3.1749999)">
+        <text
+           id="text110"
+           xml:space="preserve"
+           x="125.57222"
+           y="94.628838"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan111"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="94.628838">D</tspan></text>
+        <text
+           id="text111"
+           xml:space="preserve"
+           x="127.85822"
+           y="95.433159"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan112"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="95.433159">8</tspan></text>
+      </g>
+      <g
+         id="g4"
+         transform="translate(5.7247307,1.0583333)">
+        <text
+           id="text143"
+           xml:space="preserve"
+           x="125.57222"
+           y="73.970161"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan144"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="73.970161">D</tspan></text>
+        <text
+           id="text144"
+           xml:space="preserve"
+           x="127.85822"
+           y="74.774498"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan145"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="74.774498">12</tspan></text>
+      </g>
+      <g
+         id="g9"
+         transform="translate(6.3634513,3.6502901)">
+        <text
+           id="text114"
+           xml:space="preserve"
+           x="125.57222"
+           y="98.75634"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan115"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="98.75634">D</tspan></text>
+        <text
+           id="text115"
+           xml:space="preserve"
+           x="127.85822"
+           y="99.539497"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan116"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="99.539497">7</tspan></text>
+      </g>
+      <g
+         id="g10"
+         transform="translate(6.3560099,3.6502901)">
+        <text
+           id="text118"
+           xml:space="preserve"
+           x="125.57222"
+           y="102.69334"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan119"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="102.69334">D</tspan></text>
+        <text
+           id="text119"
+           xml:space="preserve"
+           x="127.85822"
+           y="103.47649"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan120"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="103.47649">6</tspan></text>
+      </g>
+      <g
+         id="g12"
+         transform="translate(6.351049,-0.5830433)">
+        <text
+           id="text122"
+           xml:space="preserve"
+           x="125.57222"
+           y="115.20283"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan123"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="115.20283">D</tspan></text>
+        <text
+           id="text123"
+           xml:space="preserve"
+           x="127.85822"
+           y="116.00716"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan124"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="116.00716">4</tspan></text>
+      </g>
+      <g
+         id="g13"
+         transform="translate(6.4124406,-0.5830433)">
+        <text
+           id="text126"
+           xml:space="preserve"
+           x="125.57222"
+           y="119.33033"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan127"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="119.33033">D</tspan></text>
+        <text
+           id="text127"
+           xml:space="preserve"
+           x="127.85822"
+           y="120.11349"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan128"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="120.11349">3</tspan></text>
+      </g>
+      <g
+         id="g14"
+         transform="translate(6.3597306,-0.5830433)">
+        <text
+           id="text130"
+           xml:space="preserve"
+           x="125.57222"
+           y="123.43667"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan131"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="123.43667">D</tspan></text>
+        <text
+           id="text131"
+           xml:space="preserve"
+           x="127.85822"
+           y="124.24099"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan132"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="124.24099">2</tspan></text>
+      </g>
+      <g
+         id="g15"
+         transform="translate(6.46205,-0.5830433)">
+        <text
+           id="text134"
+           xml:space="preserve"
+           x="125.57222"
+           y="127.56417"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan135"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="127.56417">D</tspan></text>
+        <text
+           id="text135"
+           xml:space="preserve"
+           x="127.85822"
+           y="128.34734"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan136"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="128.34734">1</tspan></text>
+      </g>
+      <g
+         id="g16"
+         transform="translate(6.3522892,-0.5830433)">
+        <text
+           id="text138"
+           xml:space="preserve"
+           x="125.57222"
+           y="131.6705"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan139"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="131.6705">D</tspan></text>
+        <text
+           id="text139"
+           xml:space="preserve"
+           x="127.85822"
+           y="132.47484"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan140"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="132.47484">0</tspan></text>
+      </g>
+      <g
+         id="g11"
+         transform="translate(6.3907365,3.6502901)">
+        <text
+           id="text147"
+           xml:space="preserve"
+           x="125.57222"
+           y="106.82084"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan148"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.175px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="125.57222"
+             y="106.82084">D</tspan></text>
+        <text
+           id="text148"
+           xml:space="preserve"
+           x="127.85822"
+           y="107.62516"
+           style="font-size:4.23333px;stroke-width:0.352778"><tspan
+             id="tspan149"
+             style="font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.54px;font-family:'Times New Roman';writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.352778"
+             x="127.85822"
+             y="107.62516">5</tspan></text>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text68"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect68);display:inline;fill:none;stroke:#000000" />
+  </g>
+</svg>

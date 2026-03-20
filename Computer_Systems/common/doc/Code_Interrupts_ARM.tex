@@ -1,0 +1,57 @@
+\subsection{Interrupts}
+
+% Assembly source files
+
+% interrupt example
+\lstinputlisting[style=defaultArmStyle, caption={An example of assembly language code that uses interrupts (Part {\it a}).}, captionpos=b, label={lst:interrupt_example_s}, linerange=5-17]{\sampleProgramsPath/arm/asm/interrupt_example/interrupt_example.s}
+
+\lstinputlisting[style=defaultArmStyle, captionpos=b, linerange=18-122]{\sampleProgramsPath/arm/asm/interrupt_example/interrupt_example.s}
+\begin{center}
+Listing \ref{lst:interrupt_example_s}. An example of assembly language code that uses interrupts (Part {\it b}).
+\end{center}
+
+\lstinputlisting[style=defaultArmStyle, captionpos=b, linerange=71-109]{\sampleProgramsPath/arm/asm/interrupt_example/exceptions.s}
+\begin{center}
+Listing \ref{lst:interrupt_example_s}. An example of assembly language code that uses interrupts (Part {\it c}).
+\end{center}
+\newpage
+
+% exception handlers
+\lstinputlisting[style=defaultArmStyle, caption={Exception handlers assembly language code.}, captionpos=b, label={lst:exception_handler_s}, linerange=9-69]{\sampleProgramsPath/arm/asm/interrupt_example/exceptions.s}
+\newpage
+
+% HPS timer interrupt
+\lstinputlisting[style=defaultArmStyle, caption={Interrupt service routine for the HPS timer.}, captionpos=b, label={lst:hps_timer_isr_s}]{\sampleProgramsPath/arm/asm/interrupt_example/hps_timer_isr.s}
+\newpage
+
+% interval timer interrupt
+\lstinputlisting[style=defaultArmStyle, caption={Interrupt service routine for the interval timer.}, captionpos=b, label={lst:interval_timer_isr_s}]{\sampleProgramsPath/arm/asm/interrupt_example/interval_timer_isr.s}
+\newpage
+
+% key interrupt
+\lstinputlisting[style=defaultArmStyle, caption={Interrupt service routine for the pushbutton KEYs.}, captionpos=b, label={lst:pushbutton_isr_s}]{\sampleProgramsPath/arm/asm/interrupt_example/key_isr.s}
+\newpage
+
+% C Source Code
+
+% interrupt example
+\lstinputlisting[language=C, label={lst:interrupt_example_C}, linerange=3-129]{\sampleProgramsPath/arm/c/interrupt_example/interrupt_example.c}
+
+\lstinputlisting[language=C, caption={An example of C code that uses interrupts.}, captionpos=b, label={lst:interrupt_example_C}, linerange=76-132]{\sampleProgramsPath/arm/c/interrupt_example/exceptions.c}
+\newpage
+
+% Exceptions Handler
+\lstinputlisting[language=C, caption={Exception handlers C code.}, captionpos=b, label={lst:exception_handler_C}, linerange=10-74]{\sampleProgramsPath/arm/c/interrupt_example/exceptions.c}
+\newpage
+
+% HPS timer interrupt
+\lstinputlisting[language=C, caption={Interrupt service routine for the HPS timer.}, captionpos=b, label={lst:hps_timer_isr_C}]{\sampleProgramsPath/arm/c/interrupt_example/HPS_timer_ISR.c}
+\newpage
+
+% interval timer interrupt
+\lstinputlisting[language=C, caption={Interrupt service routine for the interval timer.}, captionpos=b, label={lst:interval_timer_isr_C}]{\sampleProgramsPath/arm/c/interrupt_example/interval_timer_ISR.c}
+\newpage
+
+% key interrupt
+\lstinputlisting[language=C, caption={Interrupt service routine for the pushbutton KEYs.}, captionpos=b, label={lst:pushbutton_isr_C}]{\sampleProgramsPath/arm/c/interrupt_example/pushbutton_ISR.c}
+\newpage

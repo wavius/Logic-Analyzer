@@ -1,0 +1,22 @@
+\subsubsection{Expansion Parallel Port}
+
+The \systemName~includes one bidirectional parallel port that is connected to the
+{\it \expansionPortA} expansion header on the \DEBoard~board. This parallel port
+includes the four 32-bit registers that were described previously for 
+Figure~\ref{fig:parallel_port}. The base address of this port is {\sf 0xFF200060}.
+Figure \ref{fig:expansion_port} gives a diagram of 
+the {\it JP1} expansion connector on the \DEBoard~board, and shows how the respective parallel port {\it Data} register bits, 
+$D_{31-0}$, are assigned to the pins on the connector. The figure shows that bit $D_0$ of
+the parallel port is assigned to the pin at the top right corner of the
+connector, bit $D_1$ is assigned below this, and so on. Note that some of the pins on
+{\it \expansionPortA} are not usable as input/output connections, and are 
+therefore not used by the parallel ports. Also, only 32 of the 36 data pins that appear on
+each connector can be used.
+
+\begin{figure}[h!]
+   \begin{center}
+       \includegraphics[trim={0 0 0 0.5cm},clip]{../../../common/figs/FPGA_PP_Expansion_Port_Single.pdf}
+   \end{center}
+   \caption{Assignment of parallel port bits to pins.}
+	\label{fig:expansion_port}
+\end{figure}

@@ -1,0 +1,341 @@
+2026.03.19.23:01:52 Info: Saving generation log to C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/Computer_System_generation.rpt
+2026.03.19.23:01:52 Info: Starting: <b>Create HDL design files for synthesis</b>
+2026.03.19.23:01:52 Info: qsys-generate C:\Users\david\Downloads\Computer_Systems\DE1-SoC\out\DE1_SoC_NiosVg_Computer\Computer_System.qsys --synthesis=VERILOG --output-directory=C:\Users\david\Downloads\Computer_Systems\DE1-SoC\out\DE1_SoC_NiosVg_Computer\Computer_System\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
+2026.03.19.23:01:52 Info: Loading DE1_SoC_NiosVg_Computer/Computer_System.qsys
+2026.03.19.23:01:53 Info: Reading input file
+2026.03.19.23:01:53 Info: Adding ADC [altera_up_avalon_adc 18.0]
+2026.03.19.23:01:53 Info: Parameterizing module ADC
+2026.03.19.23:01:53 Info: Adding AV_Config [altera_up_avalon_audio_and_video_config 18.0]
+2026.03.19.23:01:53 Info: Parameterizing module AV_Config
+2026.03.19.23:01:53 Info: Adding Audio_Subsystem [Audio_Subsystem 1.0]
+2026.03.19.23:01:54 Info: Parameterizing module Audio_Subsystem
+2026.03.19.23:01:54 Info: Adding Expansion_JP1 [altera_avalon_pio 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module Expansion_JP1
+2026.03.19.23:01:54 Info: Adding Expansion_JP2 [altera_avalon_pio 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module Expansion_JP2
+2026.03.19.23:01:54 Info: Adding HEX3_HEX0 [altera_avalon_pio 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module HEX3_HEX0
+2026.03.19.23:01:54 Info: Adding HEX5_HEX4 [altera_avalon_pio 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module HEX5_HEX4
+2026.03.19.23:01:54 Info: Adding Interval_Timer_NiosV [altera_avalon_timer 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module Interval_Timer_NiosV
+2026.03.19.23:01:54 Info: Adding Interval_Timer_NiosV_2 [altera_avalon_timer 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module Interval_Timer_NiosV_2
+2026.03.19.23:01:54 Info: Adding IrDA [altera_up_avalon_irda 18.0]
+2026.03.19.23:01:54 Info: Parameterizing module IrDA
+2026.03.19.23:01:54 Info: Adding JTAG_UART_NiosV [altera_avalon_jtag_uart 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module JTAG_UART_NiosV
+2026.03.19.23:01:54 Info: Adding JTAG_to_FPGA_Bridge [altera_jtag_avalon_master 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module JTAG_to_FPGA_Bridge
+2026.03.19.23:01:54 Info: Adding LEDs [altera_avalon_pio 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module LEDs
+2026.03.19.23:01:54 Info: Adding Logic_Analyzer_0 [Logic_Analyzer 1.0]
+2026.03.19.23:01:54 Info: Parameterizing module Logic_Analyzer_0
+2026.03.19.23:01:54 Info: Adding NiosVg [intel_niosv_g 4.0.0]
+2026.03.19.23:01:54 Info: Parameterizing module NiosVg
+2026.03.19.23:01:54 Info: Adding Onchip_SRAM [altera_avalon_onchip_memory2 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module Onchip_SRAM
+2026.03.19.23:01:54 Info: Adding PS2_Port [altera_up_avalon_ps2 18.0]
+2026.03.19.23:01:54 Info: Parameterizing module PS2_Port
+2026.03.19.23:01:54 Info: Adding PS2_Port_Dual [altera_up_avalon_ps2 18.0]
+2026.03.19.23:01:54 Info: Parameterizing module PS2_Port_Dual
+2026.03.19.23:01:54 Info: Adding Pushbuttons [altera_avalon_pio 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module Pushbuttons
+2026.03.19.23:01:54 Info: Adding SDRAM [sdram_64mb 1.0]
+2026.03.19.23:01:54 Info: Parameterizing module SDRAM
+2026.03.19.23:01:54 Info: Adding Slider_Switches [altera_avalon_pio 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module Slider_Switches
+2026.03.19.23:01:54 Info: Adding SysID [altera_avalon_sysid_qsys 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module SysID
+2026.03.19.23:01:54 Info: Adding System_CLK [clock_source 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module System_CLK
+2026.03.19.23:01:54 Info: Adding VGA_CLK [clock_source 24.1]
+2026.03.19.23:01:54 Info: Parameterizing module VGA_CLK
+2026.03.19.23:01:54 Info: Adding VGA_Subsystem [VGA_Subsystem 1.0]
+2026.03.19.23:01:55 Info: Parameterizing module VGA_Subsystem
+2026.03.19.23:01:55 Info: Adding Video_In_Subsystem [Video_In_Subsystem 1.0]
+2026.03.19.23:01:56 Info: Parameterizing module Video_In_Subsystem
+2026.03.19.23:01:56 Info: Building connections
+2026.03.19.23:01:56 Info: Parameterizing connections
+2026.03.19.23:01:56 Info: Validating
+2026.03.19.23:01:58 Info: Done reading input file
+2026.03.19.23:02:04 Info: Computer_System.JTAG_UART_NiosV: JTAG UART IP input clock need to be at least double (2x) the operating frequency of JTAG TCK on board
+2026.03.19.23:02:04 Warning: Computer_System.NiosVg: Properties (associatedClock) have been set on interface <b>reset</b> - in composed mode these are ignored
+2026.03.19.23:02:04 Warning: Computer_System.NiosVg: Properties (associatedClock) have been set on interface <b>ndm_reset_in</b> - in composed mode these are ignored
+2026.03.19.23:02:04 Info: Computer_System.SysID: System ID is not assigned automatically. Edit the System ID parameter to provide a unique ID
+2026.03.19.23:02:04 Info: Computer_System.SysID: Time stamp will be automatically updated when this component is generated.
+2026.03.19.23:02:04 Info: Computer_System.VGA_Subsystem.Char_Buf_Subsystem.Char_Buf_RGB_Resampler: RGB Resampling: 1 (bits) x 1 (planes) -> 10 (bits) x 4 (planes)
+2026.03.19.23:02:04 Info: Computer_System.VGA_Subsystem.Char_Buf_Subsystem.Char_Buf_Scaler: Change in Resolution: 80 x 60 -> 640 x 480
+2026.03.19.23:02:04 Warning: Computer_System.VGA_Subsystem.Char_Buf_Subsystem.Char_Buf_RGB_Resampler: <b>Char_Buf_RGB_Resampler.avalon_rgb_slave</b> must be connected to an Avalon-MM master
+2026.03.19.23:02:04 Info: Computer_System.VGA_Subsystem.VGA_Controller: Video Output Stream: Format: 640 x 480 with Color: 10 (bits) x 3 (planes) converted to 8 (bits) per color plane
+2026.03.19.23:02:04 Info: Computer_System.VGA_Subsystem.VGA_Pixel_RGB_Resampler: RGB Resampling: 16 (bits) x 1 (planes) -> 10 (bits) x 3 (planes)
+2026.03.19.23:02:04 Info: Computer_System.VGA_Subsystem.VGA_Pixel_Scaler: Change in Resolution: 320 x 240 -> 640 x 480
+2026.03.19.23:02:04 Info: Computer_System.VGA_Subsystem.VGA_Pixel_Scaler.avalon_scaler_source/VGA_Alpha_Blender.avalon_background_sink: The source has a channel signal of 2 bits, but the sink does not. Avalon-ST Adapter will be inserted.
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In: Video In Stream: Format: 720 x 244 (Odd Frames) or 720 x 243 (Even Frames) with Colour: 8 (bits) x 2 (planes) (YCrCb 4:2:2)
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In_CSC: Colour Space Conversion: 8 (bits) x 3 (planes) (444 YCrCb) -> 8 (bits) x 3 (planes) (24-bit RGB)
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In_Chroma_Resampler: Chroma Resampling: 8 (bits) x 2 (planes) -> 8 (bits) x 3 (planes)
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In_Clipper: Change in Resolution: 720 x 244 -> 640 x 240
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In_Edge_Detection_Subsystem.Chroma_Filter: Chroma Resampling: 8 (bits) x 3 (planes) -> 8 (bits) x 1 (planes)
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In_Edge_Detection_Subsystem.Chroma_Upsampler: Chroma Resampling: 8 (bits) x 1 (planes) -> 8 (bits) x 3 (planes)
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In_RGB_Resampler: RGB Resampling: 8 (bits) x 3 (planes) -> 16 (bits) x 1 (planes)
+2026.03.19.23:02:04 Info: Computer_System.Video_In_Subsystem.Video_In_Scaler: Change in Resolution: 640 x 240 -> 320 x 240
+2026.03.19.23:02:04 Warning: Computer_System.Video_In_Subsystem.Video_In_RGB_Resampler: <b>Video_In_RGB_Resampler.avalon_rgb_slave</b> must be connected to an Avalon-MM master
+2026.03.19.23:02:04 Warning: Computer_System.Expansion_JP1: <b>Expansion_JP1.external_connection</b> must be exported, or connected to a matching conduit.
+2026.03.19.23:02:04 Info: Computer_System: Generating "<b>Computer_System</b>" for QUARTUS_SYNTH
+2026.03.19.23:02:27 Info: ADC: Starting Generation of ADC Controller for DE-series Board
+2026.03.19.23:02:27 Info: ADC: C:/intelfpga_lite/24.1std/ip/altera/university_program/input_output/altera_up_avalon_adc/hdl/altera_up_avalon_adv_adc.v C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0002_sopcgen/Computer_System_ADC.v
+2026.03.19.23:02:29 Info: ADC: "<b>Computer_System</b>" instantiated <b>altera_up_avalon_adc</b> "<b>ADC</b>"
+2026.03.19.23:02:29 Info: AV_Config: Starting Generation of Audio and Video Config
+2026.03.19.23:02:29 Info: AV_Config: "<b>Computer_System</b>" instantiated <b>altera_up_avalon_audio_and_video_config</b> "<b>AV_Config</b>"
+2026.03.19.23:02:32 Info: Audio_Subsystem: "<b>Computer_System</b>" instantiated <b>Audio_Subsystem</b> "<b>Audio_Subsystem</b>"
+2026.03.19.23:02:32 Info: Expansion_JP1: Starting RTL generation for module 'Computer_System_Expansion_JP1'
+2026.03.19.23:02:32 Info: Expansion_JP1:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_Expansion_JP1 --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0006_Expansion_JP1_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0006_Expansion_JP1_gen//Computer_System_Expansion_JP1_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:32 Info: Expansion_JP1: Done RTL generation for module 'Computer_System_Expansion_JP1'
+2026.03.19.23:02:32 Info: Expansion_JP1: "<b>Computer_System</b>" instantiated <b>altera_avalon_pio</b> "<b>Expansion_JP1</b>"
+2026.03.19.23:02:32 Info: HEX3_HEX0: Starting RTL generation for module 'Computer_System_HEX3_HEX0'
+2026.03.19.23:02:32 Info: HEX3_HEX0:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_HEX3_HEX0 --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0007_HEX3_HEX0_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0007_HEX3_HEX0_gen//Computer_System_HEX3_HEX0_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:32 Info: HEX3_HEX0: Done RTL generation for module 'Computer_System_HEX3_HEX0'
+2026.03.19.23:02:32 Info: HEX3_HEX0: "<b>Computer_System</b>" instantiated <b>altera_avalon_pio</b> "<b>HEX3_HEX0</b>"
+2026.03.19.23:02:32 Info: HEX5_HEX4: Starting RTL generation for module 'Computer_System_HEX5_HEX4'
+2026.03.19.23:02:32 Info: HEX5_HEX4:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_HEX5_HEX4 --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0008_HEX5_HEX4_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0008_HEX5_HEX4_gen//Computer_System_HEX5_HEX4_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:33 Info: HEX5_HEX4: Done RTL generation for module 'Computer_System_HEX5_HEX4'
+2026.03.19.23:02:33 Info: HEX5_HEX4: "<b>Computer_System</b>" instantiated <b>altera_avalon_pio</b> "<b>HEX5_HEX4</b>"
+2026.03.19.23:02:33 Info: Interval_Timer_NiosV: Starting RTL generation for module 'Computer_System_Interval_Timer_NiosV'
+2026.03.19.23:02:33 Info: Interval_Timer_NiosV:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelFPGA_lite/24.1std/quartus/bin64//perl/bin/perl.exe -I C:/intelFPGA_lite/24.1std/quartus/bin64//perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_timer/generate_rtl.pl --name=Computer_System_Interval_Timer_NiosV --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0009_Interval_Timer_NiosV_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0009_Interval_Timer_NiosV_gen//Computer_System_Interval_Timer_NiosV_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:33 Info: Interval_Timer_NiosV: Done RTL generation for module 'Computer_System_Interval_Timer_NiosV'
+2026.03.19.23:02:33 Info: Interval_Timer_NiosV: "<b>Computer_System</b>" instantiated <b>altera_avalon_timer</b> "<b>Interval_Timer_NiosV</b>"
+2026.03.19.23:02:33 Info: IrDA: Starting Generation of RS232 UART
+2026.03.19.23:02:33 Info: IrDA: "<b>Computer_System</b>" instantiated <b>altera_up_avalon_irda</b> "<b>IrDA</b>"
+2026.03.19.23:02:33 Info: JTAG_UART_NiosV: "<b>Computer_System</b>" instantiated <b>altera_avalon_jtag_uart</b> "<b>JTAG_UART_NiosV</b>"
+2026.03.19.23:02:34 Info: JTAG_to_FPGA_Bridge: "<b>Computer_System</b>" instantiated <b>altera_jtag_avalon_master</b> "<b>JTAG_to_FPGA_Bridge</b>"
+2026.03.19.23:02:34 Info: LEDs: Starting RTL generation for module 'Computer_System_LEDs'
+2026.03.19.23:02:34 Info: LEDs:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_LEDs --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0012_LEDs_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0012_LEDs_gen//Computer_System_LEDs_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:34 Info: LEDs: Done RTL generation for module 'Computer_System_LEDs'
+2026.03.19.23:02:34 Info: LEDs: "<b>Computer_System</b>" instantiated <b>altera_avalon_pio</b> "<b>LEDs</b>"
+2026.03.19.23:02:34 Info: Logic_Analyzer_0: "<b>Computer_System</b>" instantiated <b>Logic_Analyzer</b> "<b>Logic_Analyzer_0</b>"
+2026.03.19.23:02:36 Info: NiosVg: "<b>Computer_System</b>" instantiated <b>intel_niosv_g</b> "<b>NiosVg</b>"
+2026.03.19.23:02:36 Info: Onchip_SRAM: Starting RTL generation for module 'Computer_System_Onchip_SRAM'
+2026.03.19.23:02:36 Info: Onchip_SRAM:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=Computer_System_Onchip_SRAM --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0014_Onchip_SRAM_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0014_Onchip_SRAM_gen//Computer_System_Onchip_SRAM_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:36 Info: Onchip_SRAM: Done RTL generation for module 'Computer_System_Onchip_SRAM'
+2026.03.19.23:02:36 Info: Onchip_SRAM: "<b>Computer_System</b>" instantiated <b>altera_avalon_onchip_memory2</b> "<b>Onchip_SRAM</b>"
+2026.03.19.23:02:36 Info: PS2_Port: Starting Generation of PS2 Controller
+2026.03.19.23:02:36 Info: PS2_Port: "<b>Computer_System</b>" instantiated <b>altera_up_avalon_ps2</b> "<b>PS2_Port</b>"
+2026.03.19.23:02:37 Info: Pushbuttons: Starting RTL generation for module 'Computer_System_Pushbuttons'
+2026.03.19.23:02:37 Info: Pushbuttons:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_Pushbuttons --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0016_Pushbuttons_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0016_Pushbuttons_gen//Computer_System_Pushbuttons_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:37 Info: Pushbuttons: Done RTL generation for module 'Computer_System_Pushbuttons'
+2026.03.19.23:02:37 Info: Pushbuttons: "<b>Computer_System</b>" instantiated <b>altera_avalon_pio</b> "<b>Pushbuttons</b>"
+2026.03.19.23:02:37 Info: SDRAM: "<b>Computer_System</b>" instantiated <b>sdram_64mb</b> "<b>SDRAM</b>"
+2026.03.19.23:02:37 Info: Slider_Switches: Starting RTL generation for module 'Computer_System_Slider_Switches'
+2026.03.19.23:02:37 Info: Slider_Switches:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_Slider_Switches --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0018_Slider_Switches_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0018_Slider_Switches_gen//Computer_System_Slider_Switches_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:02:37 Info: Slider_Switches: Done RTL generation for module 'Computer_System_Slider_Switches'
+2026.03.19.23:02:37 Info: Slider_Switches: "<b>Computer_System</b>" instantiated <b>altera_avalon_pio</b> "<b>Slider_Switches</b>"
+2026.03.19.23:02:37 Info: SysID: "<b>Computer_System</b>" instantiated <b>altera_avalon_sysid_qsys</b> "<b>SysID</b>"
+2026.03.19.23:02:39 Info: avalon_st_adapter: Inserting channel_adapter: channel_adapter_0
+2026.03.19.23:02:41 Info: VGA_Subsystem: "<b>Computer_System</b>" instantiated <b>VGA_Subsystem</b> "<b>VGA_Subsystem</b>"
+2026.03.19.23:02:43 Info: Video_In_Subsystem: "<b>Computer_System</b>" instantiated <b>Video_In_Subsystem</b> "<b>Video_In_Subsystem</b>"
+2026.03.19.23:03:06 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:06 Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:07 Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:07 Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:08 Info: avalon_st_adapter_004: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:09 Info: avalon_st_adapter_005: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:09 Info: avalon_st_adapter_006: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:10 Info: avalon_st_adapter_007: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:10 Info: avalon_st_adapter_008: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:11 Info: avalon_st_adapter_009: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:12 Info: avalon_st_adapter_010: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:12 Info: avalon_st_adapter_011: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:13 Info: avalon_st_adapter_012: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:14 Info: avalon_st_adapter_013: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:14 Info: avalon_st_adapter_014: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:15 Info: avalon_st_adapter_015: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:15 Info: avalon_st_adapter_016: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:16 Info: avalon_st_adapter_017: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:16 Info: avalon_st_adapter_018: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:17 Info: avalon_st_adapter_019: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:18 Info: avalon_st_adapter_020: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:18 Info: avalon_st_adapter_021: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:19 Info: avalon_st_adapter_022: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:19 Info: avalon_st_adapter_023: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:20 Info: avalon_st_adapter_024: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:21 Info: avalon_st_adapter_025: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:21 Info: avalon_st_adapter_026: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:22 Info: avalon_st_adapter_027: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:23 Info: avalon_st_adapter_028: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:42 Info: mm_interconnect_0: "<b>Computer_System</b>" instantiated <b>altera_mm_interconnect</b> "<b>mm_interconnect_0</b>"
+2026.03.19.23:03:42 Info: irq_mapper: "<b>Computer_System</b>" instantiated <b>altera_irq_mapper</b> "<b>irq_mapper</b>"
+2026.03.19.23:03:42 Info: rst_controller: "<b>Computer_System</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"
+2026.03.19.23:03:42 Info: Audio: Starting Generation of Audio Controller
+2026.03.19.23:03:42 Info: Audio: "<b>Audio_Subsystem</b>" instantiated <b>altera_up_avalon_audio</b> "<b>Audio</b>"
+2026.03.19.23:03:42 Warning: Overwriting different file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_sync_fifo.v</b>
+2026.03.19.23:03:44 Info: Audio_PLL: "<b>Audio_Subsystem</b>" instantiated <b>altera_up_avalon_audio_pll</b> "<b>Audio_PLL</b>"
+2026.03.19.23:03:44 Info: jtag_phy_embedded_in_jtag_master: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>altera_jtag_dc_streaming</b> "<b>jtag_phy_embedded_in_jtag_master</b>"
+2026.03.19.23:03:44 Info: timing_adt: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>timing_adapter</b> "<b>timing_adt</b>"
+2026.03.19.23:03:44 Info: fifo: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>altera_avalon_sc_fifo</b> "<b>fifo</b>"
+2026.03.19.23:03:44 Info: b2p: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>altera_avalon_st_bytes_to_packets</b> "<b>b2p</b>"
+2026.03.19.23:03:44 Info: p2b: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>altera_avalon_st_packets_to_bytes</b> "<b>p2b</b>"
+2026.03.19.23:03:44 Info: transacto: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>altera_avalon_packets_to_master</b> "<b>transacto</b>"
+2026.03.19.23:03:44 Info: b2p_adapter: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>channel_adapter</b> "<b>b2p_adapter</b>"
+2026.03.19.23:03:44 Info: p2b_adapter: "<b>JTAG_to_FPGA_Bridge</b>" instantiated <b>channel_adapter</b> "<b>p2b_adapter</b>"
+2026.03.19.23:03:44 Info: niosv_reset_controller: "Generating: niosv_reset_controller"
+2026.03.19.23:03:44 Info: hart: "<b>NiosVg</b>" instantiated <b>intel_niosv_g_unit</b> "<b>hart</b>"
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_sc_fifo.v</b>
+2026.03.19.23:03:44 Info: timer_module: "<b>NiosVg</b>" instantiated <b>intel_niosv_timer_msip</b> "<b>timer_module</b>"
+2026.03.19.23:03:44 Info: dbg_mod: "<b>NiosVg</b>" instantiated <b>intel_niosv_dbg_mod</b> "<b>dbg_mod</b>"
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/niosv_ram.sv</b>
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_std_synchronizer_nocut.v</b>
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_st_clock_crosser.v</b>
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_st_pipeline_base.v</b>
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_st_pipeline_stage.sv</b>
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_reset_synchronizer.v</b>
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_reset_controller.v</b>
+2026.03.19.23:03:44 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_reset_controller.sdc</b>
+2026.03.19.23:03:44 Info: irq_mapper: "<b>NiosVg</b>" instantiated <b>altera_irq_mapper</b> "<b>irq_mapper</b>"
+2026.03.19.23:03:45 Info: Interconnect is inserted between master Char_Buf_DMA.avalon_dma_master and slave Onchip_SRAM.s2 because the master has address signal 32 bit wide, but the slave is 11 bit wide.
+2026.03.19.23:03:45 Info: Interconnect is inserted between master Char_Buf_DMA.avalon_dma_master and slave Onchip_SRAM.s2 because the master has waitrequest signal 1 bit wide, but the slave is 0 bit wide.
+2026.03.19.23:03:45 Info: Interconnect is inserted between master Char_Buf_DMA.avalon_dma_master and slave Onchip_SRAM.s2 because the master has lock signal 1 bit wide, but the slave is 0 bit wide.
+2026.03.19.23:03:45 Info: Interconnect is inserted between master Char_Buf_DMA.avalon_dma_master and slave Onchip_SRAM.s2 because the master has read signal 1 bit wide, but the slave is 0 bit wide.
+2026.03.19.23:03:45 Info: Interconnect is inserted between master Char_Buf_DMA.avalon_dma_master and slave Onchip_SRAM.s2 because the master has readdata signal 8 bit wide, but the slave is 32 bit wide.
+2026.03.19.23:03:45 Info: Interconnect is inserted between master Char_Buf_DMA.avalon_dma_master and slave Onchip_SRAM.s2 because the master has readdatavalid signal 1 bit wide, but the slave is 0 bit wide.
+2026.03.19.23:03:47 Info: Char_Buf_Subsystem: "<b>VGA_Subsystem</b>" instantiated <b>Char_Buf_Subsystem</b> "<b>Char_Buf_Subsystem</b>"
+2026.03.19.23:03:47 Info: VGA_Alpha_Blender: Starting Generation of the Alpha Blender
+2026.03.19.23:03:47 Info: VGA_Alpha_Blender: "<b>VGA_Subsystem</b>" instantiated <b>altera_up_avalon_video_alpha_blender</b> "<b>VGA_Alpha_Blender</b>"
+2026.03.19.23:03:47 Info: VGA_Controller: Starting Generation of VGA Controller
+2026.03.19.23:03:47 Info: VGA_Controller: "<b>VGA_Subsystem</b>" instantiated <b>altera_up_avalon_video_vga_controller</b> "<b>VGA_Controller</b>"
+2026.03.19.23:03:47 Info: VGA_Dual_Clock_FIFO: Starting Generation of the Dual Clock Buffer
+2026.03.19.23:03:47 Info: VGA_Dual_Clock_FIFO: "<b>VGA_Subsystem</b>" instantiated <b>altera_up_avalon_video_dual_clock_buffer</b> "<b>VGA_Dual_Clock_FIFO</b>"
+2026.03.19.23:03:47 Info: VGA_Pixel_DMA: Starting Generation of Video DMA Controller
+2026.03.19.23:03:47 Info: VGA_Pixel_DMA: "<b>VGA_Subsystem</b>" instantiated <b>altera_up_avalon_video_dma_controller</b> "<b>VGA_Pixel_DMA</b>"
+2026.03.19.23:03:47 Info: VGA_Pixel_FIFO: Starting Generation of the Dual Clock Buffer
+2026.03.19.23:03:47 Info: VGA_Pixel_FIFO: "<b>VGA_Subsystem</b>" instantiated <b>altera_up_avalon_video_dual_clock_buffer</b> "<b>VGA_Pixel_FIFO</b>"
+2026.03.19.23:03:47 Info: VGA_Pixel_RGB_Resampler: Starting Generation of Video RGB Resampler
+2026.03.19.23:03:47 Info: VGA_Pixel_RGB_Resampler: "<b>VGA_Subsystem</b>" instantiated <b>altera_up_avalon_video_rgb_resampler</b> "<b>VGA_Pixel_RGB_Resampler</b>"
+2026.03.19.23:03:47 Info: VGA_Pixel_Scaler: Starting Generation of Video Scaler
+2026.03.19.23:03:47 Info: VGA_Pixel_Scaler: "<b>VGA_Subsystem</b>" instantiated <b>altera_up_avalon_video_scaler</b> "<b>VGA_Pixel_Scaler</b>"
+2026.03.19.23:03:48 Info: avalon_st_adapter: "<b>VGA_Subsystem</b>" instantiated <b>altera_avalon_st_adapter</b> "<b>avalon_st_adapter</b>"
+2026.03.19.23:03:48 Info: Video_In: Starting Generation of Video In Decoder
+2026.03.19.23:03:48 Info: Video_In: "<b>Video_In_Subsystem</b>" instantiated <b>altera_up_avalon_video_decoder</b> "<b>Video_In</b>"
+2026.03.19.23:03:48 Info: Video_In_CSC: Starting Generation of Colour Space Converter
+2026.03.19.23:03:48 Info: Video_In_CSC: "<b>Video_In_Subsystem</b>" instantiated <b>altera_up_avalon_video_csc</b> "<b>Video_In_CSC</b>"
+2026.03.19.23:03:48 Info: Video_In_Chroma_Resampler: Starting Generation of Chroma Resampler
+2026.03.19.23:03:48 Info: Video_In_Chroma_Resampler: "<b>Video_In_Subsystem</b>" instantiated <b>altera_up_avalon_video_chroma_resampler</b> "<b>Video_In_Chroma_Resampler</b>"
+2026.03.19.23:03:48 Info: Video_In_Clipper: Starting generation of the video clipper
+2026.03.19.23:03:48 Info: Video_In_Clipper: "<b>Video_In_Subsystem</b>" instantiated <b>altera_up_avalon_video_clipper</b> "<b>Video_In_Clipper</b>"
+2026.03.19.23:03:48 Info: Video_In_DMA: Starting Generation of Video DMA Controller
+2026.03.19.23:03:49 Info: Video_In_DMA: "<b>Video_In_Subsystem</b>" instantiated <b>altera_up_avalon_video_dma_controller</b> "<b>Video_In_DMA</b>"
+2026.03.19.23:03:49 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_dma_control_slave.v</b>
+2026.03.19.23:03:49 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_dma_to_memory.v</b>
+2026.03.19.23:03:49 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_dma_to_stream.v</b>
+2026.03.19.23:03:50 Info: Video_In_Edge_Detection_Subsystem: "<b>Video_In_Subsystem</b>" instantiated <b>Video_In_Edge_Detection_Subsystem</b> "<b>Video_In_Edge_Detection_Subsystem</b>"
+2026.03.19.23:03:50 Info: Video_In_RGB_Resampler: Starting Generation of Video RGB Resampler
+2026.03.19.23:03:50 Info: Video_In_RGB_Resampler: "<b>Video_In_Subsystem</b>" instantiated <b>altera_up_avalon_video_rgb_resampler</b> "<b>Video_In_RGB_Resampler</b>"
+2026.03.19.23:03:50 Info: Video_In_Scaler: Starting Generation of Video Scaler
+2026.03.19.23:03:50 Info: Video_In_Scaler: "<b>Video_In_Subsystem</b>" instantiated <b>altera_up_avalon_video_scaler</b> "<b>Video_In_Scaler</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_scaler_shrink.v</b>
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_scaler_multiply_width.v</b>
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_scaler_multiply_height.v</b>
+2026.03.19.23:03:50 Info: NiosVg_data_manager_translator: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_axi_translator</b> "<b>NiosVg_data_manager_translator</b>"
+2026.03.19.23:03:50 Info: JTAG_to_FPGA_Bridge_master_translator: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_master_translator</b> "<b>JTAG_to_FPGA_Bridge_master_translator</b>"
+2026.03.19.23:03:50 Info: ADC_adc_slave_translator: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_slave_translator</b> "<b>ADC_adc_slave_translator</b>"
+2026.03.19.23:03:50 Info: NiosVg_data_manager_agent: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_axi_master_ni</b> "<b>NiosVg_data_manager_agent</b>"
+2026.03.19.23:03:50 Info: JTAG_to_FPGA_Bridge_master_agent: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_master_agent</b> "<b>JTAG_to_FPGA_Bridge_master_agent</b>"
+2026.03.19.23:03:50 Info: ADC_adc_slave_agent: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_slave_agent</b> "<b>ADC_adc_slave_agent</b>"
+2026.03.19.23:03:50 Info: router: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router</b>"
+2026.03.19.23:03:50 Info: router_002: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_002</b>"
+2026.03.19.23:03:50 Info: router_003: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_003</b>"
+2026.03.19.23:03:50 Info: router_004: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_004</b>"
+2026.03.19.23:03:50 Info: router_006: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_006</b>"
+2026.03.19.23:03:50 Info: router_007: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_007</b>"
+2026.03.19.23:03:50 Info: router_014: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_014</b>"
+2026.03.19.23:03:50 Info: router_018: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_018</b>"
+2026.03.19.23:03:50 Info: router_021: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_021</b>"
+2026.03.19.23:03:50 Info: router_022: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_022</b>"
+2026.03.19.23:03:50 Info: router_035: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_035</b>"
+2026.03.19.23:03:50 Info: JTAG_to_FPGA_Bridge_master_limiter: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_traffic_limiter</b> "<b>JTAG_to_FPGA_Bridge_master_limiter</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_sc_fifo.v</b>
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_st_pipeline_base.v</b>
+2026.03.19.23:03:50 Info: ADC_adc_slave_burst_adapter: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_burst_adapter</b> "<b>ADC_adc_slave_burst_adapter</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_address_alignment.sv</b>
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_st_pipeline_stage.sv</b>
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_avalon_st_pipeline_base.v</b>
+2026.03.19.23:03:50 Info: cmd_demux: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>cmd_demux</b>"
+2026.03.19.23:03:50 Info: cmd_demux_002: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>cmd_demux_002</b>"
+2026.03.19.23:03:50 Info: cmd_demux_003: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>cmd_demux_003</b>"
+2026.03.19.23:03:50 Info: cmd_demux_004: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>cmd_demux_004</b>"
+2026.03.19.23:03:50 Info: cmd_demux_006: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>cmd_demux_006</b>"
+2026.03.19.23:03:50 Info: cmd_mux: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>cmd_mux</b>"
+2026.03.19.23:03:50 Info: cmd_mux_007: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>cmd_mux_007</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:50 Info: cmd_mux_011: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>cmd_mux_011</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:50 Info: cmd_mux_014: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>cmd_mux_014</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:50 Info: rsp_demux: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>rsp_demux</b>"
+2026.03.19.23:03:50 Info: rsp_demux_007: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>rsp_demux_007</b>"
+2026.03.19.23:03:50 Info: rsp_demux_011: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>rsp_demux_011</b>"
+2026.03.19.23:03:50 Info: rsp_demux_014: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>rsp_demux_014</b>"
+2026.03.19.23:03:50 Info: rsp_mux: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>rsp_mux</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:50 Info: rsp_mux_002: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>rsp_mux_002</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:50 Info: rsp_mux_003: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>rsp_mux_003</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:50 Info: rsp_mux_004: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>rsp_mux_004</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:50 Info: NiosVg_data_manager_wr_to_SDRAM_s1_cmd_width_adapter: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_width_adapter</b> "<b>NiosVg_data_manager_wr_to_SDRAM_s1_cmd_width_adapter</b>"
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_address_alignment.sv</b>
+2026.03.19.23:03:50 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_burst_uncompressor.sv</b>
+2026.03.19.23:03:51 Info: avalon_st_adapter: "<b>mm_interconnect_0</b>" instantiated <b>altera_avalon_st_adapter</b> "<b>avalon_st_adapter</b>"
+2026.03.19.23:03:52 Info: avalon_st_adapter_014: "<b>mm_interconnect_0</b>" instantiated <b>altera_avalon_st_adapter</b> "<b>avalon_st_adapter_014</b>"
+2026.03.19.23:03:52 Info: audio_pll: "<b>Audio_PLL</b>" instantiated <b>altera_pll</b> "<b>audio_pll</b>"
+2026.03.19.23:03:52 Info: reset_from_locked: "<b>Audio_PLL</b>" instantiated <b>altera_up_avalon_reset_from_locked_signal</b> "<b>reset_from_locked</b>"
+2026.03.19.23:03:52 Info: niosv_reset_controller: "<b>hart</b>" instantiated <b>intel_niosv_g_unit</b> "<b>niosv_reset_controller</b>"
+2026.03.19.23:03:52 Info: ASCII_to_Image: Starting Generation of ASCII to Image Stream Converter
+2026.03.19.23:03:52 Info: ASCII_to_Image: "<b>Char_Buf_Subsystem</b>" instantiated <b>altera_up_avalon_video_ascii_to_image</b> "<b>ASCII_to_Image</b>"
+2026.03.19.23:03:52 Info: Char_Buf_DMA: Starting Generation of Video DMA Controller
+2026.03.19.23:03:52 Info: Char_Buf_DMA: "<b>Char_Buf_Subsystem</b>" instantiated <b>altera_up_avalon_video_dma_controller</b> "<b>Char_Buf_DMA</b>"
+2026.03.19.23:03:52 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_dma_control_slave.v</b>
+2026.03.19.23:03:52 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_dma_to_memory.v</b>
+2026.03.19.23:03:52 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_dma_to_stream.v</b>
+2026.03.19.23:03:52 Info: Char_Buf_RGB_Resampler: Starting Generation of Video RGB Resampler
+2026.03.19.23:03:52 Info: Char_Buf_RGB_Resampler: "<b>Char_Buf_Subsystem</b>" instantiated <b>altera_up_avalon_video_rgb_resampler</b> "<b>Char_Buf_RGB_Resampler</b>"
+2026.03.19.23:03:52 Info: Char_Buf_Scaler: Starting Generation of Video Scaler
+2026.03.19.23:03:52 Info: Char_Buf_Scaler: "<b>Char_Buf_Subsystem</b>" instantiated <b>altera_up_avalon_video_scaler</b> "<b>Char_Buf_Scaler</b>"
+2026.03.19.23:03:52 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_scaler_shrink.v</b>
+2026.03.19.23:03:52 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_scaler_multiply_width.v</b>
+2026.03.19.23:03:52 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_up_video_scaler_multiply_height.v</b>
+2026.03.19.23:03:52 Info: Onchip_SRAM: Starting RTL generation for module 'Computer_System_VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM'
+2026.03.19.23:03:52 Info: Onchip_SRAM:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=Computer_System_VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0092_Onchip_SRAM_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0092_Onchip_SRAM_gen//Computer_System_VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:03:53 Info: Onchip_SRAM: Done RTL generation for module 'Computer_System_VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM'
+2026.03.19.23:03:53 Info: Onchip_SRAM: "<b>Char_Buf_Subsystem</b>" instantiated <b>altera_avalon_onchip_memory2</b> "<b>Onchip_SRAM</b>"
+2026.03.19.23:03:53 Info: Set_Black_Transparent: Starting Generation of Video Change Alpha Value IP Core
+2026.03.19.23:03:53 Info: Set_Black_Transparent: "<b>Char_Buf_Subsystem</b>" instantiated <b>altera_up_avalon_video_change_alpha</b> "<b>Set_Black_Transparent</b>"
+2026.03.19.23:03:56 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+2026.03.19.23:03:57 Info: mm_interconnect_0: "<b>Char_Buf_Subsystem</b>" instantiated <b>altera_mm_interconnect</b> "<b>mm_interconnect_0</b>"
+2026.03.19.23:03:57 Info: channel_adapter_0: "<b>avalon_st_adapter</b>" instantiated <b>channel_adapter</b> "<b>channel_adapter_0</b>"
+2026.03.19.23:03:57 Info: Chroma_Filter: Starting Generation of Chroma Resampler
+2026.03.19.23:03:57 Info: Chroma_Filter: "<b>Video_In_Edge_Detection_Subsystem</b>" instantiated <b>altera_up_avalon_video_chroma_resampler</b> "<b>Chroma_Filter</b>"
+2026.03.19.23:03:57 Info: Chroma_Upsampler: Starting Generation of Chroma Resampler
+2026.03.19.23:03:57 Info: Chroma_Upsampler: "<b>Video_In_Edge_Detection_Subsystem</b>" instantiated <b>altera_up_avalon_video_chroma_resampler</b> "<b>Chroma_Upsampler</b>"
+2026.03.19.23:03:57 Info: Edge_Detection: Starting Generation of Video In Edge Detection
+2026.03.19.23:03:57 Info: Edge_Detection: "<b>Video_In_Edge_Detection_Subsystem</b>" instantiated <b>altera_up_avalon_video_edge_detection</b> "<b>Edge_Detection</b>"
+2026.03.19.23:03:57 Info: Edge_Detection_Router_Controller: Starting RTL generation for module 'Computer_System_Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller'
+2026.03.19.23:03:57 Info: Edge_Detection_Router_Controller:   Generation command is [exec cmd /c {set LC_ALL=C&& C:/intelfpga_lite/24.1std/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/24.1std/quartus/bin64/perl/lib -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/24.1std/quartus/sopc_builder/bin -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/24.1std/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=Computer_System_Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller --dir=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0098_Edge_Detection_Router_Controller_gen/ --quartus_dir=C:/intelfpga_lite/24.1std/quartus --verilog --config=C:/Users/david/AppData/Local/Temp/alt0532_3077615664341966195.dir/0098_Edge_Detection_Router_Controller_gen//Computer_System_Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller_component_configuration.pl --do_build_sim=0}]
+2026.03.19.23:03:57 Info: Edge_Detection_Router_Controller: Done RTL generation for module 'Computer_System_Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller'
+2026.03.19.23:03:57 Info: Edge_Detection_Router_Controller: "<b>Video_In_Edge_Detection_Subsystem</b>" instantiated <b>altera_avalon_pio</b> "<b>Edge_Detection_Router_Controller</b>"
+2026.03.19.23:03:57 Info: Video_Stream_Merger: Starting Generation of Video In Stream Router
+2026.03.19.23:03:57 Info: Video_Stream_Merger: "<b>Video_In_Edge_Detection_Subsystem</b>" instantiated <b>altera_up_avalon_video_stream_router</b> "<b>Video_Stream_Merger</b>"
+2026.03.19.23:03:57 Info: Video_Stream_Splitter: Starting Generation of Video In Stream Router
+2026.03.19.23:03:57 Info: Video_Stream_Splitter: "<b>Video_In_Edge_Detection_Subsystem</b>" instantiated <b>altera_up_avalon_video_stream_router</b> "<b>Video_Stream_Splitter</b>"
+2026.03.19.23:03:57 Info: error_adapter_0: "<b>avalon_st_adapter</b>" instantiated <b>error_adapter</b> "<b>error_adapter_0</b>"
+2026.03.19.23:03:57 Info: error_adapter_0: "<b>avalon_st_adapter_014</b>" instantiated <b>error_adapter</b> "<b>error_adapter_0</b>"
+2026.03.19.23:03:57 Info: router: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router</b>"
+2026.03.19.23:03:58 Info: router_001: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_router</b> "<b>router_001</b>"
+2026.03.19.23:03:58 Info: cmd_demux: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_demultiplexer</b> "<b>cmd_demux</b>"
+2026.03.19.23:03:58 Info: cmd_mux: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>cmd_mux</b>"
+2026.03.19.23:03:58 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:58 Info: rsp_mux: "<b>mm_interconnect_0</b>" instantiated <b>altera_merlin_multiplexer</b> "<b>rsp_mux</b>"
+2026.03.19.23:03:58 Info: Reusing file <b>C:/Users/david/Downloads/Computer_Systems/DE1-SoC/out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/submodules/altera_merlin_arbitrator.sv</b>
+2026.03.19.23:03:58 Info: Computer_System: Done "<b>Computer_System</b>" with 119 modules, 291 files
+2026.03.19.23:03:58 Info: qsys-generate succeeded.
+2026.03.19.23:03:58 Info: Finished: <b>Create HDL design files for synthesis</b>

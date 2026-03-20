@@ -1,0 +1,7 @@
+\subsection{Interrupts from the IrDA* UART}
+In section \ref{sec:irda_port} we discussed the {\it Data} and {\it Control} registers associated
+with the IrDA UART, which are shown in Figure~\ref{fig:irda_port}. The {\it RE} and bit in the 
+{\it Control} register  is used to enable or disable processor interrupts
+associated with the receive FIFO. When enabled, interrupts are generated when the receive 
+FIFO is more than 75\% full ({\it RAVAIL} is greater than 95). Pending interrupts are indicated in the 
+{\it Control} register's {\it RI} bit, and can be cleared by reading data from the UART.

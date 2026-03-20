@@ -1,0 +1,19 @@
+\subsubsection{Using the Parallel Ports with Assembly Language Code and C Code}
+
+The {\it \systemNameFull} provides a convenient platform for experimenting with {\processor}
+assembly language code, or C code.  A simple example of such code is provided in the Appendix in
+Listings \ref{lst:getting_started_s} and \ref{lst:getting_started_C}. Each of these
+listing {\it includes} a file that specifies the memory-mapped addresses of all peripheral
+devices in the {\it \systemNameFull}. These include files, called {\it address\_map\_niosv.s}
+and {\it address\_map\_niosV.h}, are provided in Listings~\ref{lst:address_map_niosV_s}
+and~\ref{lst:address_map_niosv_h}. These include files are also used in other code
+samples described in this document.  
+
+The code in Listing \ref{lst:getting_started_s} and \ref{lst:getting_started_C}
+displays the values of the SW switches on the LED lights, and also
+shows a rotating pattern on the LEDs. This pattern is shifted in a loop, using a software delay
+to make the shifting slow enough to observe. The pattern can be changed to the values of the 
+SW switches by pressing a pushbutton KEY. When a KEY is pressed, the program waits in a
+loop until it is released and then continues to display the pattern.
+
+

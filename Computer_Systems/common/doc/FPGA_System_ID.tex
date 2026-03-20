@@ -1,0 +1,10 @@
+\subsection{System ID}
+
+The system ID module provides a unique value that identifies the \systemName~
+system.  The host computer connected to the \DEBoard~board can query the
+system ID module by performing a read operation through the JTAG port. The host computer can 
+then check the value of the returned identifier to confirm that the \systemName~has 
+been properly downloaded onto the \DEBoard~board.  This process allows debugging tools on the 
+host computer, such as the \productNameMed{}, to verify that the 
+\DEBoard~board contains the required computer system before attempting to execute code 
+that has been compiled for this system.

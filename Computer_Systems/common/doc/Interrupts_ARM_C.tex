@@ -1,0 +1,41 @@
+\subsection{Using Interrupts with C Code}
+
+An example of C code for the \systemName~that uses interrupts is
+shown in Figure \ref{lst:interrupt_example_C}. This code performs exactly the same
+operations as the code described in Listing~\ref{lst:interrupt_example_s}. 
+
+Before it call subroutines to configure the generic interrupt controller (GIC), timers,
+and pushbutton KEY port, the main program first initializes the IRQ mode stack pointer by
+calling the routine {\it set\_A9\_IRQ\_stack()}. The code for this routine uses in-line
+assembly language instructions, as shown in Part $b$ of the listing. This step is necessary 
+because the C compiler generates code to set only the supervisor mode stack, which is used 
+for running the main program, but the compiler does not produce code for setting
+the IRQ mode stack.  To enable IRQ interrupts in the A9 processor the main program uses
+the in-line assembly code shown in the subroutine called {\it enable\_A9\_interrupts()}.
+
+The exception handlers for the main program in Listing~\ref{lst:interrupt_example_C} 
+are given in Listing~\ref{lst:exception_handler_C}. These routines have unique names that
+are meaningful to the C compiler and linker tools, and they are declared with the special
+type of {\bf \_\_attribute\_\_} called {\bf interrupt}. These mechanisms cause the C
+compiler and linker to use the addresses of these routines as the contents of the exception
+vector table.
+
+The function with the name {\it \_\_cs3\_isr\_irq} is the IRQ exception handler. As
+discussed for the assembly language code in Listing~\ref{lst:exception_handler_s} this 
+routine first reads from the {\it interrupt acknowledge} register in the GIC to determine 
+the interrupt ID of the peripheral that caused the interrupt, and then 
+calls the corresponding interrupt service routine for either the HPS timer, FPGA interval timer,
+or FPGA KEY parallel port.  These interrupt service routines are shown in 
+Listings~\ref{lst:hps_timer_isr_C} to \ref{lst:interval_timer_isr_C}.
+
+Listing~\ref{lst:exception_handler_C} also shows handlers for exceptions that correspond to 
+the various types of error conditions and the FIQ interrupt. These handlers are just loops
+that are meant to serve as place-holders for code that would handle the corresponding
+exceptions. 
+
+The source code files shown in Listing~\ref{lst:interrupt_example_s} to
+Listing~\ref{lst:pushbutton_isr_C} are distributed as part of the  
+\productNameMed{}. The files can be found under the heading {\it sample programs}, 
+and are identified by the name {\it Interrupt Example}.
+
+

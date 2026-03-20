@@ -1,0 +1,21 @@
+\subsubsection{7-Segment Displays Parallel Port}
+
+There are two parallel ports connected to the 7-segment displays on the \DEBoard~board, each of
+which comprises a 32-bit write-only {\it Data} register. As indicated in 
+Figure \ref{fig:hex_segment_port}, the register at address {\sf 0xFF200020} 
+drives digits {\it HEX3} to {\it HEX0}, and the register at 
+address {\sf 0xFF200030} drives digits {\it HEX5} and
+{\it HEX4}.  Data can be written into these two registers, and read back, by using word operations. 
+This data directly controls the segments of each display, according to
+the bit locations given in Figure \ref{fig:hex_segment_port}. The locations of segments 
+6 to 0 in each seven-segment display on the \DEBoard~board is illustrated on the right side of the
+figure.
+
+\begin{figure}[h!]
+   \begin{center}
+       \includegraphics{../../../common/figs/FPGA_PP_7_Segs_6.pdf}
+   \end{center}
+   \caption{Bit locations for the 7-segment displays parallel ports.}
+	\label{fig:hex_segment_port}
+\end{figure}
+

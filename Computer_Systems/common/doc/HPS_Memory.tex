@@ -1,0 +1,10 @@
+\subsection{Memory}
+\label{sec:ddr3}
+The HPS includes a memory port that connects the ARM MPCORE* to a 1 GB DDR3 memory.
+This memory is normally used as the storage location of programs and data used by the ARM
+processors. The memory is organized as 256M {\sf x} 32-bits, and is accessible using word
+accesses (32 bits), halfwords, and bytes. The DDR3 memory is mapped to the address space
+{\sf 0x00000000} to {\sf 0x3FFFFFFF}. There is also a 64 KB on-chip memory available inside 
+each ARM A9 processor. This small memory is organized as 16K {\sf x} 32-bits, and is mapped 
+to the address space {\sf 0xFFFF0000} to {\sf 0xFFFFFFFF}.
+

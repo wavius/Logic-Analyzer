@@ -1,0 +1,140 @@
+\subsubsection{Using the Parallel Ports with Assembly Language Code and C Code}
+
+The \systemName~provides a convenient platform for experimenting with \processor~
+assembly language code, or C code.  A simple example of such code is provided in 
+Figures \ref{fig:getting_started_s} and \ref{fig:getting_started_C}. Both programs
+perform the same operations, and illustrate the use of parallel ports by using either 
+assembly language or C code.
+
+The code in the figures displays the values of the SW switches on the red lights {\it LEDR}.
+It also displays a rotating pattern on 7-segment displays {\it HEX3}, $\ldots$, {\it HEX0}. 
+This pattern is rotated to the left by using a \processor~{\it rotate} instruction, and a delay loop 
+is used to make the shifting slow enough to observe. The pattern on the HEX displays
+can be changed to the values of the SW switches by pressing any of 
+pushbuttons {\it KEY}$_{3-0}$.
+When a pushbutton key is pressed, the program waits in a loop until the key is released.
+
+The source code files shown in Figures \ref{fig:getting_started_s} and \ref{fig:getting_started_C}
+are distributed as part of the  
+\productNameMed{}. The files can be found under the heading {\it sample programs}, 
+and are identified by the name {\it Getting Started}.
+
+\newpage
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}[t]{12.5 cm}
+\begin{tabbing}
+/\=*****\=*********************************\=****************************************\=\kill
+/********************************************************************************\\
+\>* This program demonstrates the use of parallel ports in the \systemName:\\
+\>* \>1. displays the SW switch values on the red LEDR\\
+\>* \>2. displays a rotating pattern on the HEX displays\\
+\>* \>3. if any KEY is pressed, the SW switches are used as the rotating pattern\\
+\=\kill
+\>********************************************************************************/\\
+ZZZZZZZZ\={\bf movia}ZZZ\=r16, 0xFF200000ZZZZZZZZ\=/* RED\_LED base address */\kill
+\>.{\bf text}	\>\>/* executable code follows */\\
+\>.{\bf global} \>\_start\\
+\_start:\\
+\>/* initialize base addresses of parallel ports */\\
+\>{\bf movia} \>r15, 0xFF200040 \>/* SW slider switch base address */\\
+\>{\bf movia} \>r16, 0xFF200000 \>/* red LED base address */\\
+\>{\bf movia} \>r17, 0xFF200050 \>/* pushbutton KEY base address */\\
+\>{\bf movia} \>r20, 0xFF200020 \>/* HEX3\_HEX0 base address */\\
+\>{\bf movia} \>r19, HEX\_bits\\
+\>{\bf ldwio} \>r6, 0(r19) \>/* load pattern for HEX displays */\\
+\rule{6.0in}{0in}~\\
+DO\_DISPLAY:\\
+\>{\bf ldwio} \>r4, 0(r15) \>/* load input from slider switches */\\
+\>{\bf stwio} \>r4, 0(r16) \>/* write to red LEDs */\\
+\>{\bf ldwio} \>r5, 0(r17) \>/* load input from pushbuttons */\\
+\>{\bf beq} \>r5, r0, NO\_BUTTON\\
+\>{\bf mov} \>r6, r4 \>/* copy SW switch values onto HEX displays */\\
+WAIT:\\
+\>{\bf ldwio} \>r5, 0(r17) \>/* load input from pushbuttons */\\
+\>{\bf bne} \>r5, r0, WAIT \>/* wait for button release */\\
+NO\_BUTTON:\\
+\>{\bf stwio} \>r6, 0(r20) \>/* store to HEX3 ... HEX0 */\\
+\>{\bf roli} \>r6, r6, 1 \>/* rotate the displayed pattern */\\
+\>{\bf movia} \>r7, 500000 \>/* delay counter */\\
+DELAY:	\\
+\>{\bf subi} \>r7, r7, 1\\
+\>{\bf bne} \>r7, r0, DELAY	\\
+\>{\bf br} \>DO\_DISPLAY\\
+~\\
+\>.{\bf data}	\>\>/* data follows */\\
+HEX\_bits:\\
+\>.{\bf word} \>0x0000000F\\
+\>.{\bf end}\\
+\end{tabbing}
+\end{minipage}
+\end{center}
+	\vspace{-0.33in}\caption{An example of assembly language code that uses parallel ports.}
+   \label{fig:getting_started_s}
+\end{figure}
+\pagebreak
+\clearpage
+\newpage
+
+\newpage
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}[t]{12.5 cm}
+\begin{tabbing}
+/\=*****\=*********************************\=****************************************\=\kill
+/********************************************************************************\\
+\>* This program demonstrates the use of parallel ports in the \systemName\\
+\>* It performs the following: \\
+\>* \>1. displays the SW switch values on the red lights LEDR\\
+\>* \>2. displays a rotating pattern on the HEX displays\\
+\>* \>3. if any KEY is pressed, the SW switches are used as the rotating pattern\\
+\=\kill
+\>********************************************************************************/\\
+{\bf int} main({\bf void})\\
+\{\\
+ZZ\=/\=* \=\kill
+\>/* Declare volatile pointers to I/O registers (volatile means that the locations will
+not be cached,\\
+\>\>* even in registers) */\\
+ZZ\={\bf volatile} {\bf int} * HEX3\_HEX0\_ptr	Z\== ({\bf int} *) 0xFF200000;ZZZ\=\kill
+\>{\bf volatile} {\bf int} * LED\_ptr \>= ({\bf int} *) 0xFF200000; \>// red LED address\\
+\>{\bf volatile} {\bf int} * HEX3\_HEX0\_ptr	\>= ({\bf int} *) 0xFF200020; \>// HEX3\_HEX0 address\\
+\>{\bf volatile} {\bf int} * SW\_switch\_ptr	\>= ({\bf int} *) 0xFF200040; \>// SW slider switch address\\
+\>{\bf volatile} {\bf int} * KEY\_ptr \>= ({\bf int} *) 0xFF200050;	\>// pushbutton KEY address\\
+\rule{6.0in}{0in}~\\
+ZZ\=ZZZ\=ZZZ\=HEX\_bits = HEX\_bits z 0xFFFFFFFF;ZZ\=// initial pattern for HEX displays\kill
+\>{\bf int} HEX\_bits = 0x0000000F; \>\>\>// initial pattern for HEX displays\\
+\>{\bf int} SW\_value;\\
+\>{\bf volatile int} delay\_count;\>\>\>// volatile so C compiler does not remove loop\\
+~\\
+\>{\bf while} (1)\\
+\>\{\\
+\>\>SW\_value = *(SW\_switch\_ptr); \>\>// read the SW slider switch values\\
+\>\>*(LED\_ptr) = SW\_value; \>\>// light up the red LEDs\\
+~\\
+\>\>{\bf if} (*KEY\_ptr != 0) \>\>// check if any KEY was pressed\\
+\>\>\{\\
+\>\>\>HEX\_bits = SW\_value; \>// set pattern using SW values\\
+\>\>\>{\bf while} (*KEY\_ptr != 0); \>// wait for pushbutton KEY release\\
+\>\>\}\\
+\>\>*(HEX3\_HEX0\_ptr) = HEX\_bits; \>\>// display pattern on HEX3 ... HEX0\\
+~\\
+\>\>/* rotate the pattern shown on the HEX displays */\\
+\>\>{\bf if} (HEX\_bits \& 0x80000000)\\
+\>\>\>HEX\_bits = (HEX\_bits $<<$ 1) $\mid$ 1;\\
+\>\>{\bf else}\\
+\>\>\>HEX\_bits = HEX\_bits $<<$ 1;\\
+~\\
+\>\>{\bf for} (delay\_count = 100000; delay\_count != 0; $-\,-$delay\_count);\hspace{.75
+cm}// delay loop\\
+\>\} \\
+\}\\
+\end{tabbing}
+\end{minipage}
+\end{center}
+	\vspace{-0.33in}\caption{An example of C code that uses parallel ports.}
+   \label{fig:getting_started_C}
+\end{figure}
+\pagebreak
+\clearpage
+\newpage

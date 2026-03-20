@@ -1,0 +1,62 @@
+\subsection{USB Port}
+The \systemName~includes a USB port, which can be used either as a host for a USB peripheral
+device (such as a mouse or keyboard) or as a device (when connected to host, such as a PC). The USB 
+port is controlled by the USB Controller IP Core, which provideds a register-mapped interface, as 
+well as high-level C functions though the {\it Hardware Abstraction Layer (HAL)}. Using the HAL is 
+the reccomended method to send and recieve data though the USB port. To use the HAL, the directive 
+{\it \#include "altera\_up\_avalon\_usb\_high\_level\_driver.h"} is needed.
+
+To use the USB port, refer to the code example in Figure~\ref{fig:usb_mouse}, which can be used to 
+read input data from a USB mouse. Included with the HAL is a basic USB mouse driver, which can be 
+accessed using the directive {\it \#include "altera\_up\_avalon\_usb\_mouse\_driver.h"}. In 
+Figure~\ref{fig:usb_mouse}, the variable {\it alt\_up\_usb\_dev * usb\_dev} points to the USB device,
+and is initialized by the function {\it alt\_up\_usb\_open\_dev}. The then {\it alt\_up\_usb\_setup}
+and {\it alt\_up\_usb\_set\_config} functions are called to intitalize the USB chip and device. To 
+setup the USB device as a mouse, the function  {\it alt\_up\_usb\_mouse\_setup} is then called.
+
+Once the USB mouse has been setup, data can be acquired using the 
+{\it alt\_up\_usb\_retrieve\_mouse\_packet} function. It stores the change in x-coordinate, change
+in y-coordinate, and button status into an {\it alt\_up\_usb\_mouse\_packet} data structure. The packet 
+structure is composed of three byte-sized variables: {\it x\_movement, y\_movement} and {\it buttons}.
+The {\it x\_movement} and {\it y\_movement} variables store the change in mouse position in each axis.
+The left, right, and center mouse buttons are mapped to bits 0, 1 and 2 respectively of the packet's 
+{\it buttons} variable, which holds the state of the three buttons.
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}[t]{12.5 cm}
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#include "altera_up_avalon_usb_high_level_driver.h"
+#include "altera_up_avalon_usb_mouse_driver.h"
+int main(){
+	alt_up_usb_dev * usb_dev = alt_up_usb_open_dev ("/dev/USB/");
+	int port = -1;
+	int addr = -1;
+	int hid = -1;
+	int x = 0;
+	int y = 0;
+	int l_button = 0;
+	int m_button = 0;
+	int r_button = 0;
+	alt_up_usb_mouse_packet packet;
+
+	hid = alt_up_usb_setup (usb_dev, &addr, &port);
+	if (port != -1 && hid == 0x0209) {
+		alt_up_usb_set_config (usb_dev, addr, port, 1);
+		alt_up_usb_mouse_setup (usb_dev, addr, port);
+		while (1) {
+			alt_up_usb_retrieve_mouse_packet (usb_dev, &packet);
+			x += packet.x_movement;
+			y += packet.y_movement;
+			l_button = packet.buttons && 0x01;
+			r_button = packet.buttons && 0x02;
+			m_button = packet.buttons && 0x04;
+			// Process the data
+			. . .
+\end{lstlisting}
+\end{minipage}
+\end{center}
+	\vspace{-0.33in}\caption{An example of code for a using a USB mouse.}
+   \label{fig:usb_mouse}
+\end{figure}

@@ -1,0 +1,32 @@
+\section{Exceptions and Interrupts}
+\label{sec:exceptions}
+
+The A9 processor supports eight types of exceptions, including the {\it reset} exception and the
+{\it interrupt request} (IRQ) exception, as well a number of exceptions related to 
+error conditions. All of the exception types are described in the document 
+{\it Introduction to the ARM Cortex-A9 Processor}, which is provided in 
+the \texttt{Computer Organization System Design} section of the 
+\href{https://www.fpgacademy.org/tutorials.html} {FPGAcademy.org} website.
+Exception processing uses a table in memory, called the {\it vector table}. This 
+table comprises eight words in memory and has one entry for each type of exception. The 
+contents of the vector table have to be set up by software, which typically places a 
+branch instruction in each word of the table, where the branch target is the desired 
+exception service routine. When an exception occurs, the ARM processor stops the 
+program that is currently running, and then fetches the instruction 
+stored at the corresponding vector table entry.  The vector table usually starts at 
+the address {\sf 0x00000000} in memory. The first entry in the table corresponds to the 
+reset vector, and the IRQ vector uses the seventh entry in the table, at the 
+address {\sf 0x00000018}.
+
+The IRQ exception allows I/O peripherals to generate interrupts for the A9 processor.
+All interrupt signals from the peripherals are connected to a module in the processor
+called the {\it Generic Interrupt Controller} (GIC). The GIC allows individual interrupts
+for each peripheral to be either enabled or disabled. When an enabled interrupt happens, the 
+GIC causes an IRQ exception in the A9 processor. Since the same vector table entry is used for 
+all interrupts, the software for the interrupt service routine must determine the source 
+of the interrupt by querying the GIC. Each peripheral is identified in the GIC by an
+interrupt identification (ID) number.  Table \ref{tab:irq}
+gives the assignment of interrupt IDs for each of the I/O peripherals in the \systemName.
+The rest of this section describes the interrupt behavior associated with the 
+timers and parallel ports.
+

@@ -1,0 +1,13 @@
+\subsection{Interrupts from the HPS Timers}
+
+Figure~\ref{fig:HPS_timer}, in Section~\ref{sec:HPS_timers}, shows five registers that
+are associated with each HPS timer. As we said in Section \ref{sec:HPS_timers}, 
+when the timer reaches a count value of zero, bit~{\it F} in the {\it End-of-Interrupt} register 
+is set to 1. The value of the {\it F}~bit is also reflected in the {\it S}~bit in the 
+{\it Interrupt status} register.  It is possible to generate an A9 interrupt when the 
+{\it F}~bit becomes 1, by using the {\it I}~bit of the {\it Control} register.  
+Setting bit {\it I} to 0 {\it unmasks} the interrupt signal, and causes the timer to send an
+interrupt signal to the GIC whenever the {\it F}~bit is 1.  After an interrupt occurs, it can 
+be cleared by reading the {\it End-of-Interrupt} register.
+
+

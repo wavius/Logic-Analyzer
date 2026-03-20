@@ -1,0 +1,9 @@
+\subsubsection{Using the Video-out Port with C code}
+
+A fragment of C code that uses the pixel and character buffers is shown in 
+Listing \ref{lst:video_C}.  The first {\bf for} loop in the figure draws a rectangle in 
+the pixel buffer using the color {\it pixel\_color}. The rectangle is drawn using the
+coordinates $x_1, y_1$ and $x_2, y_2$.  The second {\bf while} loop in the 
+figure writes a null-terminated character
+string pointed to by the variable {\it text\_ptr} into the character buffer at the
+coordinates {\it x}, {\it y}.
