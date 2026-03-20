@@ -1,5 +1,5 @@
 module logic_analyzer (
-    input  logic        CLOCK_50,
+    input  logic        clk,
     input  logic        nreset,
 
     // Avalon-MM Slave Interface
@@ -21,9 +21,9 @@ module logic_analyzer (
         .BURST_PATTERN  (8'b0110_1010),
         .FREQ_BURST     (100_000),
         .FREQ_PULSE     (1_000_000),
-        .FREQ_SYS_CLOCK (50_000_000)
+        .FREQ_SYS_CLOCK (100_000_000)
     ) SG0 (
-        .clock_50m (CLOCK_50),
+        .clk (clk),
         .nreset    (nreset), 
         .heartbeat (OUT_CH[0]), 
         .burst     (OUT_CH[1]), 
@@ -32,6 +32,8 @@ module logic_analyzer (
         .logic0    (OUT_CH[4])   
     );
 
+    assign OUT_CH[15:5] = 0; 
+
     // Unused output channels
     assign OUT_CH[15:5] = 11'b0;
 
@@ -39,7 +41,7 @@ module logic_analyzer (
     signal_capture #(
         .BUFFER_SIZE(4096)
     ) SC0 (
-        .clock_50M (CLOCK_50),
+        .clk (clk),
         .nreset    (nreset),
         
         .address   (address),
@@ -48,7 +50,7 @@ module logic_analyzer (
         .read      (read),
         .readdata  (readdata),
 
-        .channel_in({12'b0, IN_CH[3], IN_CH[2], IN_CH[1], IN_CH[0]})
+        .channel_in(IN_CH)
     );
 
 endmodule

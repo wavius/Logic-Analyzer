@@ -1,10 +1,10 @@
-Analysis & Synthesis Status : Successful - Fri Mar 20 00:52:13 2026
+Analysis & Synthesis Status : Successful - Fri Mar 20 05:23:07 2026
 Quartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 Revision Name : DE1_SoC_NiosVg_Computer
 Top-level Entity Name : DE1_SoC_NiosVg_Computer
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A
-Total registers : 18373
+Total registers : 18418
 Total pins : 240
 Total virtual pins : 0
 Total block memory bits : 2,338,904

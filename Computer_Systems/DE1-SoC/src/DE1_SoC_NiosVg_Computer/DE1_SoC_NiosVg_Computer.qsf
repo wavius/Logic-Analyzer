@@ -968,7 +968,6 @@ set_instance_assignment -name FAST_INPUT_REGISTER ON -to *
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to *
 
 set_global_assignment -name LAST_QUARTUS_VERSION "24.1std.0 Lite Edition"
-set_global_assignment -name QIP_FILE ../../out/DE1_SoC_NiosVg_Computer/Computer_System/synthesis/Computer_System.qip
 set_global_assignment -name SYSTEMVERILOG_FILE ../Logic_Analyzer/signal_generator.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../Logic_Analyzer/signal_capture.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../Logic_Analyzer/logic_analyzer.sv
@@ -976,5 +975,4 @@ set_global_assignment -name QIP_FILE Computer_System/synthesis/Computer_System.q
 set_global_assignment -name VERILOG_FILE DE1_SoC_NiosVg_Computer.v
 set_global_assignment -name SDC_FILE DE1_SoC_NiosVg_Computer.sdc
 set_global_assignment -name TCL_SCRIPT_FILE ../../scripts/gen_niosvg_computer_system.tcl
-set_global_assignment -name SOURCE_FILE db/DE1_SoC_NiosVg_Computer.cmp.rdb
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
