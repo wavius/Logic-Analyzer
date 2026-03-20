@@ -9,6 +9,10 @@
 #define SCREEN_H 240
 #define FRAME_BUF_CTRL_BASE 0xFF203020
 
+// ----- global variables ----- //
+int top_bar_height = 15;
+int left_bar_width = 30;
+
 /********************************
  *  Function Declarations
  ********************************/
@@ -31,6 +35,43 @@ struct frame_buffer_controller {
     volatile uint32_t resolution;
     volatile uint32_t statusReg;
 };
+
+typedef struct {
+    uint16_t ch0;
+    uint16_t ch1;
+    uint16_t ch2;
+    uint16_t ch3;
+    uint16_t ch4;
+    uint16_t ch5;
+    uint16_t ch6;
+    uint16_t ch7;
+    uint16_t ch8;
+    uint16_t ch9;
+    uint16_t ch10;
+    uint16_t ch11;
+    uint16_t ch12;
+    uint16_t ch13;
+    uint16_t ch14;
+    uint16_t ch15;
+} Channel_Colors;
+
+const Channel_Colors colors = {
+    .ch0 = 0x5D6B,
+    .ch1 = 0x8E24,
+    .ch2 = 0x8E24,
+    .ch3 = 0xC7C0,
+    .ch4 = 0xE7E0,
+    .ch5 = 0xF580,
+    .ch6 = 0xE3A0,
+    .ch7 = 0xD820,
+    .ch8 = 0x72A9,
+    .ch9 = 0x5249,
+    .ch10 = 0x3A89,
+    .ch11 = 0x44CB,
+    .ch12 = 0x5CFE,
+    .ch13 = 0x65FF,
+    .ch14 = 0x65D7,
+    .ch15 = 0x61ED};
 
 /********************************
  *  Global Variables
@@ -55,39 +96,51 @@ void clear_screen();
  ********************************/
 int main(void) {
     vga_init();  // must always be done first
+    const int lanes = 5;
+
     // ----- Fake sample data (0 = low, 1 = high) ----- //
     static uint8_t ch0[64] = {
         0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0,
         0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0,
         0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0,
         1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0};
+
     static uint8_t ch1[64] = {
         0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
         0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
         1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
         1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0};
+
     static uint8_t ch2[64] = {
         0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
         0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1,
         1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0,
         1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0};
+
     static uint8_t ch3[64] = {
         0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1,
         0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0,
         0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0,
         1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0};
+
     while (1) {
-        clear_screen();
-        draw_logic_ui_frame();
+        clear_screen();  // should update this erase only whats needed (unless memset = O(1)?)
+
+        draw_logic_ui_frame(lanes);  // needs modifications
+
         // Waveform area starts after label column
         int x0 = 54;
         int w = 320 - x0 - 2;
-        draw_digital_waveform(ch0, 64, x0, 20, w, 50, 0xFFFF);
-        draw_digital_waveform(ch1, 64, x0, 70, w, 50, 0xF800);
-        draw_digital_waveform(ch2, 64, x0, 120, w, 50, 0x07E0);
-        draw_digital_waveform(ch3, 64, x0, 170, w, 50, 0x001F);
+
+        draw_digital_waveform(ch0, 64, x0, 20, w, 50, colors.ch0);
+        draw_digital_waveform(ch1, 64, x0, 70, w, 50, colors.ch1);
+        draw_digital_waveform(ch2, 64, x0, 120, w, 50, colors.ch2);
+        draw_digital_waveform(ch3, 64, x0, 170, w, 50, colors.ch3);
+        draw_digital_waveform(ch3, 64, x0, 170, w, 50, colors.ch4);  // try drawing 5 chanels
+
         wait_for_vsync();
     }
+
     return 0;
 }
 
@@ -146,16 +199,21 @@ void fill_rect(int x, int y, int w, int h, uint16_t color) {
 }
 
 // ----- Logic analyzer UI ----- //
-void draw_logic_ui_frame() {
-    fill_rect(0, 0, SCREEN_W, 20, 0x39E7);  // grey
+void draw_logic_ui_frame(int lanes) {
+    // Top bar
+    fill_rect(0, 0, SCREEN_W, top_bar_height, 0x39E7);  // grey
 
-    fill_rect(0, 20, 52, SCREEN_H - 20, 0x2104);  // darker grey
+    // Left label column
+    fill_rect(0, top_bar_height, left_bar_width, SCREEN_H - top_bar_height, 0x2104);  // darker grey
 
-    for (int i = 0; i < 4; i++) {
-        int y = 20 + i * 50;
+    // Channel separators (4 lanes)
+    int spacing = calculate_channel_height(lanes, SCREEN_H - top_bar_height);
+    for (int i = 0; i < (lanes - 1); i++) {
+        int y = spacing + i * spacing;
         draw_hline(0, SCREEN_W - 1, y, 0xFFFF);  // white line
     }
 
+    // Vertical grid lines
     for (int x = 60; x < SCREEN_W; x += 40)
         draw_vline(x, 20, SCREEN_H - 1, 0x4208);  // faint grey
 }
