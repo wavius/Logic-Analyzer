@@ -1,6 +1,7 @@
 #ifndef DRAW_SCREEN_H
 #define DRAW_SCREEN_H
 
+#include <stdbool.h>
 #include <stdint.h>
 
 // ----- Structs ----- //
@@ -9,7 +10,7 @@ typedef struct {
     const uint8_t* samples;
     int count;
     // uint16_t color;  // bring back this feature later if I think of a better way to include it
-    int enabled;
+    bool enabled;
     char label[5];
 } Channel;
 

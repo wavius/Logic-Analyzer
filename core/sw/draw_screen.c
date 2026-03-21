@@ -6,17 +6,19 @@
 #define SCREEN_W 320
 #define SCREEN_H 240
 
+// HARD CODED CHANNEL VALUE
+#define CHANNEL_LIMIT 16
 /********************************
  *  Structs + global variables
  ********************************/
 //-- screen sizing variables --//
 static const int top_bar_height = 15;
-static const int left_bar_width = 25;
+static const int left_bar_width = 32;  // cause there are 8 major vertical grid ticks. (320 - 32)/8 = 36
 static const int bottom_bar_height = 7;
 static const int channel_area_height = SCREEN_H - (top_bar_height + bottom_bar_height);
 
 //-- waveform / grid layout variables --//
-static const int grid_spacing_x = 40;
+static const int grid_spacing_x = 36;
 static const int waveform_margin_divisor = 4;
 static const int waveform_min_margin = 1;
 
@@ -94,7 +96,7 @@ static void draw_text() {
  ********************************/
 // draws the main static part of the background
 void draw_logic_ui_frame(const int lanes) {
-    if (lanes <= 0)
+    if (lanes <= 0 || (lanes > CHANNEL_LIMIT))
         return;
 
     // Top bar
@@ -166,7 +168,7 @@ void draw_digital_waveform(const uint8_t* samples, const int count, int x_start,
 
 // draw signals
 void draw_signals(const Channel* channels, const int lanes) {
-    if (channels == 0 || lanes <= 0)
+    if (channels == 0 || lanes <= 0 || lanes > CHANNEL_LIMIT)
         return;
 
     int lane_height = calculate_channel_height(lanes, channel_area_height);
