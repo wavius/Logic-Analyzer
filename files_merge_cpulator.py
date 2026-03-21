@@ -1,7 +1,8 @@
 import os
 import re
 
-FILES_TO_MERGE = ['core/sw/draw_screen.h', 'core/sw/vga_driver.h', 'core/sw/vga_driver.c', 'core/sw/draw_screen.c', 'core/sw/main.c']
+FILES_TO_MERGE = ['core/sw/visualizer_logic.h', 'core/sw/visualizer_logic.c', 'core/sw/draw_screen.h', 'core/sw/vga_driver.h',  
+                  'core/sw/vga_driver.c', 'core/sw/draw_screen.c', 'core/sw/main.c']
 OUTPUT_FILE = 'combined_cpulator.c'
 
 def merge_files():

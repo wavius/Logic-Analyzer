@@ -2,6 +2,7 @@
 
 #include "draw_screen.h"
 #include "vga_driver.h"
+#include "visualizer_logic.h"
 
 /********************************
  *  Structs + global variables
@@ -60,11 +61,21 @@ int main(void) {
         {0, 0, false, "CH14"},
         {0, 0, false, "CH15"}};
 
+    VisualizerState view;
+
+    visualizer_init(&view, 1000000, 4096, 288, 8);
+    visualizer_set_zoom(&view, 256);
+
+    // TEMP manual scroll test
+    view.start_sample = 128;
+
     while (1) {
         clear_screen();
         draw_logic_ui_frame(lanes);
-        draw_signals(channels, lanes);
+        // draw_signals(channels, lanes);
+        draw_logic_view(&view, channels, lanes);
         wait_for_vsync();
+        view.start_sample++;
     }
 
     return 0;

@@ -169,7 +169,7 @@ void draw_digital_waveform(const uint8_t* samples, const int count, int x_start,
     }
 }
 
-// draw signals
+// draw signals (no zooming and scrolling logic, just prints start of given sample buffer)
 void draw_signals(const Channel* channels, const int lanes) {
     if (channels == 0 || lanes <= 0 || lanes > CHANNEL_LIMIT)
         return;
@@ -188,6 +188,36 @@ void draw_signals(const Channel* channels, const int lanes) {
     }
 }
 
-// handle zooming
-void draw_logic_view(const VisualizerState* state, const uint8_t* samples) {
+// handle zooming logic by determining the sample window for each enabled channel and prints it out using draw_digital_waveform(...)
+void draw_logic_view(const VisualizerState* state, const Channel* channels, int lanes) {
+    if (state == 0 || channels == 0 || lanes <= 0)
+        return;
+
+    uint32_t start = state->start_sample;
+    uint32_t end = visualizer_get_end_sample(state);
+
+    if (end <= start)
+        return;
+
+    uint32_t visible_count = end - start;
+
+    int lane_height = calculate_channel_height(lanes, channel_area_height);
+    int x_start = left_bar_width;
+    int waveform_width = SCREEN_W - left_bar_width;
+
+    for (int i = 0; i < lanes; i++) {
+        if (!channels[i].enabled)
+            continue;
+
+        int y_top = top_bar_height + i * lane_height;
+
+        draw_digital_waveform(
+            &channels[i].samples[start],  // shifted pointer
+            visible_count,
+            x_start,
+            y_top,
+            waveform_width,
+            lane_height,
+            channel_colors[i]);
+    }
 }
