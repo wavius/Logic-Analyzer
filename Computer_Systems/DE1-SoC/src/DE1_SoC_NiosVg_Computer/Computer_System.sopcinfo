@@ -5,11 +5,11 @@
  version="1.0"
  fabric="QSYS">
  <!-- Format version 24.1 1077 (Future versions may contain additional information.) -->
- <!-- 2026.03.20.05:10:35 -->
+ <!-- 2026.03.21.02:39:05 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1773997835</value>
+  <value>1774075145</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -1514,7 +1514,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1773997835</value>
+   <value>1774075145</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -10755,6 +10755,14 @@ parameters are a RESULT of the module parameters. -->
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
+    <moduleName>Logic_Analyzer_0</moduleName>
+    <slaveName>avalon_slave_0</slaveName>
+    <name>Logic_Analyzer_0.avalon_slave_0</name>
+    <baseAddress>4280307712</baseAddress>
+    <span>32</span>
+   </memoryBlock>
+   <memoryBlock>
+    <isBridge>false</isBridge>
     <moduleName>VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA</moduleName>
     <slaveName>avalon_dma_control_slave</slaveName>
     <name>VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave</name>
@@ -12465,7 +12473,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="dataSlaveMapParam">
    <type>java.lang.String</type>
-   <value><![CDATA[<address-map><slave name='SDRAM.s1' start='0x0' end='0x4000000' type='sdram_64mb.s1' /><slave name='Logic_Analyzer_0.avalon_slave_0' start='0x4000000' end='0x4000020' type='Logic_Analyzer.avalon_slave_0' /><slave name='Onchip_SRAM.s1' start='0x8000000' end='0x8040000' type='altera_avalon_onchip_memory2.s1' /><slave name='VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1' start='0x9000000' end='0x9002000' type='altera_avalon_onchip_memory2.s1' /><slave name='NiosVg.dm_agent' start='0xA000000' end='0xA010000' type='intel_niosv_g.dm_agent' /><slave name='LEDs.s1' start='0xFF200000' end='0xFF200010' type='altera_avalon_pio.s1' /><slave name='HEX3_HEX0.s1' start='0xFF200020' end='0xFF200030' type='altera_avalon_pio.s1' /><slave name='HEX5_HEX4.s1' start='0xFF200030' end='0xFF200040' type='altera_avalon_pio.s1' /><slave name='Slider_Switches.s1' start='0xFF200040' end='0xFF200050' type='altera_avalon_pio.s1' /><slave name='Pushbuttons.s1' start='0xFF200050' end='0xFF200060' type='altera_avalon_pio.s1' /><slave name='Expansion_JP1.s1' start='0xFF200060' end='0xFF200070' type='altera_avalon_pio.s1' /><slave name='Expansion_JP2.s1' start='0xFF200070' end='0xFF200080' type='altera_avalon_pio.s1' /><slave name='PS2_Port.avalon_ps2_slave' start='0xFF200100' end='0xFF200108' type='altera_up_avalon_ps2.avalon_ps2_slave' /><slave name='PS2_Port_Dual.avalon_ps2_slave' start='0xFF200108' end='0xFF200110' type='altera_up_avalon_ps2.avalon_ps2_slave' /><slave name='JTAG_UART_NiosV.avalon_jtag_slave' start='0xFF201000' end='0xFF201008' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='IrDA.avalon_irda_slave' start='0xFF201020' end='0xFF201028' type='altera_up_avalon_irda.avalon_irda_slave' /><slave name='Interval_Timer_NiosV.s1' start='0xFF202000' end='0xFF202020' type='altera_avalon_timer.s1' /><slave name='Interval_Timer_NiosV_2.s1' start='0xFF202020' end='0xFF202040' type='altera_avalon_timer.s1' /><slave name='SysID.control_slave' start='0xFF202040' end='0xFF202048' type='altera_avalon_sysid_qsys.control_slave' /><slave name='NiosVg.timer_sw_agent' start='0xFF202100' end='0xFF202140' type='intel_niosv_g.timer_sw_agent' /><slave name='AV_Config.avalon_av_config_slave' start='0xFF203000' end='0xFF203010' type='altera_up_avalon_audio_and_video_config.avalon_av_config_slave' /><slave name='VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave' start='0xFF203010' end='0xFF203014' type='altera_up_avalon_video_rgb_resampler.avalon_rgb_slave' /><slave name='VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave' start='0xFF203020' end='0xFF203030' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave' start='0xFF203030' end='0xFF203040' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='Audio_Subsystem_Audio.avalon_audio_slave' start='0xFF203040' end='0xFF203050' type='altera_up_avalon_audio.avalon_audio_slave' /><slave name='Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave' start='0xFF203060' end='0xFF203070' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1' start='0xFF203070' end='0xFF203080' type='altera_avalon_pio.s1' /><slave name='ADC.adc_slave' start='0xFF204000' end='0xFF204020' type='altera_up_avalon_adc.adc_slave' /></address-map>]]></value>
+   <value><![CDATA[<address-map><slave name='SDRAM.s1' start='0x0' end='0x4000000' type='sdram_64mb.s1' /><slave name='Onchip_SRAM.s1' start='0x8000000' end='0x8040000' type='altera_avalon_onchip_memory2.s1' /><slave name='VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1' start='0x9000000' end='0x9002000' type='altera_avalon_onchip_memory2.s1' /><slave name='NiosVg.dm_agent' start='0xA000000' end='0xA010000' type='intel_niosv_g.dm_agent' /><slave name='LEDs.s1' start='0xFF200000' end='0xFF200010' type='altera_avalon_pio.s1' /><slave name='HEX3_HEX0.s1' start='0xFF200020' end='0xFF200030' type='altera_avalon_pio.s1' /><slave name='HEX5_HEX4.s1' start='0xFF200030' end='0xFF200040' type='altera_avalon_pio.s1' /><slave name='Slider_Switches.s1' start='0xFF200040' end='0xFF200050' type='altera_avalon_pio.s1' /><slave name='Pushbuttons.s1' start='0xFF200050' end='0xFF200060' type='altera_avalon_pio.s1' /><slave name='Expansion_JP1.s1' start='0xFF200060' end='0xFF200070' type='altera_avalon_pio.s1' /><slave name='Expansion_JP2.s1' start='0xFF200070' end='0xFF200080' type='altera_avalon_pio.s1' /><slave name='PS2_Port.avalon_ps2_slave' start='0xFF200100' end='0xFF200108' type='altera_up_avalon_ps2.avalon_ps2_slave' /><slave name='PS2_Port_Dual.avalon_ps2_slave' start='0xFF200108' end='0xFF200110' type='altera_up_avalon_ps2.avalon_ps2_slave' /><slave name='JTAG_UART_NiosV.avalon_jtag_slave' start='0xFF201000' end='0xFF201008' type='altera_avalon_jtag_uart.avalon_jtag_slave' /><slave name='IrDA.avalon_irda_slave' start='0xFF201020' end='0xFF201028' type='altera_up_avalon_irda.avalon_irda_slave' /><slave name='Interval_Timer_NiosV.s1' start='0xFF202000' end='0xFF202020' type='altera_avalon_timer.s1' /><slave name='Interval_Timer_NiosV_2.s1' start='0xFF202020' end='0xFF202040' type='altera_avalon_timer.s1' /><slave name='SysID.control_slave' start='0xFF202040' end='0xFF202048' type='altera_avalon_sysid_qsys.control_slave' /><slave name='NiosVg.timer_sw_agent' start='0xFF202100' end='0xFF202140' type='intel_niosv_g.timer_sw_agent' /><slave name='AV_Config.avalon_av_config_slave' start='0xFF203000' end='0xFF203010' type='altera_up_avalon_audio_and_video_config.avalon_av_config_slave' /><slave name='VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave' start='0xFF203010' end='0xFF203014' type='altera_up_avalon_video_rgb_resampler.avalon_rgb_slave' /><slave name='VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave' start='0xFF203020' end='0xFF203030' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave' start='0xFF203030' end='0xFF203040' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='Audio_Subsystem_Audio.avalon_audio_slave' start='0xFF203040' end='0xFF203050' type='altera_up_avalon_audio.avalon_audio_slave' /><slave name='Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave' start='0xFF203060' end='0xFF203070' type='altera_up_avalon_video_dma_controller.avalon_dma_control_slave' /><slave name='Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1' start='0xFF203070' end='0xFF203080' type='altera_avalon_pio.s1' /><slave name='ADC.adc_slave' start='0xFF204000' end='0xFF204020' type='altera_up_avalon_adc.adc_slave' /><slave name='Logic_Analyzer_0.avalon_slave_0' start='0xFF205000' end='0xFF205020' type='Logic_Analyzer.avalon_slave_0' /></address-map>]]></value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -13652,7 +13660,7 @@ parameters are a RESULT of the module parameters. -->
     <moduleName>Logic_Analyzer_0</moduleName>
     <slaveName>avalon_slave_0</slaveName>
     <name>Logic_Analyzer_0.avalon_slave_0</name>
-    <baseAddress>67108864</baseAddress>
+    <baseAddress>4280307712</baseAddress>
     <span>32</span>
    </memoryBlock>
    <memoryBlock>
@@ -19635,7 +19643,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1773997835</value>
+   <value>1774075145</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -19655,7 +19663,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1773997835</value>
+   <value>1774075145</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -19671,7 +19679,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1773997835</value>
+   <value>1774075145</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -21073,7 +21081,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1773997835</value>
+   <value>1774075145</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -23319,7 +23327,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1773997835</value>
+   <value>1774075145</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -34765,7 +34773,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1773997835</value>
+   <value>1774075145</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -39532,7 +39540,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1773997835</value>
+   <value>1774075145</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -48786,7 +48794,7 @@ parameters are a RESULT of the module parameters. -->
   </parameter>
   <parameter name="baseAddress">
    <type>java.math.BigInteger</type>
-   <value>0x04000000</value>
+   <value>0xff205000</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>true</visible>
@@ -50350,6 +50358,57 @@ parameters are a RESULT of the module parameters. -->
   <startConnectionPoint>master</startConnectionPoint>
   <endModule>PS2_Port_Dual</endModule>
   <endConnectionPoint>avalon_ps2_slave</endConnectionPoint>
+ </connection>
+ <connection
+   name="JTAG_to_FPGA_Bridge.master/Logic_Analyzer_0.avalon_slave_0"
+   kind="avalon"
+   version="24.1"
+   start="JTAG_to_FPGA_Bridge.master"
+   end="Logic_Analyzer_0.avalon_slave_0">
+  <parameter name="arbitrationPriority">
+   <type>int</type>
+   <value>1</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <parameter name="baseAddress">
+   <type>java.math.BigInteger</type>
+   <value>0xff205000</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <parameter name="defaultConnection">
+   <type>boolean</type>
+   <value>false</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <parameter name="deviceFamily">
+   <type>java.lang.String</type>
+   <value>UNKNOWN</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <parameter name="generateLegacySim">
+   <type>boolean</type>
+   <value>false</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <startModule>JTAG_to_FPGA_Bridge</startModule>
+  <startConnectionPoint>master</startConnectionPoint>
+  <endModule>Logic_Analyzer_0</endModule>
+  <endConnectionPoint>avalon_slave_0</endConnectionPoint>
  </connection>
  <connection
    name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave"
@@ -53652,7 +53711,7 @@ parameters are a RESULT of the module parameters. -->
   <version>24.1</version>
  </plugin>
  <plugin>
-  <instanceCount>61</instanceCount>
+  <instanceCount>62</instanceCount>
   <name>avalon</name>
   <type>com.altera.entityinterfaces.IElementClass</type>
   <subtype>com.altera.entityinterfaces.IConnection</subtype>

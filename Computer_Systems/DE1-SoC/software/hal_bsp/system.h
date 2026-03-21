@@ -403,7 +403,7 @@
  */
 
 #define ALT_MODULE_CLASS_Logic_Analyzer_0 Logic_Analyzer
-#define LOGIC_ANALYZER_0_BASE 0x4000000
+#define LOGIC_ANALYZER_0_BASE 0xff205000
 #define LOGIC_ANALYZER_0_IRQ -1
 #define LOGIC_ANALYZER_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define LOGIC_ANALYZER_0_NAME "/dev/Logic_Analyzer_0"

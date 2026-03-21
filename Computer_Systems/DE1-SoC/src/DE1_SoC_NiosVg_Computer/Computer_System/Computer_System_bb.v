@@ -20,6 +20,8 @@ module Computer_System (
 	irda_TXD,
 	irda_RXD,
 	leds_export,
+	logic_analyzer_0_conduit_end_out_data,
+	logic_analyzer_0_conduit_end_in_data,
 	ps2_port_CLK,
 	ps2_port_DAT,
 	ps2_port_dual_CLK,
@@ -53,9 +55,7 @@ module Computer_System (
 	video_in_TD_VS,
 	video_in_clk27_reset,
 	video_in_TD_RESET,
-	video_in_overflow_flag,
-	logic_analyzer_0_conduit_end_out_data,
-	logic_analyzer_0_conduit_end_in_data);	
+	video_in_overflow_flag);	
 
 	output		adc_sclk;
 	output		adc_cs_n;
@@ -77,6 +77,8 @@ module Computer_System (
 	output		irda_TXD;
 	input		irda_RXD;
 	output	[9:0]	leds_export;
+	output	[15:0]	logic_analyzer_0_conduit_end_out_data;
+	input	[15:0]	logic_analyzer_0_conduit_end_in_data;
 	inout		ps2_port_CLK;
 	inout		ps2_port_DAT;
 	inout		ps2_port_dual_CLK;
@@ -111,6 +113,4 @@ module Computer_System (
 	input		video_in_clk27_reset;
 	output		video_in_TD_RESET;
 	output		video_in_overflow_flag;
-	output	[15:0]	logic_analyzer_0_conduit_end_out_data;
-	input	[15:0]	logic_analyzer_0_conduit_end_in_data;
 endmodule

@@ -19,6 +19,8 @@
 		.irda_TXD                              (<connected-to-irda_TXD>),                              //                         irda.TXD
 		.irda_RXD                              (<connected-to-irda_RXD>),                              //                             .RXD
 		.leds_export                           (<connected-to-leds_export>),                           //                         leds.export
+		.logic_analyzer_0_conduit_end_out_data (<connected-to-logic_analyzer_0_conduit_end_out_data>), // logic_analyzer_0_conduit_end.out_data
+		.logic_analyzer_0_conduit_end_in_data  (<connected-to-logic_analyzer_0_conduit_end_in_data>),  //                             .in_data
 		.ps2_port_CLK                          (<connected-to-ps2_port_CLK>),                          //                     ps2_port.CLK
 		.ps2_port_DAT                          (<connected-to-ps2_port_DAT>),                          //                             .DAT
 		.ps2_port_dual_CLK                     (<connected-to-ps2_port_dual_CLK>),                     //                ps2_port_dual.CLK
@@ -52,8 +54,6 @@
 		.video_in_TD_VS                        (<connected-to-video_in_TD_VS>),                        //                             .TD_VS
 		.video_in_clk27_reset                  (<connected-to-video_in_clk27_reset>),                  //                             .clk27_reset
 		.video_in_TD_RESET                     (<connected-to-video_in_TD_RESET>),                     //                             .TD_RESET
-		.video_in_overflow_flag                (<connected-to-video_in_overflow_flag>),                //                             .overflow_flag
-		.logic_analyzer_0_conduit_end_out_data (<connected-to-logic_analyzer_0_conduit_end_out_data>), // logic_analyzer_0_conduit_end.out_data
-		.logic_analyzer_0_conduit_end_in_data  (<connected-to-logic_analyzer_0_conduit_end_in_data>)   //                             .in_data
+		.video_in_overflow_flag                (<connected-to-video_in_overflow_flag>)                 //                             .overflow_flag
 	);
 

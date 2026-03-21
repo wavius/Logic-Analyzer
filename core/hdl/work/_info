@@ -34,6 +34,31 @@ Z6 !s108 1773845597.000000
 !i113 1
 o-sv
 Z7 tCvgOpt 0
+vsignal_capture
+R0
+!s110 1774058501
+!i10b 1
+!s100 52Jf<jBSYbo<;LPh=08eO2
+R2
+ImiWiUb2Q2W5dnnP=RiD`k0
+R3
+S1
+Z8 dD:/GitHub/Logic-Analyzer/core/hdl
+w1774058486
+8signal_capture.sv
+Fsignal_capture.sv
+!i122 99
+L0 1 186
+R5
+r1
+!s85 0
+31
+Z9 !s108 1774058501.000000
+!s107 signal_capture.sv|
+!s90 -reportprogress|300|-sv|signal_capture.sv|
+!i113 1
+o-sv
+R7
 vsignal_generator
 R0
 R1
@@ -59,6 +84,31 @@ R6
 !i113 1
 o-sv
 R7
+vtb_signal_capture
+R0
+!s110 1774058502
+!i10b 1
+!s100 VWNKBDdE8gokPTUDo2BjT0
+R2
+Ikl0H1^:EYCjB28Vfz7n>Y2
+R3
+S1
+R8
+w1774054325
+Z10 8testbench.sv
+Z11 Ftestbench.sv
+!i122 100
+L0 3 103
+R5
+r1
+!s85 0
+31
+R9
+Z12 !s107 testbench.sv|
+Z13 !s90 -reportprogress|300|-sv|testbench.sv|
+!i113 1
+o-sv
+R7
 vtestbench
 R0
 !s110 1773845598
@@ -70,8 +120,8 @@ R3
 S1
 R4
 w1773806606
-8testbench.sv
-Ftestbench.sv
+R10
+R11
 !i122 79
 L0 3 108
 R5
@@ -79,8 +129,8 @@ r1
 !s85 0
 31
 R6
-!s107 testbench.sv|
-!s90 -reportprogress|300|-sv|testbench.sv|
+R12
+R13
 !i113 1
 o-sv
 R7

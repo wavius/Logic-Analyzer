@@ -39,8 +39,8 @@
 // ------------------------------------------
 // Generation parameters:
 //   output_name:         Computer_System_mm_interconnect_0_rsp_mux_002
-//   NUM_INPUTS:          25
-//   ARBITRATION_SHARES:  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+//   NUM_INPUTS:          26
+//   ARBITRATION_SHARES:  1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 //   ARBITRATION_SCHEME   "no-arb"
 //   PIPELINE_ARB:        0
 //   PKT_TRANS_LOCK:      72 (arbitration locking enabled)
@@ -228,6 +228,13 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     input                       sink24_endofpacket,
     output                      sink24_ready,
 
+    input                       sink25_valid,
+    input [127-1   : 0]  sink25_data,
+    input [29-1: 0]  sink25_channel,
+    input                       sink25_startofpacket,
+    input                       sink25_endofpacket,
+    output                      sink25_ready,
+
 
     // ----------------------
     // Source
@@ -246,7 +253,7 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     input reset
 );
     localparam PAYLOAD_W        = 127 + 29 + 2;
-    localparam NUM_INPUTS       = 25;
+    localparam NUM_INPUTS       = 26;
     localparam SHARE_COUNTER_W  = 1;
     localparam PIPELINE_ARB     = 0;
     localparam ST_DATA_W        = 127;
@@ -291,6 +298,7 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     wire [PAYLOAD_W - 1 : 0] sink22_payload;
     wire [PAYLOAD_W - 1 : 0] sink23_payload;
     wire [PAYLOAD_W - 1 : 0] sink24_payload;
+    wire [PAYLOAD_W - 1 : 0] sink25_payload;
 
     assign valid[0] = sink0_valid;
     assign valid[1] = sink1_valid;
@@ -317,6 +325,7 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     assign valid[22] = sink22_valid;
     assign valid[23] = sink23_valid;
     assign valid[24] = sink24_valid;
+    assign valid[25] = sink25_valid;
 
 
     // ------------------------------------------
@@ -351,6 +360,7 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
       lock[22] = sink22_data[72];
       lock[23] = sink23_data[72];
       lock[24] = sink24_data[72];
+      lock[25] = sink25_data[72];
     end
 
     assign last_cycle = src_valid & src_ready & src_endofpacket & ~(|(lock & grant));
@@ -406,6 +416,7 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     // 22      |      1       |  0
     // 23      |      1       |  0
     // 24      |      1       |  0
+    // 25      |      1       |  0
      wire [SHARE_COUNTER_W - 1 : 0] share_0 = 1'd0;
      wire [SHARE_COUNTER_W - 1 : 0] share_1 = 1'd0;
      wire [SHARE_COUNTER_W - 1 : 0] share_2 = 1'd0;
@@ -431,6 +442,7 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
      wire [SHARE_COUNTER_W - 1 : 0] share_22 = 1'd0;
      wire [SHARE_COUNTER_W - 1 : 0] share_23 = 1'd0;
      wire [SHARE_COUNTER_W - 1 : 0] share_24 = 1'd0;
+     wire [SHARE_COUNTER_W - 1 : 0] share_25 = 1'd0;
 
     // ------------------------------------------
     // Choose the share value corresponding to the grant.
@@ -462,7 +474,8 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     share_21 & { SHARE_COUNTER_W {next_grant[21]} } |
     share_22 & { SHARE_COUNTER_W {next_grant[22]} } |
     share_23 & { SHARE_COUNTER_W {next_grant[23]} } |
-    share_24 & { SHARE_COUNTER_W {next_grant[24]} };
+    share_24 & { SHARE_COUNTER_W {next_grant[24]} } |
+    share_25 & { SHARE_COUNTER_W {next_grant[25]} };
     end
 
     // ------------------------------------------
@@ -574,11 +587,14 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
 
     wire final_packet_24 = 1'b1;
 
+    wire final_packet_25 = 1'b1;
+
 
     // ------------------------------------------
     // Concatenate all final_packet signals (wire or reg) into a handy vector.
     // ------------------------------------------
     wire [NUM_INPUTS - 1 : 0] final_packet = {
+    final_packet_25,
     final_packet_24,
     final_packet_23,
     final_packet_22,
@@ -712,6 +728,7 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     assign sink22_ready = src_ready && grant[22];
     assign sink23_ready = src_ready && grant[23];
     assign sink24_ready = src_ready && grant[24];
+    assign sink25_ready = src_ready && grant[25];
 
     assign src_valid = |(grant & valid);
 
@@ -741,7 +758,8 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
       sink21_payload & {PAYLOAD_W {grant[21]} } |
       sink22_payload & {PAYLOAD_W {grant[22]} } |
       sink23_payload & {PAYLOAD_W {grant[23]} } |
-      sink24_payload & {PAYLOAD_W {grant[24]} };
+      sink24_payload & {PAYLOAD_W {grant[24]} } |
+      sink25_payload & {PAYLOAD_W {grant[25]} };
     end
 
     // ------------------------------------------
@@ -798,6 +816,8 @@ module Computer_System_mm_interconnect_0_rsp_mux_002
     sink23_startofpacket,sink23_endofpacket};
     assign sink24_payload = {sink24_channel,sink24_data,
     sink24_startofpacket,sink24_endofpacket};
+    assign sink25_payload = {sink25_channel,sink25_data,
+    sink25_startofpacket,sink25_endofpacket};
 
     assign {src_channel,src_data,src_startofpacket,src_endofpacket} = src_payload;
 endmodule

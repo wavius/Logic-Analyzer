@@ -8,7 +8,7 @@ module signal_generator #(
   parameter FREQ_SYS_CLOCK        // System clock frequency
 )(
   // Inputs
-  input  logic clock_50m,
+  input  logic clk,
   input  logic nreset,
   
   // Outputs
@@ -30,7 +30,7 @@ module signal_generator #(
 
   // heartbeat generator
   logic [$clog2(COUNT_HEARTBEAT)-1:0] q0; 
-  always_ff @(posedge clock_50m, negedge nreset) begin
+  always_ff @(posedge clk, negedge nreset) begin
     if (!nreset) begin
       q0        <= 0;
       heartbeat <= 0;
@@ -47,7 +47,7 @@ module signal_generator #(
 
   // clock generator
   logic [$clog2(COUNT_CLOCK)-1:0] q1;
-  always_ff @(posedge clock_50m, negedge nreset) begin
+  always_ff @(posedge clk, negedge nreset) begin
     if (!nreset) begin
       q1    <= 0;
       clock <= 0;
@@ -66,7 +66,7 @@ module signal_generator #(
   logic [$clog2(COUNT_PULSE)-1:0] p2;     // Pulse frequency counter
   logic [$clog2(BURST_WIDTH + 1)-1:0] l2; // Number of bits required to store BURST_WIDTH
   logic [BURST_WIDTH-1:0] pattern;        // Pattern width counter
-  always_ff @(posedge clock_50m, negedge nreset) begin
+  always_ff @(posedge clk, negedge nreset) begin
     if (!nreset) begin
       q2      <= 0;
       p2      <= 0;

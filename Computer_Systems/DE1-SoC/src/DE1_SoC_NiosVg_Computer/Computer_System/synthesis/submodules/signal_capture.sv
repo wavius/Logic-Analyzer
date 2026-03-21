@@ -4,22 +4,22 @@ module signal_capture #(
   input  logic        clk,
   input  logic        nreset,
 
-  // --- Avalon-MM Slave Interface ---
+  // Avalon-MM slave 
   input  logic [2:0]  address,      // 3-bit address for up to 8 registers
   input  logic        write,
   input  logic [31:0] writedata,
   input  logic        read,
   output logic [31:0] readdata,
 
-  // --- Channel Input (Conduit) ---
+  // Channel input 
   input  logic [15:0] channel_in
 );
 
-  // --- Internal Avalon Registers ---
+  // Internal registers
   logic [31:0] control_reg;     // Address 0
   logic [31:0] trigger_config;  // Address 2
 
-  // --- Buffer and Pointer Declarations ---
+  // Internal pointers
   logic [15:0] post_trigger_length;            
   logic [15:0] post_trigger_count;             
   logic [15:0] pre_trigger_count;              
@@ -27,23 +27,23 @@ module signal_capture #(
   logic [$clog2(BUFFER_SIZE)-1:0] trigger_ptr; 
   logic [$clog2(BUFFER_SIZE)-1:0] read_pointer; // Auto-incrementing read pointer
 
-  // The actual memory buffer
+  // Memory buffer
   logic [15:0] buffer [0:BUFFER_SIZE-1];
 
-  // --- Status Flags ---
+  // Status flags 
   logic run;
   logic buffer_full;
   logic triggered;
   
   assign run = control_reg[0];
 
-  // --- Trigger Edge Detection Logic (Rising Edge Only) ---
+  // Rising edge trigger 
   logic [15:0] trigger_channel;
   logic        trigger_current_data;
   logic        trigger_past_data;
   logic        rising_edge_detected;
 
-  assign trigger_channel = trigger_config[15:0];
+  assign trigger_channel = trigger_config[15:0] - 1;
   assign trigger_current_data = channel_in[trigger_channel];
 
   always_ff @(posedge clk) begin
@@ -56,14 +56,14 @@ module signal_capture #(
 
   assign rising_edge_detected = (trigger_current_data && !trigger_past_data);
 
-  // --- Avalon Write & Auto-Increment Logic ---
+  // Avalon write logic
   always_ff @(posedge clk or negedge nreset) begin
     if (!nreset) begin
       control_reg    <= 32'h0;
       trigger_config <= 32'h0;
       read_pointer   <= '0;
     end else begin
-      // Handle HPS Writes
+      // Writes
       if (write) begin
         case (address)
           3'h0: control_reg    <= writedata;
@@ -72,7 +72,7 @@ module signal_capture #(
         endcase
       end
       
-      // Handle Auto-Increment on HPS Read from Data Window
+      // Auto-incerement pointer on read
       if (read && address == 3'h3) begin
         if (read_pointer < BUFFER_SIZE - 1) begin
           read_pointer <= read_pointer + 1'b1;
@@ -81,7 +81,7 @@ module signal_capture #(
     end
   end
 
-  // --- Avalon Read Logic ---
+  // Avalon read logic
   always_comb begin
     readdata = 32'h0; // Default
     if (read) begin
@@ -97,7 +97,7 @@ module signal_capture #(
     end
   end
 
-  // --- FSM Definitions ---
+  // FSM enum
   typedef enum logic [1:0] {
     IDLE         = 2'b00, 
     PRE_TRIGGER  = 2'b01, 
@@ -107,7 +107,7 @@ module signal_capture #(
   
   state_t current_state, next_state;
 
-  // --- FSM Combinational Logic ---
+  // FSM combinational logic
   always_comb begin
     next_state = current_state;
     case(current_state) 
@@ -124,12 +124,12 @@ module signal_capture #(
       end
 
       DONE: begin
-        if (!run) next_state = IDLE; // Wait for HPS to clear the run bit
+        if (!run) next_state = IDLE; // Wait for CPU to clear the run bit
       end
     endcase
   end
 
-  // --- FSM Sequential Logic ---
+  // FSM sequential logic
   always_ff @(posedge clk or negedge nreset) begin
     if (!nreset) begin
       current_state <= IDLE;
@@ -156,8 +156,9 @@ module signal_capture #(
         PRE_TRIGGER: begin
           buffer[buffer_ptr] <= channel_in;
           buffer_ptr         <= buffer_ptr + 1'b1;
-          trigger_ptr        <= buffer_ptr; // Constantly update until trigger hits  
+          trigger_ptr        <= buffer_ptr;  
           
+          // Limit pre trigger samples
           if (pre_trigger_count < (BUFFER_SIZE / 2)) begin
             pre_trigger_count <= pre_trigger_count + 1'b1;
           end
@@ -174,7 +175,6 @@ module signal_capture #(
 
         DONE: begin
           buffer_full <= 1'b1; 
-          // Stays here until HPS writes 0 to the RUN bit in control_reg
         end
       endcase
     end

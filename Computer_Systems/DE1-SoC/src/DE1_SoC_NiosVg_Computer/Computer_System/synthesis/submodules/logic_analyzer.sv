@@ -32,6 +32,8 @@ module logic_analyzer (
         .logic0    (OUT_CH[4])   
     );
 
+    assign OUT_CH[15:5] = 0; 
+
     // Unused output channels
     assign OUT_CH[15:5] = 11'b0;
 
@@ -48,7 +50,7 @@ module logic_analyzer (
         .read      (read),
         .readdata  (readdata),
 
-        .channel_in({12'b0, IN_CH[3], IN_CH[2], IN_CH[1], IN_CH[0]})
+        .channel_in(IN_CH)
     );
 
 endmodule
