@@ -2,11 +2,11 @@
 
 #include <stddef.h>
 
+#define ZOOM_LVL_COUNT 6
 /********************************
  *  Structs + global variables
  ********************************/
-static const uint32_t zoom_levels[] = {64, 96, 128, 256, 512, 1024};
-static const uint32_t zoom_level_count = 6;
+static const uint32_t zoom_levels[ZOOM_LVL_COUNT] = {64, 96, 128, 256, 512, 1024};
 
 /********************************
  *  Helper Function Declarations
@@ -29,7 +29,7 @@ static int find_best_zoom_index(uint32_t visible_samples) {
     int best_index = 0;
     uint32_t best_diff = (zoom_levels[0] > visible_samples) ? (zoom_levels[0] - visible_samples) : (visible_samples - zoom_levels[0]);
 
-    for (int i = 1; i < zoom_level_count; i++) {
+    for (int i = 1; i < ZOOM_LVL_COUNT; i++) {
         uint32_t diff = (zoom_levels[i] > visible_samples) ? (zoom_levels[i] - visible_samples) : (visible_samples - zoom_levels[i]);
 
         if (diff < best_diff) {
@@ -42,8 +42,8 @@ static int find_best_zoom_index(uint32_t visible_samples) {
 }
 
 // ensures visible_samples is valid and does not exceed capture size
-static uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t capture_size) {
-    if (capture_size == 0)
+static uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t buffer_size) {
+    if (buffer_size == 0)  // buffer contains no samples (shouldn't ever happen)
         return 0;
 
     // choose nearest zoom level first
@@ -51,37 +51,38 @@ static uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t capture
     uint32_t chosen = zoom_levels[idx];
 
     // if chosen zoom is larger than capture, shrink to largest valid zoom
-    if (chosen > capture_size) {
-        for (int i = zoom_level_count - 1; i >= 0; i--) {  // short for loop since zoom level count is just 6
-            if (zoom_levels[i] <= capture_size)
+    if (chosen > buffer_size) {
+        for (int i = ZOOM_LVL_COUNT - 1; i >= 0; i--) {  // short for loop since zoom level count is just 6
+            if (zoom_levels[i] <= buffer_size)
                 return zoom_levels[i];
         }
 
-        // if capture is smaller than all zoom levels, just show entire capture
-        return capture_size;
+        // if capture is smaller than all zoom levels, just show entire capture (but this shouldn't ever happen since our buffer will be huge)
+        return buffer_size;
     }
 
-    return chosen;  // if capture size is larger than the closest zoom level, return the closest zoom level
+    return chosen;  // if buffer size is larger than all the chosen zoom levels, just return with chosen zoom level as visible samples.
 }
 
 // keeps start_sample within valid range
-static void clamp_start_sample(VisualizerState* state) {
-    if (state == 0)
+static void clamp_start_sample(VisualizerState* sig_disp_state) {
+    if (sig_disp_state == NULL)  // uninitalized state->return
         return;
 
-    if (state->capture_size == 0) {
-        state->start_sample = 0;
-        return;
-    }
-
-    if (state->visible_samples >= state->capture_size) {
-        state->start_sample = 0;
+    if (sig_disp_state->buffer_size == 0) {  // nothing in the buffer
+        sig_disp_state->start_sample = 0;
         return;
     }
 
-    uint32_t max_start = state->capture_size - state->visible_samples;
-    if (state->start_sample > max_start) {
-        state->start_sample = max_start;
+    // if zoom level is greater than the buffer size, show the entire waveform by starting at 0th sample (shouldn't happpen)
+    if (sig_disp_state->visible_samples >= sig_disp_state->buffer_size) {
+        sig_disp_state->start_sample = 0;
+        return;
+    }
+
+    uint32_t max_start = sig_disp_state->buffer_size - sig_disp_state->visible_samples;
+    if (sig_disp_state->start_sample > max_start) {  // prevent how far into the buffer we can show the signal
+        sig_disp_state->start_sample = max_start;
     }
 }
 
@@ -89,21 +90,21 @@ static void clamp_start_sample(VisualizerState* state) {
  *  Function Implementations
  ********************************/
 // <add description>
-void visualizer_init(VisualizerState* state, uint32_t sample_rate_Mhz, uint32_t capture_size,
+void visualizer_init(VisualizerState* sig_disp_state, uint32_t sample_rate_Mhz, uint32_t capture_size,
                      uint16_t waveform_width_px, uint8_t num_divisions) {
-    if (state == 0)
+    if (sig_disp_state == NULL)  // uninitalized state->return
         return;
 
-    state->sample_rate_Mhz = sample_rate_Mhz;
-    state->capture_size = capture_size;
-    state->waveform_width_px = waveform_width_px;
-    state->num_v_div = num_divisions;
+    sig_disp_state->sample_rate_Mhz = sample_rate_Mhz;
+    sig_disp_state->buffer_size = capture_size;
+    sig_disp_state->waveform_width_px = waveform_width_px;
+    sig_disp_state->num_v_div = num_divisions;
 
     // default zoom: 96 if possible, otherwise clamp to what fits
-    state->visible_samples = clamp_visible_samples(96, capture_size);
-    state->start_sample = 0;
+    sig_disp_state->visible_samples = clamp_visible_samples(96, capture_size);
+    sig_disp_state->start_sample = 0;  // to start, show from the 0th position
 
-    clamp_start_sample(state);
+    clamp_start_sample(sig_disp_state);
 }
 
 // <add description>
@@ -112,13 +113,13 @@ void visualizer_set_zoom(VisualizerState* state, uint32_t visible_samples) {
         return;
     }
 
-    state->visible_samples = clamp_visible_samples(visible_samples, state->capture_size);
+    state->visible_samples = clamp_visible_samples(visible_samples, state->buffer_size);
     clamp_start_sample(state);
 }
 
 // <add description>
 void visualizer_zoom_in(VisualizerState* state) {
-    if (state == 0 || state->capture_size == 0)
+    if (state == 0 || state->buffer_size == 0)
         return;
 
     int idx = find_best_zoom_index(state->visible_samples);
@@ -129,24 +130,24 @@ void visualizer_zoom_in(VisualizerState* state) {
     else if (zoom_levels[idx] > state->visible_samples && idx > 0)
         idx--;
 
-    state->visible_samples = clamp_visible_samples(zoom_levels[idx], state->capture_size);
+    state->visible_samples = clamp_visible_samples(zoom_levels[idx], state->buffer_size);
     clamp_start_sample(state);
 }
 
 // <add description>
 void visualizer_zoom_out(VisualizerState* state) {
-    if (state == 0 || state->capture_size == 0)
+    if (state == 0 || state->buffer_size == 0)
         return;
 
     int idx = find_best_zoom_index(state->visible_samples);
 
     // move to larger window if possible
-    if (zoom_levels[idx] <= state->visible_samples && idx < zoom_level_count - 1)
+    if (zoom_levels[idx] <= state->visible_samples && idx < ZOOM_LVL_COUNT - 1)
         idx++;
-    else if (zoom_levels[idx] < state->visible_samples && idx < zoom_level_count - 1)
+    else if (zoom_levels[idx] < state->visible_samples && idx < ZOOM_LVL_COUNT - 1)
         idx++;
 
-    state->visible_samples = clamp_visible_samples(zoom_levels[idx], state->capture_size);
+    state->visible_samples = clamp_visible_samples(zoom_levels[idx], state->buffer_size);
     clamp_start_sample(state);
 }
 
@@ -173,8 +174,8 @@ void visualizer_scroll_right(VisualizerState* state) {
     uint32_t step = visualizer_get_scroll_step(state);
     uint32_t max_start = 0;
 
-    if (state->capture_size > state->visible_samples)
-        max_start = state->capture_size - state->visible_samples;
+    if (state->buffer_size > state->visible_samples)
+        max_start = state->buffer_size - state->visible_samples;
 
     if (state->start_sample + step > max_start)
         state->start_sample = max_start;
@@ -186,11 +187,11 @@ void visualizer_scroll_right(VisualizerState* state) {
 
 // <add description>
 uint32_t visualizer_get_end_sample(const VisualizerState* state) {
-    if (state == 0 || state->capture_size == 0)
+    if (state == 0 || state->buffer_size == 0)
         return 0;
 
     uint32_t end = state->start_sample + state->visible_samples;
-    return min_u32(end, state->capture_size);
+    return min_u32(end, state->buffer_size);
 }
 
 // <add description>

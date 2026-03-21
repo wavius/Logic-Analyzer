@@ -5,7 +5,7 @@
 
 typedef struct {
     uint32_t sample_rate_Mhz;  // sampling frequency
-    uint32_t capture_size;     // 4096
+    uint32_t buffer_size;      // amount of samples in the buffer (4096 planned for rn)
     uint32_t visible_samples;  // current zoom window
     uint32_t start_sample;     // scroll offset
     uint16_t waveform_width_px;

@@ -201,7 +201,7 @@ static void draw_channel_labels(const Channel* channels, const int lanes) {
         // here we just rely on the background already drawn
 
         // draw the channel name
-        if (channels[i].label != 0) {
+        if (channels[i].label[0] != '\0') {  // make sure string isn't empty (first element would be the null terminator )
             text_draw_string(text_col, label_row, channels[i].label);
         }
     }
