@@ -2,6 +2,7 @@
 Logic analyzer implemented on the DE1-SoC
 
 Just rough notes for now: 
+
 To Do: 
 - implement user input via PS/2 keyboard
 - connect data buffer to UI
