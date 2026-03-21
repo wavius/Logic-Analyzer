@@ -1,10 +1,15 @@
 #include "draw_screen.h"
 
+#include "../../Computer_Systems/DE1-SoC/software/address_map_niosV.h"
 #include "vga_driver.h"
 
 // ----- Screen constants ----- //
 #define SCREEN_W 320
 #define SCREEN_H 240
+
+// ----- Char buffer ----- //
+#define CHAR_COLS 80
+#define CHAR_ROWS 60
 
 // HARD CODED CHANNEL VALUE
 #define CHANNEL_LIMIT 16
@@ -46,7 +51,12 @@ static void draw_hline(int x_start, int x_end, int y, uint16_t color);
 static void draw_vline(int x, int y_start, int y_end, uint16_t color);
 static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color);
 static int calculate_channel_height(const int lanes, const int available_height);
-static void draw_text();  // temp, unfinished
+static void text_plot_char(int col, int row, char c);
+static void text_draw_string(int col, int row, const char* text);
+static void text_clear(void);
+static void draw_channel_labels(const Channel* channels, int lanes);
+static uint16_t dim_color(uint16_t color);
+static void draw_channel_labels(const Channel* channels, const int lanes);
 
 /********************************
  *  Helper Functions
@@ -85,19 +95,123 @@ static int calculate_channel_height(const int lanes, const int available_height)
     return available_height / lanes;
 }
 
+// store a single char in a string buffer
+static void text_plot_char(int col, int row, char c) {
+    if (col < 0 || col >= CHAR_COLS || row < 0 || row >= CHAR_ROWS)
+        return;
+
+    // pointer to controller
+    volatile int* ctrl = (int*)CHAR_BUF_CTRL_BASE;
+
+    // first register = character buffer address
+    volatile char* char_buf = (volatile char*)(ctrl[0]);
+
+    char_buf[row * CHAR_COLS + col] = c;
+}
+
 // draw text to screen
-static void draw_text() {
-    // draw title
-    // draw channel labels
-    // draw grid numbers
-    // draw wtv else
+static void text_draw_string(int col, int row, const char* text) {
+    if (text == 0)
+        return;
+
+    int cur_col = col;
+    int cur_row = row;
+
+    while (*text) {
+        if (*text == '\n') {
+            cur_row++;
+            cur_col = col;
+        } else {
+            text_plot_char(cur_col, cur_row, *text);
+            cur_col++;
+
+            if (cur_col >= CHAR_COLS) {
+                cur_col = col;
+                cur_row++;
+            }
+        }
+
+        if (cur_row >= CHAR_ROWS)
+            break;
+
+        text++;
+    }
+}
+
+// clear buffer or smth? idk
+static void text_clear(void) {
+    volatile int* ctrl = (int*)CHAR_BUF_CTRL_BASE;
+    volatile char* char_buf = (volatile char*)(ctrl[0]);
+
+    for (int row = 0; row < CHAR_ROWS; row++) {
+        for (int col = 0; col < CHAR_COLS; col++) {
+            char_buf[row * CHAR_COLS + col] = ' ';
+        }
+    }
+}
+
+// for dimming the color of text drawn to screen (used for channel labels for example)
+static uint16_t dim_color(uint16_t color) {
+    uint16_t r = (color >> 11) & 0x1F;
+    uint16_t g = (color >> 5) & 0x3F;
+    uint16_t b = color & 0x1F;
+
+    r >>= 1;
+    g >>= 1;
+    b >>= 1;
+
+    return (r << 11) | (g << 5) | b;
+}
+
+// draws labels
+static void draw_channel_labels(const Channel* channels, const int lanes) {
+    if (channels == 0 || lanes <= 0 || lanes > CHANNEL_LIMIT)
+        return;
+
+    int lane_height = calculate_channel_height(lanes, channel_area_height);
+
+    // character placement inside left panel
+    // 80 cols over 320 px => 4 px per char cell
+    // 60 rows over 240 px => 4 px per char cell
+    const int text_col = 2;  // a little padding from left side
+    const int stripe_width = 2;
+
+    for (int i = 0; i < lanes; i++) {
+        int y_top = top_bar_height + i * lane_height;
+
+        // center label vertically in lane
+        int label_row = (y_top + lane_height / 2) / 4;
+
+        uint16_t stripe_color = channels[i].enabled
+                                    ? channel_colors[i]
+                                    : dim_color(channel_colors[i]);
+
+        uint16_t label_bg = channels[i].enabled
+                                ? left_bar_color
+                                : dim_color(left_bar_color);
+
+        // fill the label area background per-lane
+        fill_rect(0, y_top, left_bar_width, lane_height, label_bg);
+
+        // draw color stripe at far left
+        fill_rect(0, y_top, stripe_width, lane_height, stripe_color);
+
+        // clear a small text band inside the label area so text is readable
+        // optional but helps consistency
+        // here we just rely on the background already drawn
+
+        // draw the channel name
+        if (channels[i].label != 0) {
+            text_draw_string(text_col, label_row, channels[i].label);
+        }
+    }
 }
 
 /********************************
  *  Function Implementations
  ********************************/
 // draws the main static part of the background
-void draw_logic_ui_frame(const int lanes) {
+void draw_logic_ui_frame(const Channel* channels, const int lanes) {
     if (lanes <= 0 || (lanes > CHANNEL_LIMIT))
         return;
 
@@ -121,8 +235,8 @@ void draw_logic_ui_frame(const int lanes) {
         draw_hline(0, SCREEN_W - 1, y, separator_color);
     }
 
-    // draw the text
-    draw_text();
+    // labels + stripes
+    draw_channel_labels(channels, lanes);
 }
 
 // based on recieved array samples and count (the amount of cycles), draws any given digital waveform

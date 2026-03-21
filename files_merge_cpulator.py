@@ -29,6 +29,7 @@ def merge_files():
             
             # Hardcode specific hardware macros for CPulator
             content = content.replace("PIXEL_BUF_CTRL_BASE", "0xFF203020")
+            content = content.replace("CHAR_BUF_CTRL_BASE", "0xFF203030")
             
             combined_content.append(f"/* --- START OF {filename} --- */")
             combined_content.append(content)

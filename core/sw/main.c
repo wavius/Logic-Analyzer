@@ -71,7 +71,7 @@ int main(void) {
 
     while (1) {
         clear_screen();
-        draw_logic_ui_frame(lanes);
+        draw_logic_ui_frame(channels, lanes);
         // draw_signals(channels, lanes);
         draw_logic_view(&view, channels, lanes);
         wait_for_vsync();
