@@ -18,16 +18,18 @@ static const int bottom_bar_height = 7;
 static const int channel_area_height = SCREEN_H - (top_bar_height + bottom_bar_height);
 
 //-- waveform / grid layout variables --//
-static const int grid_spacing_x = 36;
+static const int vertical_grid_ticks = 8;
+static const int grid_spacing_x = (SCREEN_W - left_bar_width) / 8;
 static const int waveform_margin_divisor = 4;
 static const int waveform_min_margin = 1;
 
 //-- UI color variables --//
-static const uint16_t top_bar_color = 0x39E7;
-static const uint16_t bottom_bar_color = 0x2104;
-static const uint16_t left_bar_color = 0x2104;
-static const uint16_t separator_color = 0xFFFF;
-static const uint16_t grid_color = 0x4208;
+static const uint16_t top_bar_color = 0x18e3;
+static const uint16_t bottom_bar_color = 0x18e3;
+static const uint16_t left_bar_color = 0x18e3;
+static const uint16_t separator_color = 0x39c7;
+static const uint16_t grid_color = 0x18e3;
+static const uint16_t text_color = 0xd69a;
 
 // color options for the signals drawn to screen
 static const uint16_t channel_colors[16] = {
@@ -108,6 +110,10 @@ void draw_logic_ui_frame(const int lanes) {
     // Left label column
     fill_rect(0, top_bar_height, left_bar_width, channel_area_height, left_bar_color);
 
+    // Vertical grid lines
+    for (int x = left_bar_width; x < SCREEN_W; x += grid_spacing_x)
+        draw_vline(x, top_bar_height, SCREEN_H - bottom_bar_height - 1, grid_color);
+
     // Channel separators
     int spacing = calculate_channel_height(lanes, channel_area_height);
     for (int i = 1; i < lanes; i++) {
@@ -115,38 +121,35 @@ void draw_logic_ui_frame(const int lanes) {
         draw_hline(0, SCREEN_W - 1, y, separator_color);
     }
 
-    // Vertical grid lines
-    for (int x = left_bar_width; x < SCREEN_W; x += grid_spacing_x)
-        draw_vline(x, top_bar_height, SCREEN_H - bottom_bar_height - 1, grid_color);
-
+    // draw the text
     draw_text();
 }
 
 // based on recieved array samples and count (the amount of cycles), draws any given digital waveform
-void draw_digital_waveform(const uint8_t* samples, const int count, int x_start, int y_top, int w, int h, uint16_t color) {
-    if (w <= 0 || h <= 0)
+void draw_digital_waveform(const uint8_t* samples, const int count, int x_start, int y_top, int draw_width, int draw_heigth, uint16_t color) {
+    if (draw_width <= 0 || draw_heigth <= 0)
         return;
 
-    int margin = h / waveform_margin_divisor;
+    int margin = draw_heigth / waveform_margin_divisor;
     if (margin < waveform_min_margin)
         margin = waveform_min_margin;
 
     int y_high = y_top + margin;
-    int y_low = y_top + h - 1 - margin;
+    int y_low = y_top + draw_heigth - 1 - margin;
 
     if (y_low < y_high)
         y_low = y_high;
 
     if (count <= 0 || samples == 0) {  // given there is no waveform given, just draw a horizontal line
-        draw_hline(x_start, x_start + w - 1, y_low, color);
+        draw_hline(x_start, x_start + draw_width - 1, y_low, color);
         return;
     }
 
     int prev = samples[0] ? 1 : 0;
     int prev_y = prev ? y_high : y_low;
 
-    for (int x = 0; x < w; x++) {
-        int idx = (x * count) / w;
+    for (int x = 0; x < draw_width; x++) {
+        int idx = (x * count) / draw_width;  // automatically scale the amount of samples given to fit the screen
         if (idx >= count)
             idx = count - 1;
 
@@ -183,4 +186,8 @@ void draw_signals(const Channel* channels, const int lanes) {
         int y_top = top_bar_height + i * lane_height;
         draw_digital_waveform(channels[i].samples, channels[i].count, x_start, y_top, waveform_width, lane_height, channel_colors[i]);
     }
+}
+
+// handle zooming
+void draw_logic_view(const VisualizerState* state, const uint8_t* samples) {
 }

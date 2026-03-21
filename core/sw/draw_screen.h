@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "visualizer_logic.h"
+
 // ----- Structs ----- //
 // all info needed to draw a singal
 typedef struct {
@@ -18,5 +20,6 @@ typedef struct {
 void draw_logic_ui_frame(const int lanes);
 void draw_digital_waveform(const uint8_t* samples, const int count, int x0, int y0, int w, int h, uint16_t color);
 void draw_signals(const Channel* channels, const int lanes);
+void draw_logic_view(const VisualizerState* state, const uint8_t* samples);
 
 #endif
