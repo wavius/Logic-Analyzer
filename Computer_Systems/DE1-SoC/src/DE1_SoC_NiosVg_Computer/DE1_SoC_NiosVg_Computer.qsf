@@ -967,7 +967,7 @@ set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE PERFORMANCE"
 set_instance_assignment -name FAST_INPUT_REGISTER ON -to *
 set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to *
 
-set_global_assignment -name LAST_QUARTUS_VERSION "24.1std.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"
 set_global_assignment -name SYSTEMVERILOG_FILE ../Logic_Analyzer/signal_generator.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../Logic_Analyzer/signal_capture.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../Logic_Analyzer/logic_analyzer.sv
