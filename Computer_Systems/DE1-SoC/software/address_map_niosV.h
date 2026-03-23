@@ -40,6 +40,7 @@
 #define VIDEO_IN_BASE          0xFF203060
 #define EDGE_DETECT_CTRL_BASE  0xFF203070
 #define ADC_BASE               0xFF204000
+#define LA_BASE                0xFF205000 // Logic Analyzer
 
 /* Nios V memory-mapped registers */
 #define MTIME_BASE             0xFF202100

@@ -43,7 +43,7 @@ module signal_capture #(
   logic        trigger_past_data;
   logic        rising_edge_detected;
 
-  assign trigger_channel = trigger_config[15:0] - 1;
+  assign trigger_channel = trigger_config[15:0];
   assign trigger_current_data = channel_in[trigger_channel];
 
   always_ff @(posedge clk) begin

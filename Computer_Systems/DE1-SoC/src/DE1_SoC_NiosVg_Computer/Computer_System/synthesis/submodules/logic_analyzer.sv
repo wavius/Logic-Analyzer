@@ -32,8 +32,6 @@ module logic_analyzer (
         .logic0    (OUT_CH[4])   
     );
 
-    assign OUT_CH[15:5] = 0; 
-
     // Unused output channels
     assign OUT_CH[15:5] = 11'b0;
 

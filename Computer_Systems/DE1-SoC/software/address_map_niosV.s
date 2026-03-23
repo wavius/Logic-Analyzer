@@ -34,6 +34,7 @@
     .equ    VIDEO_IN_BASE,          0xFF203060
     .equ    EDGE_DETECT_CTRL_BASE,  0xFF203070
     .equ    ADC_BASE,               0xFF204000
+    .equ    LA_BASE,                0xFF205000 // Logic Analyzer
 
 /* Nios V memory-mapped registers */
     .equ    MTIME_BASE,             0xFF202100

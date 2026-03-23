@@ -1,5 +1,5 @@
 Flow report for DE1_SoC_NiosVg_Computer
-Sat Mar 21 16:10:21 2026
+Mon Mar 23 02:59:09 2026
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -41,15 +41,15 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Sat Mar 21 16:09:04 2026           ;
+; Flow Status                     ; Successful - Mon Mar 23 02:56:50 2026           ;
 ; Quartus Prime Version           ; 24.1std.0 Build 1077 03/04/2025 SC Lite Edition ;
 ; Revision Name                   ; DE1_SoC_NiosVg_Computer                         ;
 ; Top-level Entity Name           ; DE1_SoC_NiosVg_Computer                         ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSEMA5F31C6                                    ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 15,554 / 32,070 ( 49 % )                        ;
-; Total registers                 ; 20230                                           ;
+; Logic utilization (in ALMs)     ; 15,497 / 32,070 ( 48 % )                        ;
+; Total registers                 ; 20165                                           ;
 ; Total pins                      ; 240 / 457 ( 53 % )                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 2,388,056 / 4,065,280 ( 59 % )                  ;
@@ -68,7 +68,7 @@ on the Quartus Prime software download page.
 +-------------------+-------------------------+
 ; Option            ; Setting                 ;
 +-------------------+-------------------------+
-; Start date & time ; 03/21/2026 15:47:51     ;
+; Start date & time ; 03/23/2026 02:07:32     ;
 ; Main task         ; Compilation             ;
 ; Revision Name     ; DE1_SoC_NiosVg_Computer ;
 +-------------------+-------------------------+
@@ -79,7 +79,7 @@ on the Quartus Prime software download page.
 +--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+------------+
 ; Assignment Name                      ; Value                                                             ; Default Value ; Entity Name     ; Section Id ;
 +--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+------------+
-; COMPILER_SIGNATURE_ID                ; 22437451415891.177412247106768                                    ; --            ; --              ; --         ;
+; COMPILER_SIGNATURE_ID                ; 70631279444307.177424605219244                                    ; --            ; --              ; --         ;
 ; FITTER_EFFORT                        ; Standard Fit                                                      ; Auto Fit      ; --              ; --         ;
 ; MAX_CORE_JUNCTION_TEMP               ; 85                                                                ; --            ; --              ; --         ;
 ; MIN_CORE_JUNCTION_TEMP               ; 0                                                                 ; --            ; --              ; --         ;
@@ -99,7 +99,7 @@ on the Quartus Prime software download page.
 ; ROUTER_TIMING_OPTIMIZATION_LEVEL     ; MAXIMUM                                                           ; Normal        ; --              ; --         ;
 ; SLD_FILE                             ; Computer_System/synthesis/Computer_System.regmap                  ; --            ; --              ; --         ;
 ; SLD_FILE                             ; Computer_System/synthesis/Computer_System.debuginfo               ; --            ; --              ; --         ;
-; SLD_INFO                             ; QSYS_NAME Computer_System HAS_SOPCINFO 1 GENERATION_ID 1774075145 ; --            ; Computer_System ; --         ;
+; SLD_INFO                             ; QSYS_NAME Computer_System HAS_SOPCINFO 1 GENERATION_ID 1774242670 ; --            ; Computer_System ; --         ;
 ; SOPCINFO_FILE                        ; Computer_System/synthesis/../../Computer_System.sopcinfo          ; --            ; --              ; --         ;
 ; SYNTHESIS_ONLY_QIP                   ; On                                                                ; --            ; --              ; --         ;
 +--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+------------+
@@ -110,11 +110,11 @@ on the Quartus Prime software download page.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:02:08     ; 1.9                     ; 5878 MB             ; 00:03:30                           ;
-; Fitter               ; 00:17:59     ; 1.3                     ; 9270 MB             ; 01:11:22                           ;
-; Assembler            ; 00:00:35     ; 1.0                     ; 5573 MB             ; 00:00:33                           ;
-; Timing Analyzer      ; 00:01:15     ; 3.2                     ; 6521 MB             ; 00:03:24                           ;
-; Total                ; 00:21:57     ; --                      ; --                  ; 01:18:49                           ;
+; Analysis & Synthesis ; 00:06:15     ; 1.8                     ; 5843 MB             ; 00:06:19                           ;
+; Fitter               ; 00:41:14     ; 1.3                     ; 9313 MB             ; 01:10:01                           ;
+; Assembler            ; 00:00:43     ; 1.0                     ; 5573 MB             ; 00:00:39                           ;
+; Timing Analyzer      ; 00:02:16     ; 5.2                     ; 6478 MB             ; 00:04:47                           ;
+; Total                ; 00:50:28     ; --                      ; --                  ; 01:21:46                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
