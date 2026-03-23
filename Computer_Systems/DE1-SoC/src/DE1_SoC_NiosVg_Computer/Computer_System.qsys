@@ -1748,11 +1748,6 @@
    kind="reset"
    version="24.1"
    start="System_CLK.clk_reset"
-   end="Logic_Analyzer_0.nreset" />
- <connection
-   kind="reset"
-   version="24.1"
-   start="System_CLK.clk_reset"
    end="NiosVg.reset" />
  <connection
    kind="reset"
@@ -1839,6 +1834,11 @@
    version="24.1"
    start="System_CLK.clk_reset"
    end="ADC.reset" />
+ <connection
+   kind="reset"
+   version="24.1"
+   start="System_CLK.clk_reset"
+   end="Logic_Analyzer_0.reset" />
  <connection
    kind="reset"
    version="24.1"

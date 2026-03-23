@@ -7,6 +7,7 @@ module logic_analyzer (
     input  logic        write,
     input  logic [31:0] writedata,
     input  logic        read,
+    input  logic        chipselect,
     output logic [31:0] readdata,
 
     // FPGA Pins
@@ -42,11 +43,12 @@ module logic_analyzer (
         .clk (clk),
         .nreset    (nreset),
         
-        .address   (address),
-        .write     (write),
-        .writedata (writedata),
-        .read      (read),
-        .readdata  (readdata),
+        .address    (address),
+        .write      (write),
+        .writedata  (writedata),
+        .read       (read),
+        .chipselect (chipselect),
+        .readdata   (readdata),
 
         .channel_in(IN_CH)
     );

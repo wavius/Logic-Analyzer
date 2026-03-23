@@ -20,8 +20,8 @@
 			irda_TXD                              : out   std_logic;                                        -- TXD
 			irda_RXD                              : in    std_logic                     := 'X';             -- RXD
 			leds_export                           : out   std_logic_vector(9 downto 0);                     -- export
-			logic_analyzer_0_conduit_end_out_data : out   std_logic_vector(15 downto 0);                    -- out_data
-			logic_analyzer_0_conduit_end_in_data  : in    std_logic_vector(15 downto 0) := (others => 'X'); -- in_data
+			logic_analyzer_0_conduit_end_data_in  : in    std_logic_vector(15 downto 0) := (others => 'X'); -- data_in
+			logic_analyzer_0_conduit_end_data_out : out   std_logic_vector(15 downto 0);                    -- data_out
 			ps2_port_CLK                          : inout std_logic                     := 'X';             -- CLK
 			ps2_port_DAT                          : inout std_logic                     := 'X';             -- DAT
 			ps2_port_dual_CLK                     : inout std_logic                     := 'X';             -- CLK

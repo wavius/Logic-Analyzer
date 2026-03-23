@@ -1,5 +1,5 @@
 Flow report for DE1_SoC_NiosVg_Computer
-Mon Mar 23 02:59:09 2026
+Mon Mar 23 19:16:35 2026
 Quartus Prime Version 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
 
 
@@ -41,15 +41,15 @@ on the Quartus Prime software download page.
 +-----------------------------------------------------------------------------------+
 ; Flow Summary                                                                      ;
 +---------------------------------+-------------------------------------------------+
-; Flow Status                     ; Successful - Mon Mar 23 02:56:50 2026           ;
+; Flow Status                     ; Successful - Mon Mar 23 19:15:46 2026           ;
 ; Quartus Prime Version           ; 24.1std.0 Build 1077 03/04/2025 SC Lite Edition ;
 ; Revision Name                   ; DE1_SoC_NiosVg_Computer                         ;
 ; Top-level Entity Name           ; DE1_SoC_NiosVg_Computer                         ;
 ; Family                          ; Cyclone V                                       ;
 ; Device                          ; 5CSEMA5F31C6                                    ;
 ; Timing Models                   ; Final                                           ;
-; Logic utilization (in ALMs)     ; 15,497 / 32,070 ( 48 % )                        ;
-; Total registers                 ; 20165                                           ;
+; Logic utilization (in ALMs)     ; 15,472 / 32,070 ( 48 % )                        ;
+; Total registers                 ; 20221                                           ;
 ; Total pins                      ; 240 / 457 ( 53 % )                              ;
 ; Total virtual pins              ; 0                                               ;
 ; Total block memory bits         ; 2,388,056 / 4,065,280 ( 59 % )                  ;
@@ -68,41 +68,42 @@ on the Quartus Prime software download page.
 +-------------------+-------------------------+
 ; Option            ; Setting                 ;
 +-------------------+-------------------------+
-; Start date & time ; 03/23/2026 02:07:32     ;
+; Start date & time ; 03/23/2026 18:48:40     ;
 ; Main task         ; Compilation             ;
 ; Revision Name     ; DE1_SoC_NiosVg_Computer ;
 +-------------------+-------------------------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                                        ;
-+--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+------------+
-; Assignment Name                      ; Value                                                             ; Default Value ; Entity Name     ; Section Id ;
-+--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+------------+
-; COMPILER_SIGNATURE_ID                ; 70631279444307.177424605219244                                    ; --            ; --              ; --         ;
-; FITTER_EFFORT                        ; Standard Fit                                                      ; Auto Fit      ; --              ; --         ;
-; MAX_CORE_JUNCTION_TEMP               ; 85                                                                ; --            ; --              ; --         ;
-; MIN_CORE_JUNCTION_TEMP               ; 0                                                                 ; --            ; --              ; --         ;
-; MISC_FILE                            ; Computer_System/synthesis/../Computer_System.cmp                  ; --            ; --              ; --         ;
-; MISC_FILE                            ; Computer_System/synthesis/../../Computer_System.qsys              ; --            ; --              ; --         ;
-; MUX_RESTRUCTURE                      ; Off                                                               ; Auto          ; --              ; --         ;
-; OPTIMIZATION_MODE                    ; Aggressive Performance                                            ; Balanced      ; --              ; --         ;
-; OPTIMIZATION_TECHNIQUE               ; Speed                                                             ; Balanced      ; --              ; --         ;
-; PARTITION_COLOR                      ; -- (Not supported for targeted family)                            ; --            ; --              ; Top        ;
-; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family)                            ; --            ; --              ; Top        ;
-; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family)                            ; --            ; --              ; Top        ;
-; PHYSICAL_SYNTHESIS_COMBO_LOGIC       ; On                                                                ; Off           ; --              ; --         ;
-; PHYSICAL_SYNTHESIS_REGISTER_RETIMING ; On                                                                ; Off           ; --              ; --         ;
-; PLACEMENT_EFFORT_MULTIPLIER          ; 4.0                                                               ; 1.0           ; --              ; --         ;
-; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                                               ; --            ; --              ; --         ;
-; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                             ; --            ; --              ; --         ;
-; ROUTER_TIMING_OPTIMIZATION_LEVEL     ; MAXIMUM                                                           ; Normal        ; --              ; --         ;
-; SLD_FILE                             ; Computer_System/synthesis/Computer_System.regmap                  ; --            ; --              ; --         ;
-; SLD_FILE                             ; Computer_System/synthesis/Computer_System.debuginfo               ; --            ; --              ; --         ;
-; SLD_INFO                             ; QSYS_NAME Computer_System HAS_SOPCINFO 1 GENERATION_ID 1774242670 ; --            ; Computer_System ; --         ;
-; SOPCINFO_FILE                        ; Computer_System/synthesis/../../Computer_System.sopcinfo          ; --            ; --              ; --         ;
-; SYNTHESIS_ONLY_QIP                   ; On                                                                ; --            ; --              ; --         ;
-+--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+------------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Flow Non-Default Global Settings                                                                                                                            ;
++--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+----------------+
+; Assignment Name                      ; Value                                                             ; Default Value ; Entity Name     ; Section Id     ;
++--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+----------------+
+; COMPILER_SIGNATURE_ID                ; 70631279444307.177430611935312                                    ; --            ; --              ; --             ;
+; EDA_OUTPUT_DATA_FORMAT               ; Vhdl                                                              ; --            ; --              ; eda_simulation ;
+; FITTER_EFFORT                        ; Standard Fit                                                      ; Auto Fit      ; --              ; --             ;
+; MAX_CORE_JUNCTION_TEMP               ; 85                                                                ; --            ; --              ; --             ;
+; MIN_CORE_JUNCTION_TEMP               ; 0                                                                 ; --            ; --              ; --             ;
+; MISC_FILE                            ; Computer_System/synthesis/../Computer_System.cmp                  ; --            ; --              ; --             ;
+; MISC_FILE                            ; Computer_System/synthesis/../../Computer_System.qsys              ; --            ; --              ; --             ;
+; MUX_RESTRUCTURE                      ; Off                                                               ; Auto          ; --              ; --             ;
+; OPTIMIZATION_MODE                    ; Aggressive Performance                                            ; Balanced      ; --              ; --             ;
+; OPTIMIZATION_TECHNIQUE               ; Speed                                                             ; Balanced      ; --              ; --             ;
+; PARTITION_COLOR                      ; -- (Not supported for targeted family)                            ; --            ; --              ; Top            ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family)                            ; --            ; --              ; Top            ;
+; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family)                            ; --            ; --              ; Top            ;
+; PHYSICAL_SYNTHESIS_COMBO_LOGIC       ; On                                                                ; Off           ; --              ; --             ;
+; PHYSICAL_SYNTHESIS_REGISTER_RETIMING ; On                                                                ; Off           ; --              ; --             ;
+; PLACEMENT_EFFORT_MULTIPLIER          ; 4.0                                                               ; 1.0           ; --              ; --             ;
+; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                                               ; --            ; --              ; --             ;
+; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW                             ; --            ; --              ; --             ;
+; ROUTER_TIMING_OPTIMIZATION_LEVEL     ; MAXIMUM                                                           ; Normal        ; --              ; --             ;
+; SLD_FILE                             ; Computer_System/synthesis/Computer_System.regmap                  ; --            ; --              ; --             ;
+; SLD_FILE                             ; Computer_System/synthesis/Computer_System.debuginfo               ; --            ; --              ; --             ;
+; SLD_INFO                             ; QSYS_NAME Computer_System HAS_SOPCINFO 1 GENERATION_ID 1774305623 ; --            ; Computer_System ; --             ;
+; SOPCINFO_FILE                        ; Computer_System/synthesis/../../Computer_System.sopcinfo          ; --            ; --              ; --             ;
+; SYNTHESIS_ONLY_QIP                   ; On                                                                ; --            ; --              ; --             ;
++--------------------------------------+-------------------------------------------------------------------+---------------+-----------------+----------------+
 
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -110,11 +111,11 @@ on the Quartus Prime software download page.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:06:15     ; 1.8                     ; 5843 MB             ; 00:06:19                           ;
-; Fitter               ; 00:41:14     ; 1.3                     ; 9313 MB             ; 01:10:01                           ;
-; Assembler            ; 00:00:43     ; 1.0                     ; 5573 MB             ; 00:00:39                           ;
-; Timing Analyzer      ; 00:02:16     ; 5.2                     ; 6478 MB             ; 00:04:47                           ;
-; Total                ; 00:50:28     ; --                      ; --                  ; 01:21:46                           ;
+; Analysis & Synthesis ; 00:02:02     ; 2.1                     ; 5965 MB             ; 00:03:23                           ;
+; Fitter               ; 00:24:21     ; 1.4                     ; 9394 MB             ; 01:11:30                           ;
+; Assembler            ; 00:00:20     ; 1.0                     ; 5565 MB             ; 00:00:20                           ;
+; Timing Analyzer      ; 00:00:47     ; 3.5                     ; 6520 MB             ; 00:02:27                           ;
+; Total                ; 00:27:30     ; --                      ; --                  ; 01:17:40                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

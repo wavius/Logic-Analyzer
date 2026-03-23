@@ -9,6 +9,7 @@ module signal_capture #(
   input  logic        write,
   input  logic [31:0] writedata,
   input  logic        read,
+  input  logic        chipselect,
   output logic [31:0] readdata,
 
   // Channel input 
@@ -43,7 +44,7 @@ module signal_capture #(
   logic        trigger_past_data;
   logic        rising_edge_detected;
 
-  assign trigger_channel = trigger_config[15:0] - 1;
+  assign trigger_channel = trigger_config[15:0];
   assign trigger_current_data = channel_in[trigger_channel];
 
   always_ff @(posedge clk) begin
@@ -84,7 +85,7 @@ module signal_capture #(
   // Avalon read logic
   always_comb begin
     readdata = 32'h0; // Default
-    if (read) begin
+    if (read && chipselect) begin
       case (address)
         3'h0: readdata = control_reg;
         3'h1: readdata = {29'b0, triggered, buffer_full, run};

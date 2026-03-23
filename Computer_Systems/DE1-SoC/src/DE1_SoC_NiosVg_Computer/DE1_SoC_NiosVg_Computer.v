@@ -268,8 +268,8 @@ Computer_System The_System (
 	//.expansion_jp2_export					({GPIO_1[35:19], GPIO_1[17], GPIO_1[15:3], GPIO_1[1]}),
 
 	// Logic Analyzer Input Channels
-	.logic_analyzer_0_conduit_end_in_data   ({GPIO_0[19], GPIO_0[17], GPIO_0[15:3], GPIO_0[1]}), // JP1
-	.logic_analyzer_0_conduit_end_out_data	({GPIO_1[19], GPIO_1[17], GPIO_1[15:3], GPIO_1[1]}), // JP2
+	.logic_analyzer_0_conduit_end_data_in   ({GPIO_0[19], GPIO_0[17], GPIO_0[15:3], GPIO_0[1]}), // JP1
+	.logic_analyzer_0_conduit_end_data_out  ({GPIO_1[19], GPIO_1[17], GPIO_1[15:3], GPIO_1[1]}), // JP2
 
 
 	// LEDs

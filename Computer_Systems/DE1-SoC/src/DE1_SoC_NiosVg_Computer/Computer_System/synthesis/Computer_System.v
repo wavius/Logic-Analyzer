@@ -24,8 +24,8 @@ module Computer_System (
 		output wire        irda_TXD,                              //                         irda.TXD
 		input  wire        irda_RXD,                              //                             .RXD
 		output wire [9:0]  leds_export,                           //                         leds.export
-		output wire [15:0] logic_analyzer_0_conduit_end_out_data, // logic_analyzer_0_conduit_end.out_data
-		input  wire [15:0] logic_analyzer_0_conduit_end_in_data,  //                             .in_data
+		input  wire [15:0] logic_analyzer_0_conduit_end_data_in,  // logic_analyzer_0_conduit_end.data_in
+		output wire [15:0] logic_analyzer_0_conduit_end_data_out, //                             .data_out
 		inout  wire        ps2_port_CLK,                          //                     ps2_port.CLK
 		inout  wire        ps2_port_DAT,                          //                             .DAT
 		inout  wire        ps2_port_dual_CLK,                     //                ps2_port_dual.CLK
@@ -181,6 +181,7 @@ module Computer_System (
 	wire   [3:0] mm_interconnect_0_ps2_port_dual_avalon_ps2_slave_byteenable;                           // mm_interconnect_0:PS2_Port_Dual_avalon_ps2_slave_byteenable -> PS2_Port_Dual:byteenable
 	wire         mm_interconnect_0_ps2_port_dual_avalon_ps2_slave_write;                                // mm_interconnect_0:PS2_Port_Dual_avalon_ps2_slave_write -> PS2_Port_Dual:write
 	wire  [31:0] mm_interconnect_0_ps2_port_dual_avalon_ps2_slave_writedata;                            // mm_interconnect_0:PS2_Port_Dual_avalon_ps2_slave_writedata -> PS2_Port_Dual:writedata
+	wire         mm_interconnect_0_logic_analyzer_0_avalon_slave_0_chipselect;                          // mm_interconnect_0:Logic_Analyzer_0_avalon_slave_0_chipselect -> Logic_Analyzer_0:chipselect
 	wire  [31:0] mm_interconnect_0_logic_analyzer_0_avalon_slave_0_readdata;                            // Logic_Analyzer_0:readdata -> mm_interconnect_0:Logic_Analyzer_0_avalon_slave_0_readdata
 	wire   [2:0] mm_interconnect_0_logic_analyzer_0_avalon_slave_0_address;                             // mm_interconnect_0:Logic_Analyzer_0_avalon_slave_0_address -> Logic_Analyzer_0:address
 	wire         mm_interconnect_0_logic_analyzer_0_avalon_slave_0_read;                                // mm_interconnect_0:Logic_Analyzer_0_avalon_slave_0_read -> Logic_Analyzer_0:read
@@ -514,15 +515,16 @@ module Computer_System (
 	);
 
 	logic_analyzer logic_analyzer_0 (
-		.address   (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_address),   // avalon_slave_0.address
-		.write     (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_write),     //               .write
-		.writedata (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_writedata), //               .writedata
-		.read      (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_read),      //               .read
-		.readdata  (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_readdata),  //               .readdata
-		.OUT_CH    (logic_analyzer_0_conduit_end_out_data),                       //    conduit_end.out_data
-		.IN_CH     (logic_analyzer_0_conduit_end_in_data),                        //               .in_data
-		.clk       (sys_clk_ref_clk),                                             //          clock.clk
-		.nreset    (~rst_controller_reset_out_reset)                              //         nreset.reset_n
+		.clk        (sys_clk_ref_clk),                                              //          clock.clk
+		.address    (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_address),    // avalon_slave_0.address
+		.write      (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_write),      //               .write
+		.writedata  (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_writedata),  //               .writedata
+		.read       (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_read),       //               .read
+		.chipselect (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_chipselect), //               .chipselect
+		.readdata   (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_readdata),   //               .readdata
+		.IN_CH      (logic_analyzer_0_conduit_end_data_in),                         //    conduit_end.data_in
+		.OUT_CH     (logic_analyzer_0_conduit_end_data_out),                        //               .data_out
+		.nreset     (~rst_controller_reset_out_reset)                               //          reset.reset_n
 	);
 
 	Computer_System_NiosVg niosvg (
@@ -918,6 +920,7 @@ module Computer_System (
 		.Logic_Analyzer_0_avalon_slave_0_read                                (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_read),                                //                                                         .read
 		.Logic_Analyzer_0_avalon_slave_0_readdata                            (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_readdata),                            //                                                         .readdata
 		.Logic_Analyzer_0_avalon_slave_0_writedata                           (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_writedata),                           //                                                         .writedata
+		.Logic_Analyzer_0_avalon_slave_0_chipselect                          (mm_interconnect_0_logic_analyzer_0_avalon_slave_0_chipselect),                          //                                                         .chipselect
 		.NiosVg_dm_agent_address                                             (mm_interconnect_0_niosvg_dm_agent_address),                                             //                                          NiosVg_dm_agent.address
 		.NiosVg_dm_agent_write                                               (mm_interconnect_0_niosvg_dm_agent_write),                                               //                                                         .write
 		.NiosVg_dm_agent_read                                                (mm_interconnect_0_niosvg_dm_agent_read),                                                //                                                         .read

@@ -20,8 +20,6 @@
 			irda_TXD                              : out   std_logic;                                        -- TXD
 			irda_RXD                              : in    std_logic                     := 'X';             -- RXD
 			leds_export                           : out   std_logic_vector(9 downto 0);                     -- export
-			logic_analyzer_0_conduit_end_out_data : out   std_logic_vector(15 downto 0);                    -- out_data
-			logic_analyzer_0_conduit_end_in_data  : in    std_logic_vector(15 downto 0) := (others => 'X'); -- in_data
 			ps2_port_CLK                          : inout std_logic                     := 'X';             -- CLK
 			ps2_port_DAT                          : inout std_logic                     := 'X';             -- DAT
 			ps2_port_dual_CLK                     : inout std_logic                     := 'X';             -- CLK
@@ -55,7 +53,9 @@
 			video_in_TD_VS                        : in    std_logic                     := 'X';             -- TD_VS
 			video_in_clk27_reset                  : in    std_logic                     := 'X';             -- clk27_reset
 			video_in_TD_RESET                     : out   std_logic;                                        -- TD_RESET
-			video_in_overflow_flag                : out   std_logic                                         -- overflow_flag
+			video_in_overflow_flag                : out   std_logic;                                        -- overflow_flag
+			logic_analyzer_0_conduit_end_data_in  : in    std_logic_vector(15 downto 0) := (others => 'X'); -- data_in
+			logic_analyzer_0_conduit_end_data_out : out   std_logic_vector(15 downto 0)                     -- data_out
 		);
 	end component Computer_System;
 
@@ -81,8 +81,6 @@
 			irda_TXD                              => CONNECTED_TO_irda_TXD,                              --                         irda.TXD
 			irda_RXD                              => CONNECTED_TO_irda_RXD,                              --                             .RXD
 			leds_export                           => CONNECTED_TO_leds_export,                           --                         leds.export
-			logic_analyzer_0_conduit_end_out_data => CONNECTED_TO_logic_analyzer_0_conduit_end_out_data, -- logic_analyzer_0_conduit_end.out_data
-			logic_analyzer_0_conduit_end_in_data  => CONNECTED_TO_logic_analyzer_0_conduit_end_in_data,  --                             .in_data
 			ps2_port_CLK                          => CONNECTED_TO_ps2_port_CLK,                          --                     ps2_port.CLK
 			ps2_port_DAT                          => CONNECTED_TO_ps2_port_DAT,                          --                             .DAT
 			ps2_port_dual_CLK                     => CONNECTED_TO_ps2_port_dual_CLK,                     --                ps2_port_dual.CLK
@@ -116,6 +114,8 @@
 			video_in_TD_VS                        => CONNECTED_TO_video_in_TD_VS,                        --                             .TD_VS
 			video_in_clk27_reset                  => CONNECTED_TO_video_in_clk27_reset,                  --                             .clk27_reset
 			video_in_TD_RESET                     => CONNECTED_TO_video_in_TD_RESET,                     --                             .TD_RESET
-			video_in_overflow_flag                => CONNECTED_TO_video_in_overflow_flag                 --                             .overflow_flag
+			video_in_overflow_flag                => CONNECTED_TO_video_in_overflow_flag,                --                             .overflow_flag
+			logic_analyzer_0_conduit_end_data_in  => CONNECTED_TO_logic_analyzer_0_conduit_end_data_in,  -- logic_analyzer_0_conduit_end.data_in
+			logic_analyzer_0_conduit_end_data_out => CONNECTED_TO_logic_analyzer_0_conduit_end_data_out  --                             .data_out
 		);
 

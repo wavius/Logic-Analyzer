@@ -5,11 +5,11 @@
  version="1.0"
  fabric="QSYS">
  <!-- Format version 24.1 1077 (Future versions may contain additional information.) -->
- <!-- 2026.03.23.01:11:12 -->
+ <!-- 2026.03.23.18:40:24 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1774242670</value>
+  <value>1774305623</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -1514,7 +1514,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1774242670</value>
+   <value>1774305623</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -11765,6 +11765,51 @@ the requested settings for a module instance. -->
    <visible>true</visible>
    <valid>true</valid>
   </parameter>
+  <interface name="clock" kind="clock_sink" version="24.1">
+   <!-- The connection points exposed by a module instance for the
+particular module parameters. Connection points and their
+parameters are a RESULT of the module parameters. -->
+   <parameter name="externallyDriven">
+    <type>boolean</type>
+    <value>false</value>
+    <derived>false</derived>
+    <enabled>true</enabled>
+    <visible>false</visible>
+    <valid>true</valid>
+   </parameter>
+   <parameter name="ptfSchematicName">
+    <type>java.lang.String</type>
+    <value></value>
+    <derived>false</derived>
+    <enabled>true</enabled>
+    <visible>false</visible>
+    <valid>true</valid>
+   </parameter>
+   <parameter name="deviceFamily">
+    <type>java.lang.String</type>
+    <value>UNKNOWN</value>
+    <derived>false</derived>
+    <enabled>true</enabled>
+    <visible>true</visible>
+    <valid>true</valid>
+   </parameter>
+   <parameter name="generateLegacySim">
+    <type>boolean</type>
+    <value>false</value>
+    <derived>false</derived>
+    <enabled>true</enabled>
+    <visible>true</visible>
+    <valid>true</valid>
+   </parameter>
+   <type>clock</type>
+   <isStart>false</isStart>
+   <port>
+    <name>clk</name>
+    <direction>Input</direction>
+    <width>1</width>
+    <role>clk</role>
+   </port>
+  </interface>
   <interface name="avalon_slave_0" kind="avalon_slave" version="24.1">
    <!-- The connection points exposed by a module instance for the
 particular module parameters. Connection points and their
@@ -11835,7 +11880,7 @@ parameters are a RESULT of the module parameters. -->
    </parameter>
    <parameter name="associatedReset">
     <type>java.lang.String</type>
-    <value>nreset</value>
+    <value>reset</value>
     <derived>false</derived>
     <enabled>true</enabled>
     <visible>true</visible>
@@ -12124,6 +12169,12 @@ parameters are a RESULT of the module parameters. -->
     <role>read</role>
    </port>
    <port>
+    <name>chipselect</name>
+    <direction>Input</direction>
+    <width>1</width>
+    <role>chipselect</role>
+   </port>
+   <port>
     <name>readdata</name>
     <direction>Output</direction>
     <width>32</width>
@@ -12169,64 +12220,19 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
-    <name>OUT_CH</name>
-    <direction>Output</direction>
-    <width>16</width>
-    <role>out_data</role>
-   </port>
-   <port>
     <name>IN_CH</name>
     <direction>Input</direction>
     <width>16</width>
-    <role>in_data</role>
+    <role>data_in</role>
    </port>
-  </interface>
-  <interface name="clock" kind="clock_sink" version="24.1">
-   <!-- The connection points exposed by a module instance for the
-particular module parameters. Connection points and their
-parameters are a RESULT of the module parameters. -->
-   <parameter name="externallyDriven">
-    <type>boolean</type>
-    <value>false</value>
-    <derived>false</derived>
-    <enabled>true</enabled>
-    <visible>false</visible>
-    <valid>true</valid>
-   </parameter>
-   <parameter name="ptfSchematicName">
-    <type>java.lang.String</type>
-    <value></value>
-    <derived>false</derived>
-    <enabled>true</enabled>
-    <visible>false</visible>
-    <valid>true</valid>
-   </parameter>
-   <parameter name="deviceFamily">
-    <type>java.lang.String</type>
-    <value>UNKNOWN</value>
-    <derived>false</derived>
-    <enabled>true</enabled>
-    <visible>true</visible>
-    <valid>true</valid>
-   </parameter>
-   <parameter name="generateLegacySim">
-    <type>boolean</type>
-    <value>false</value>
-    <derived>false</derived>
-    <enabled>true</enabled>
-    <visible>true</visible>
-    <valid>true</valid>
-   </parameter>
-   <type>clock</type>
-   <isStart>false</isStart>
    <port>
-    <name>clk</name>
-    <direction>Input</direction>
-    <width>1</width>
-    <role>clk</role>
+    <name>OUT_CH</name>
+    <direction>Output</direction>
+    <width>16</width>
+    <role>data_out</role>
    </port>
   </interface>
-  <interface name="nreset" kind="reset_sink" version="24.1">
+  <interface name="reset" kind="reset_sink" version="24.1">
    <!-- The connection points exposed by a module instance for the
 particular module parameters. Connection points and their
 parameters are a RESULT of the module parameters. -->
@@ -19643,7 +19649,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1774242670</value>
+   <value>1774305623</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -19663,7 +19669,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1774242670</value>
+   <value>1774305623</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -19679,7 +19685,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1774242670</value>
+   <value>1774305623</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -21081,7 +21087,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1774242670</value>
+   <value>1774305623</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -23327,7 +23333,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1774242670</value>
+   <value>1774305623</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -34773,7 +34779,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1774242670</value>
+   <value>1774305623</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -39540,7 +39546,7 @@ parameters are a RESULT of the module parameters. -->
 the requested settings for a module instance. -->
   <parameter name="AUTO_GENERATION_ID">
    <type>java.lang.Integer</type>
-   <value>1774242670</value>
+   <value>1774305623</value>
    <derived>false</derived>
    <enabled>true</enabled>
    <visible>false</visible>
@@ -52612,33 +52618,6 @@ parameters are a RESULT of the module parameters. -->
   <endConnectionPoint>ndm_reset_in</endConnectionPoint>
  </connection>
  <connection
-   name="System_CLK.clk_reset/Logic_Analyzer_0.nreset"
-   kind="reset"
-   version="24.1"
-   start="System_CLK.clk_reset"
-   end="Logic_Analyzer_0.nreset">
-  <parameter name="deviceFamily">
-   <type>java.lang.String</type>
-   <value>UNKNOWN</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <parameter name="generateLegacySim">
-   <type>boolean</type>
-   <value>false</value>
-   <derived>false</derived>
-   <enabled>true</enabled>
-   <visible>true</visible>
-   <valid>true</valid>
-  </parameter>
-  <startModule>System_CLK</startModule>
-  <startConnectionPoint>clk_reset</startConnectionPoint>
-  <endModule>Logic_Analyzer_0</endModule>
-  <endConnectionPoint>nreset</endConnectionPoint>
- </connection>
- <connection
    name="System_CLK.clk_reset/NiosVg.reset"
    kind="reset"
    version="24.1"
@@ -53122,6 +53101,33 @@ parameters are a RESULT of the module parameters. -->
   <startModule>System_CLK</startModule>
   <startConnectionPoint>clk_reset</startConnectionPoint>
   <endModule>ADC</endModule>
+  <endConnectionPoint>reset</endConnectionPoint>
+ </connection>
+ <connection
+   name="System_CLK.clk_reset/Logic_Analyzer_0.reset"
+   kind="reset"
+   version="24.1"
+   start="System_CLK.clk_reset"
+   end="Logic_Analyzer_0.reset">
+  <parameter name="deviceFamily">
+   <type>java.lang.String</type>
+   <value>UNKNOWN</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <parameter name="generateLegacySim">
+   <type>boolean</type>
+   <value>false</value>
+   <derived>false</derived>
+   <enabled>true</enabled>
+   <visible>true</visible>
+   <valid>true</valid>
+  </parameter>
+  <startModule>System_CLK</startModule>
+  <startConnectionPoint>clk_reset</startConnectionPoint>
+  <endModule>Logic_Analyzer_0</endModule>
   <endConnectionPoint>reset</endConnectionPoint>
  </connection>
  <connection

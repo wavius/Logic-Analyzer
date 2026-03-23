@@ -153,6 +153,7 @@ module Computer_System_mm_interconnect_0 (
 		output wire        Logic_Analyzer_0_avalon_slave_0_read,                                //                                                         .read
 		input  wire [31:0] Logic_Analyzer_0_avalon_slave_0_readdata,                            //                                                         .readdata
 		output wire [31:0] Logic_Analyzer_0_avalon_slave_0_writedata,                           //                                                         .writedata
+		output wire        Logic_Analyzer_0_avalon_slave_0_chipselect,                          //                                                         .chipselect
 		output wire [15:0] NiosVg_dm_agent_address,                                             //                                          NiosVg_dm_agent.address
 		output wire        NiosVg_dm_agent_write,                                               //                                                         .write
 		output wire        NiosVg_dm_agent_read,                                                //                                                         .read
@@ -4289,6 +4290,7 @@ module Computer_System_mm_interconnect_0 (
 		.av_read                (Logic_Analyzer_0_avalon_slave_0_read),                   //                         .read
 		.av_readdata            (Logic_Analyzer_0_avalon_slave_0_readdata),               //                         .readdata
 		.av_writedata           (Logic_Analyzer_0_avalon_slave_0_writedata),              //                         .writedata
+		.av_chipselect          (Logic_Analyzer_0_avalon_slave_0_chipselect),             //                         .chipselect
 		.av_begintransfer       (),                                                       //              (terminated)
 		.av_beginbursttransfer  (),                                                       //              (terminated)
 		.av_burstcount          (),                                                       //              (terminated)
@@ -4297,7 +4299,6 @@ module Computer_System_mm_interconnect_0 (
 		.av_waitrequest         (1'b0),                                                   //              (terminated)
 		.av_writebyteenable     (),                                                       //              (terminated)
 		.av_lock                (),                                                       //              (terminated)
-		.av_chipselect          (),                                                       //              (terminated)
 		.av_clken               (),                                                       //              (terminated)
 		.uav_clken              (1'b0),                                                   //              (terminated)
 		.av_debugaccess         (),                                                       //              (terminated)
