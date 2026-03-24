@@ -512,28 +512,6 @@
    </assignment>
    </interface>
   </module>
- <module name="Logic_Analyzer_0" kind="Logic_Analyzer" path="Logic_Analyzer_0">
-  
-  <interface name="avalon_slave_0" kind="avalon_slave">
-   
-   <assignment>
-    <name>embeddedsw.configuration.isFlash</name>
-    <value>0</value>
-   </assignment>
-   <assignment>
-    <name>embeddedsw.configuration.isMemoryDevice</name>
-    <value>0</value>
-   </assignment>
-   <assignment>
-    <name>embeddedsw.configuration.isNonVolatileStorage</name>
-    <value>0</value>
-   </assignment>
-   <assignment>
-    <name>embeddedsw.configuration.isPrintableDevice</name>
-    <value>0</value>
-   </assignment>
-   </interface>
-  </module>
  <module name="NiosVg" kind="intel_niosv_g" path="NiosVg">
   
   <interface name="timer_sw_agent" kind="avalon_slave">
@@ -720,7 +698,7 @@
    <value>0</value>
    </parameter>
   <parameter name="timestamp">
-   <value>1773975723</value>
+   <value>1774321873</value>
    </parameter>
   <interface name="control_slave" kind="avalon_slave">
    
@@ -1480,8 +1458,6 @@
   </connection>
  <connection name="NiosVg.data_manager/PS2_Port_Dual.avalon_ps2_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="PS2_Port_Dual.avalon_ps2_slave">
   </connection>
- <connection name="NiosVg.data_manager/Logic_Analyzer_0.avalon_slave_0" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Logic_Analyzer_0.avalon_slave_0">
-  </connection>
  <connection name="NiosVg.data_manager/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave">
   </connection>
  <connection name="NiosVg.data_manager/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1">
@@ -1626,8 +1602,6 @@
   </connection>
  <connection name="System_CLK.clk/Onchip_SRAM.clk1" kind="clock" version="24.1" start="System_CLK.clk" end="Onchip_SRAM.clk1">
   </connection>
- <connection name="System_CLK.clk/Logic_Analyzer_0.clock_sink" kind="clock" version="24.1" start="System_CLK.clk" end="Logic_Analyzer_0.clock_sink">
-  </connection>
  <connection name="System_CLK.clk/VGA_Subsystem_Sys_Clk.clk_in" kind="clock" version="24.1" start="System_CLK.clk" end="VGA_Subsystem_Sys_Clk.clk_in">
   </connection>
  <connection name="System_CLK.clk/Audio_Subsystem_Sys_Clk.clk_in" kind="clock" version="24.1" start="System_CLK.clk" end="Audio_Subsystem_Sys_Clk.clk_in">
@@ -1697,8 +1671,6 @@
  <connection name="System_CLK.clk_reset/ADC.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="ADC.reset">
   </connection>
  <connection name="System_CLK.clk_reset/Onchip_SRAM.reset1" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Onchip_SRAM.reset1">
-  </connection>
- <connection name="System_CLK.clk_reset/Logic_Analyzer_0.reset_sink" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Logic_Analyzer_0.reset_sink">
   </connection>
  <connection name="System_CLK.clk_reset/VGA_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="VGA_Subsystem_Sys_Clk.clk_in_reset">
   </connection>
