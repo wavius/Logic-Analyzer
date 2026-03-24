@@ -2,7 +2,7 @@
 
 #include <string.h>  //for memset
 
-#include "../../Computer_Systems/DE1-SoC/software/address_map_niosV.h"
+#include "address_map_niosV.h"
 
 /********************************
  *  Structs

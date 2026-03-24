@@ -1,8 +1,13 @@
 import os
 import re
 
-FILES_TO_MERGE = ['core/sw/visualizer_logic.h', 'core/sw/visualizer_logic.c', 'core/sw/draw_screen.h', 'core/sw/vga_driver.h',  
-                  'core/sw/vga_driver.c', 'core/sw/draw_screen.c', 'core/sw/main.c']
+FILES_TO_MERGE = ['core/sw/inc/ps2_input.h',  'core/sw/src/ps2_input.c','core/sw/src/main.c']
+# FILES_TO_MERGE = [  'core/sw/inc/visualizer_logic.h', 'core/sw/src/visualizer_logic.c', 
+#                     'core/sw/inc/draw_screen.h', 'core/sw/draw_screen.c',
+#                     'core/sw/inc/vga_driver.h',  'core/sw/src/vga_driver.c',  
+#                     'core/sw/inc/visualizer_logic.h',  'core/sw/src/visualizer_logic.c', 
+#                     'core/sw/inc/ps2_input.h',  'core/sw/src/ps2_input.c', 
+#                     'core/sw/main.c'] 
 OUTPUT_FILE = 'combined_cpulator.c'
 
 def merge_files():
@@ -30,6 +35,10 @@ def merge_files():
             # Hardcode specific hardware macros for CPulator
             content = content.replace("PIXEL_BUF_CTRL_BASE", "0xFF203020")
             content = content.replace("CHAR_BUF_CTRL_BASE", "0xFF203030")
+            content = content.replace("LEDR_BASE", "0xFF200000")
+            content = content.replace("PS2_BASE", "0xFF200100")
+            
+            
             
             combined_content.append(f"/* --- START OF {filename} --- */")
             combined_content.append(content)

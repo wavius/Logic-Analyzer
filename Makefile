@@ -1,8 +1,12 @@
 INSTALL := C:/intelFPGA_pro/24.1
 
-MAIN	:= sig_test.c 
-HDRS	:= 
-SRCS	:= $(MAIN)
+MAIN := core/sw/src/main.c 
+
+# Finds all .h files in your include directory, plus your external address map
+HDRS := $(wildcard core/sw/inc/*.h) Computer_Systems/DE1-SoC/software/address_map_niosV.h
+
+# Finds all .c files in your source directory
+SRCS := $(wildcard core/sw/src/*.c)
 
 SHELL	:= cmd.exe
 
@@ -37,12 +41,17 @@ OD	:= $(COMPILER)/riscv32-unknown-elf-objdump.exe
 NM	:= $(COMPILER)/riscv32-unknown-elf-nm.exe
 RM	:= /usr/bin/rm -f
 
+
+# Define all directories containing header files
+INCLUDES := -I. \
+            -Icore/sw/inc \
+            -IComputer_Systems/DE1-SoC/software
 # Flags
 USERCCFLAGS	:= -g -O1 -ffunction-sections -fverbose-asm -fno-inline -gdwarf-2 
-USERLDFLAGS	:= -Wl,--defsym=__stack_pointer$$=0x4000000 -Wl,--defsym  -Wl,JTAG_UART_BASE=0xff201000 -lm
+USERLDFLAGS := -Wl,--defsym=__stack_pointer$$=0x4000000 -Wl,--defsym,JTAG_UART_BASE=0xff201000 -lm
 ARCHCCFLAGS	:= -march=rv32im_zicsr -mabi=ilp32
 ARCHLDFLAGS	:= -march=rv32im_zicsr -mabi=ilp32
-CCFLAGS		:= -Wall -c $(USERCCFLAGS) $(ARCHCCFLAGS) -I../../DE1-SoC/software
+CCFLAGS		:= -Wall -c $(USERCCFLAGS) $(ARCHCCFLAGS) $(INCLUDES)
 LDFLAGS		:= $(USERLDFLAGS) $(ARCHLDFLAGS)
 
 # Files
