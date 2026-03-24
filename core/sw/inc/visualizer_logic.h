@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+
 #define TOTAL_SIGANLS 16       // hard coded to be 16
 #define BUFFER_SIZE 4096       // hard coded to be 4096
 #define SAMPLE_RATE 100000000  // hard coded to be 100 MHz
