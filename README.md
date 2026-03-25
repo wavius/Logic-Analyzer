@@ -3,14 +3,12 @@ Logic analyzer implemented on the DE1-SoC
 
 Just rough notes for now: 
 
-To Do: 
-- implement user input via PS/2 keyboard
-- connect data buffer to UI
-- user input for trigger, channel enable, scrolling
-- display text
-- toggle between 2 pages in the UI to view all 16 channels
-- fix scrolling + drawing bugs
-- finalize zoom + time/div display behavior
+To Do (mar 25): 
+- implement select_channel() 
+- implement clear_everything()
+- implement switch_ui_page()
+- fix writing text to screen
+- clean up draw_screen.h/.c with more structs 
 
   
 Extra features: 
