@@ -30,16 +30,10 @@ int get_current_selected_channel_value();
 bool get_signals(bool trigger_running);
 void get_signals_test();
 void enable_signal(int current_channel);
-void hex_display(uint8_t value);
 
 /********************************
  *  Helper Functions
  ********************************/
-void hex_display(uint8_t value) {
-    volatile uint32_t* HEX = (volatile uint32_t*)HEX3_HEX0_BASE;
-    *HEX = value;  // display on HEX0 only, HEX1-3 stay blank
-}
-
 // select the given channel
 void select_channel(int selected) {
     // note: selected channels support [-1, 8] because -1 and 8 states reflect user scrolling off screen and nothing selected
