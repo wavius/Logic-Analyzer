@@ -14,17 +14,21 @@
  *  Internal global variables
  ********************************/
 static uint16_t LA_output[BUFFER_SIZE];
+Keyboard kb;        // keyboard for user input
+ZoomState g_state;  // handling zooming logic
 
-uint8_t key_channel = 0;
+Channel channels[TOTAL_SIGNALS];  // all information to draw the signals
+int key_channel = 0;
 
 /********************************
  *  Helper function declarations
  ********************************/
 void clear_signals();
-uint16_t get_current_selected_channel_value();
+int get_current_selected_channel_value();
 bool get_signals(bool trigger_running);
 void draw();
 void get_signals_test();
+void enable_signal(int current_channel);
 
 /********************************
  *  Helper Functions
@@ -45,14 +49,18 @@ void increment_channel_selected(int increment_direction) {
     if (key_channel <= -1 && increment_direction == -1)
         return;  // cannot decrement anymore
 
-    if (key_channel >= SIGNALS_PER_SCREEN && increment_direction == 1)
+    if (key_channel >= (SIGNALS_PER_SCREEN - 1) && increment_direction == 1)
         return;  // cannot increment anymore
 
     key_channel += increment_direction;
 }
 
 // figure out which channel the user currently has selected
-uint16_t get_current_selected_channel_value() {
+int get_current_selected_channel_value() {
+    // check the user is not in the deselected mode for selecting channels
+    // (deselected when current_channel_num == -1 or 8)
+    if (key_channel == -1 || key_channel == SIGNALS_PER_SCREEN)
+        return -1;                                // show deselected state
     uint16_t page_offset = current_page ? 8 : 0;  // current_page is from draw_screen lofic
     return key_channel + page_offset;             // ig 16 signals max, will always be in range [0, 15]
 }
@@ -79,7 +87,30 @@ void get_signals_test() {
 // clear signal buffer array
 void clear_signals() {
     memset(channel_buffers, 0, sizeof(channel_buffers));  // clear the signal values
-    memset(signals, 0, sizeof(signals));                  // clear all other assoicated data
+    memset(LA_output, 0, sizeof(LA_output));              // clear all other assoicated data
+    la_stop();                                            // stop the logic analyzer
+}
+
+void enable_signal(int current_channel) {
+    // check the user is not in the deselected mode for selecting channels
+    // (deselected when current_channel_num == -1 or 8)
+    if (current_channel == -1 || current_channel >= SIGNALS_PER_SCREEN)
+        return;
+
+    channels[current_channel].enabled = true;
+}
+
+bool populate_channels(bool successful_read) {
+    if (!successful_read)
+        return false;
+
+    // -- polulate the channels to draw on the screen --//
+    for (int i = 0; i < TOTAL_SIGNALS; i++) {
+        for (int p = 0; p < BUFFER_SIZE; p++) {
+            channels[i].samples[p] = (LA_output[p] >> i) & 1;
+        }
+    }
+    return true;
 }
 
 /********************************
@@ -93,7 +124,7 @@ void setup_init() {
     // add mouse stuff here too if added
 
     // -- Other initalizations -- //
-    zoom_state_init(&g_state);
+    zoom_state_init(&g_state, DEFAULT_ZOOM);
     channels_init(channels, TOTAL_SIGNALS);  // all information to DRAW the signals
 }
 
@@ -102,24 +133,20 @@ bool get_signals(bool trigger_running) {
     if (!trigger_running)
         return false;
 
-    clear_everything();
+    bool successful_read = false;
 
     while (!la_is_done()) {
     }  // get all the signals from the buffer
 
-    la_download_buffer(signals, BUFFER_SIZE);
+    la_download_buffer(LA_output, BUFFER_SIZE);
 
-    // -- polulate the channels to draw on the screen --//
-    for (int i = 0; i < TOTAL_SIGNALS; i++) {
-        channels[i].count = BUFFER_SIZE;
-        for (int p = 0; p < BUFFER_SIZE; p++) {
-            channels[i].samples[p] = (signals[p] >> i) & 1;
-        }
-        for (int j = 0; j < SIGNALS_PER_SCREEN; j++) {
-            channels[j].enabled = true;
-            snprintf(channels[i].label, sizeof(channels[i].label), "CH%d", i);
-        }
+    successful_read = true;
+
+    if (!populate_channels(successful_read)) {
+        clear_everything();  // clear and reset signals and LA
+        return false;        // something went wrong, don't try to draw
     }
+
     return true;
 }
 
@@ -145,22 +172,26 @@ void clear_everything() {
 void trigger_logic_analyzer() {
     bool trigger_running = false;
 
-    uint16_t current_channel_num = get_current_selected_channel_value();
+    int current_channel_num = get_current_selected_channel_value();
+
+    // check the user is not in the deselected mode for selecting channels
+    // (deselected when current_channel_num == -1)
+    if (current_channel_num == -1)
+        return;
+    if (!channels[current_channel_num].enabled)  // not enabled, return
+        return;
 
     la_set_trigger_channel(current_channel_num);
     trigger_running = true;
 
     get_signals(trigger_running);  // populates channel array to be passed in to draw_screen
     // get_signals_test();
-
-    draw();
 }
 
 // draw to the screen every frame
 void draw() {
     clear_screen();
-    draw_logic_ui_frame(channels, SIGNALS_PER_SCREEN);
-    draw_signals(channels, SIGNALS_PER_SCREEN);  // currently, we don't deal with zoom or any of the other complicated logic
+    draw_ui_page(channels, &g_state, la_get_trigger_index());
     wait_for_vsync();
 }
 
@@ -198,7 +229,6 @@ void keyboard_poll_user_input() {
             case KEY_TAB:
                 if (is_new_press(key.tab, ev.pressed)) {
                     switch_ui_page();
-                    draw_ui_page(channels, &g_state, la_get_trigger_index());
                 }
 
                 key.tab = ev.pressed;
@@ -212,7 +242,7 @@ void keyboard_poll_user_input() {
 
             case KEY_SPACE:
                 if (is_new_press(key.space, ev.pressed))
-                    enable_signal();
+                    enable_signal(get_current_selected_channel_value());
                 key.space = ev.pressed;
                 break;
 
@@ -243,14 +273,13 @@ void keyboard_poll_user_input() {
             case KEY_C:
                 if (is_new_press(key.c, ev.pressed)) {
                     clear_everything();
-                    draw();
                 }
                 key.c = ev.pressed;
                 break;
 
             case KEY_E:
                 if (is_new_press(key.e, ev.pressed))
-                    enable_signal();
+                    enable_signal(get_current_selected_channel_value());
                 key.e = ev.pressed;
                 break;
 
