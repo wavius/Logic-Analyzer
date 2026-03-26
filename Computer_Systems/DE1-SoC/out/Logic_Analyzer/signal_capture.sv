@@ -1,5 +1,5 @@
 module signal_capture #(
-  parameter BUFFER_SIZE = 1024
+  parameter BUFFER_SIZE = 1025
 )(
   input  logic        clk,
   input  logic        nreset,

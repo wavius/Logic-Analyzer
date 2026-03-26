@@ -20,6 +20,7 @@ add wave -noupdate -group "Avalon_Interface" -hex /tb_signal_capture/address
 add wave -noupdate -group "Avalon_Interface"      /tb_signal_capture/write
 add wave -noupdate -group "Avalon_Interface" -hex /tb_signal_capture/writedata
 add wave -noupdate -group "Avalon_Interface"      /tb_signal_capture/read
+add wave -noupdate -group "Avalon_Interface"      /tb_signal_capture/chipselect
 add wave -noupdate -group "Avalon_Interface" -hex /tb_signal_capture/readdata
 
 add wave -noupdate -divider "LA REGISTERS (HPS FACING)"
@@ -42,16 +43,11 @@ add wave -noupdate -group "Counters" -decimal /tb_signal_capture/uut/pre_trigger
 add wave -noupdate -group "Counters" -decimal /tb_signal_capture/uut/post_trigger_count
 add wave -noupdate -group "Counters" -decimal /tb_signal_capture/uut/post_trigger_length
 
-add wave -position insertpoint sim:/tb_signal_capture/DUT/trigger_channel
-add wave -position insertpoint sim:/tb_signal_capture/DUT/trigger_config
-add wave -position insertpoint sim:/tb_signal_capture/DUT/control_reg
-add wave -position insertpoint sim:/tb_signal_capture/DUT/run
-add wave -position insertpoint sim:/tb_signal_capture/DUT/buffer_full
-add wave -position insertpoint sim:/tb_signal_capture/DUT/triggered
-
-# Add everything else just in case
-add wave -position insertpoint /tb_signal_capture/uut/*
+# Add specific internal elements of interest
 add wave -position insertpoint sim:/tb_signal_capture/uut/buffer[10]
+
+# Add everything else just in case, nested in a group so it doesn't ruin the formatting
+add wave -noupdate -group "Other_Internal_Signals" /tb_signal_capture/uut/*
 
 # 5. Configure Wave Window
 configure wave -namecolwidth 250
