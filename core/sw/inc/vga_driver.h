@@ -2,6 +2,7 @@
 #define VGA_DRIVER_H
 
 #include <stdint.h>
+#include <string.h>  //for memset
 
 // ----- Core VGA ----- //
 void vga_init();

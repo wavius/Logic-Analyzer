@@ -3,22 +3,22 @@
 #include <stddef.h>
 
 // data register bits
-#define PS2_DATA_MASK 0x000000FF    // first 8 bits of 32 bits
-#define PS2_RVALID_MASK 0x00008000  // bit 15
+#define PS2_DATA_MASK 0x000000FF
+#define PS2_RVALID_MASK 0x00008000
 
 /********************************
  *  Helper Functions
  ********************************/
 static bool ps2_read_byte(Keyboard* kb, uint8_t* out) {
-    if (kb == 0 || kb->regs == 0 || out == 0)  // check for null values
+    if (kb == 0 || kb->regs == 0 || out == 0)
         return false;
 
     uint32_t value = kb->regs->data;
 
-    if ((value & PS2_RVALID_MASK) == 0)  // check the rvalid bit to see if the data is valid
+    if ((value & PS2_RVALID_MASK) == 0)
         return false;
 
-    *out = (uint8_t)(value & PS2_DATA_MASK);  // if the data was valid, read the value and return true
+    *out = (uint8_t)(value & PS2_DATA_MASK);
     return true;
 }
 
@@ -28,7 +28,9 @@ static void keyboard_clear_fifo(Keyboard* kb) {
     }
 }
 
+// PS/2 Set 2 make codes
 static const KeyCode normal_map[256] = {
+    // letters
     [0x1C] = KEY_A,
     [0x32] = KEY_B,
     [0x21] = KEY_C,
@@ -54,7 +56,25 @@ static const KeyCode normal_map[256] = {
     [0x1D] = KEY_W,
     [0x22] = KEY_X,
     [0x35] = KEY_Y,
-    [0x1A] = KEY_Z};
+    [0x1A] = KEY_Z,
+
+    // numbers
+    [0x16] = KEY_1,
+    [0x1E] = KEY_2,
+    [0x26] = KEY_3,
+    [0x25] = KEY_4,
+    [0x2E] = KEY_5,
+    [0x36] = KEY_6,
+    [0x3D] = KEY_7,
+    [0x3E] = KEY_8,
+
+    // controls
+    [0x0D] = KEY_TAB,
+    [0x76] = KEY_ESC,
+    [0x29] = KEY_SPACE,
+    [0x79] = KEY_PLUS,  // keypad +
+    [0x7B] = KEY_MINUS  // keypad -
+};
 
 static const KeyCode ext_map[256] = {
     [0x75] = KEY_UP,

@@ -3,7 +3,7 @@ INSTALL := C:/intelFPGA_pro/24.1
 MAIN := core/sw/src/main.c 
 
 # Finds all .h files in your include directory, plus your external address map
-HDRS := $(wildcard core/sw/inc/*.h) Computer_Systems/DE1-SoC/software/address_map_niosV.h
+HDRS := $(wildcard core/sw/inc/*.h)
 
 # Finds all .c files in your source directory
 SRCS := $(wildcard core/sw/src/*.c)

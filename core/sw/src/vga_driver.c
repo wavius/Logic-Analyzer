@@ -1,7 +1,5 @@
 #include "vga_driver.h"
 
-#include <string.h>  //for memset
-
 #include "address_map_niosV.h"
 
 /********************************

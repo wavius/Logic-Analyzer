@@ -6,13 +6,12 @@
 // ----- Screen constants ----- //
 #define SCREEN_W 320
 #define SCREEN_H 240
+#define TOTAL_SIGNALS_ON_SCREEN 8
 
 // ----- Char buffer ----- //
 #define CHAR_COLS 80
 #define CHAR_ROWS 60
 
-// HARD CODED CHANNEL VALUE
-#define CHANNEL_LIMIT 16
 /********************************
  *  Structs + global variables
  ********************************/
@@ -23,7 +22,6 @@ static const int bottom_bar_height = 7;
 static const int channel_area_height = SCREEN_H - (top_bar_height + bottom_bar_height);
 
 //-- waveform / grid layout variables --//
-static const int vertical_grid_ticks = 8;
 static const int grid_spacing_x = (SCREEN_W - left_bar_width) / 8;
 static const int waveform_margin_divisor = 4;
 static const int waveform_min_margin = 1;
@@ -43,6 +41,12 @@ static const uint16_t channel_colors[16] = {
     0x72A9, 0x5249, 0x3A89, 0x44CB,
     0x5CFE, 0x65FF, 0x65D7, 0x61ED};
 
+uint32_t current_page = 0;
+
+uint8_t channel_buffers[TOTAL_SIGNALS][BUFFER_SIZE];  // sample buffers for each signal
+
+uint8_t zero_samples[4096];
+
 /********************************
  *  Helper Function Declarations (idk if we need )
  ********************************/
@@ -56,7 +60,8 @@ static void text_draw_string(int col, int row, const char* text);
 static void text_clear(void);
 static void draw_channel_labels(const Channel* channels, int lanes);
 static uint16_t dim_color(uint16_t color);
-static void draw_channel_labels(const Channel* channels, const int lanes);
+static void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
+static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position);
 
 /********************************
  *  Helper Functions
@@ -165,7 +170,7 @@ static uint16_t dim_color(uint16_t color) {
 
 // draws labels
 static void draw_channel_labels(const Channel* channels, const int lanes) {
-    if (channels == 0 || lanes <= 0 || lanes > CHANNEL_LIMIT)
+    if (channels == 0 || lanes <= 0 || lanes > TOTAL_SIGNALS)
         return;
 
     int lane_height = calculate_channel_height(lanes, channel_area_height);
@@ -207,12 +212,69 @@ static void draw_channel_labels(const Channel* channels, const int lanes) {
     }
 }
 
+// handle zooming logic by determining the sample window for each enabled channel and prints it out using draw_digital_waveform(...)
+void draw_logic_view(const ZoomState* state, const Channel* channels, int signals_per_page) {
+    uint32_t start = state->scroll_offset;
+    uint32_t end = visualizer_get_end_sample(state);
+
+    if (end <= start)
+        return;
+
+    uint32_t visible_count = end - start;
+
+    int lane_height = calculate_channel_height(signals_per_page, channel_area_height);
+    int x_start = left_bar_width;
+    int waveform_width = SCREEN_W - left_bar_width;
+
+    for (int i = 0; i < signals_per_page; i++) {
+        if (!channels[i].enabled)
+            continue;
+
+        int y_top = top_bar_height + i * lane_height;
+
+        draw_digital_waveform(
+            &channels[i].samples[start],  // shifted pointer
+            visible_count,
+            x_start,
+            y_top,
+            waveform_width,
+            lane_height,
+            channels[i].color);
+    }
+}
+
+// draw vertical trigger marker line across waveform area
+static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position) {
+    if (state == 0 || state->visible_samples == 0)
+        return;
+
+    uint32_t start = state->scroll_offset;
+    uint32_t end = visualizer_get_end_sample(state);
+
+    // trigger not visible on current screen
+    if (trigger_position < start || trigger_position >= end)
+        return;
+
+    int waveform_width = SCREEN_W - left_bar_width;
+    int x_start = left_bar_width;
+
+    uint32_t samples_from_left = trigger_position - start;
+    int x = x_start + (samples_from_left * (waveform_width - 1)) / state->visible_samples;
+
+    if (x < left_bar_width)
+        x = left_bar_width;
+    if (x >= SCREEN_W)
+        x = SCREEN_W - 1;
+
+    draw_vline(x, top_bar_height, SCREEN_H - bottom_bar_height - 1, 0xFFE0);
+}
+
 /********************************
  *  Function Implementations
  ********************************/
 // draws the main static part of the background
 void draw_logic_ui_frame(const Channel* channels, const int lanes) {
-    if (lanes <= 0 || (lanes > CHANNEL_LIMIT))
+    if (lanes <= 0 || (lanes > TOTAL_SIGNALS))
         return;
 
     // Top bar
@@ -284,54 +346,32 @@ void draw_digital_waveform(const uint8_t* samples, const int count, int x_start,
 }
 
 // draw signals (no zooming and scrolling logic, just prints start of given sample buffer)
-void draw_signals(const Channel* channels, const int lanes) {
-    if (channels == 0 || lanes <= 0 || lanes > CHANNEL_LIMIT)
+void draw_signals(const ZoomState* state, const Channel* channels, const int signals_per_page) {
+    if (state == 0 || channels == 0 || signals_per_page != TOTAL_SIGNALS_ON_SCREEN)
         return;
-
-    int lane_height = calculate_channel_height(lanes, channel_area_height);
-    int x_start = left_bar_width;
-    int waveform_width = SCREEN_W - left_bar_width;
-
-    // draw the signals
-    for (int i = 0; i < lanes; i++) {
-        if (!channels[i].enabled)
-            continue;
-
-        int y_top = top_bar_height + i * lane_height;
-        draw_digital_waveform(channels[i].samples, channels[i].count, x_start, y_top, waveform_width, lane_height, channel_colors[i]);
-    }
+    draw_logic_view(state, channels, signals_per_page);
 }
 
-// handle zooming logic by determining the sample window for each enabled channel and prints it out using draw_digital_waveform(...)
-void draw_logic_view(const VisualizerState* state, const Channel* channels, int lanes) {
-    if (state == 0 || channels == 0 || lanes <= 0)
-        return;
+// draw given page
+void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trigger_position) {
+    int start_index = current_page * TOTAL_SIGNALS_ON_SCREEN;  // either 0 or 8
+    draw_logic_ui_frame(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
+    draw_signals(state, &channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
+    draw_trigger_marker(state, trigger_position);
+}
 
-    uint32_t start = state->start_sample;
-    uint32_t end = visualizer_get_end_sample(state);
+// switch to the other page
+void switch_ui_page() {
+    current_page ^= 1;  // Toggle page (0 or 1)
+}
 
-    if (end <= start)
-        return;
-
-    uint32_t visible_count = end - start;
-
-    int lane_height = calculate_channel_height(lanes, channel_area_height);
-    int x_start = left_bar_width;
-    int waveform_width = SCREEN_W - left_bar_width;
-
-    for (int i = 0; i < lanes; i++) {
-        if (!channels[i].enabled)
-            continue;
-
-        int y_top = top_bar_height + i * lane_height;
-
-        draw_digital_waveform(
-            &channels[i].samples[start],  // shifted pointer
-            visible_count,
-            x_start,
-            y_top,
-            waveform_width,
-            lane_height,
-            channel_colors[i]);
+// initalize channels struct (from draw_screen module)
+void channels_init(Channel* channels, const int total_signals) {
+    for (int i = 0; i < total_signals; i++) {
+        channels[i].samples = channel_buffers[i];  // assign a buffer to each channel
+        channels[i].count = 0;
+        channels[i].enabled = false;
+        snprintf(channels[i].label, sizeof(channels[i].label), "CH%d", i);  // give each channel it's appropriate label
+        channels[i].color = channel_colors[i];                              // give each signal it's color
     }
 }

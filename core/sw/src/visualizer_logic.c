@@ -3,6 +3,7 @@
 #include <stddef.h>
 
 #define ZOOM_LVL_COUNT 6
+
 /********************************
  *  Structs + global variables
  ********************************/
@@ -18,7 +19,6 @@ static uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t buffer_
 uint32_t visualizer_get_scroll_step(const ZoomState* g_state);
 static void calc_time_div_zoom_lvls();
 uint32_t time_div_to_samples(uint32_t time_div);
-uint32_t visualizer_get_scroll_step(const ZoomState* g_state);
 
 /********************************
  *  Helper Functions
@@ -87,30 +87,70 @@ static void clamp_scroll_offset(ZoomState* g_state) {
     }
 }
 
-// calculate time div
+// calculate time div in nanoseconds/div
 static void calc_time_div_zoom_lvls() {
     for (int i = 0; i < ZOOM_LVL_COUNT; i++) {
-        zoom_levels_time_div[i] = (zoom_levels_samples[i] / VERTICAL_DIVISIONS) / SAMPLE_RATE;
+        zoom_levels_time_div[i] =
+            ((uint64_t)zoom_levels_samples[i] * 1000000000ULL) /
+            ((uint64_t)VERTICAL_DIVISIONS * SAMPLE_RATE);
     }
 }
 
-// go from time/div to samples
+// go from time/div (in nanoseconds/div) to samples
 uint32_t time_div_to_samples(uint32_t time_div) {
-    return (time_div * SAMPLE_RATE) * VERTICAL_DIVISIONS;
+    return (uint32_t)(((uint64_t)time_div * SAMPLE_RATE * VERTICAL_DIVISIONS) / 1000000000ULL);
 }
 
 // get the amount each attempt to scroll will shift the scroll offset of the buffer
 uint32_t visualizer_get_scroll_step(const ZoomState* g_state) {
     if (g_state == 0 || g_state->vertical_divisions == 0)
         return 1;
-    return g_state->visible_samples / (g_state->vertical_divisions * 3);  // integer division is fine here for display / scroll behavior
+    return g_state->visible_samples / (g_state->vertical_divisions * 2);  // integer division is fine here for display / scroll behavior
 }
 
+// center the waveform on the trigger helper
+void center_view_on_trigger(ZoomState* g_state, uint32_t trigger_position) {
+    if (g_state == 0 || g_state->buffer_size == 0)
+        return;
+
+    if (g_state->visible_samples >= g_state->buffer_size) {
+        g_state->scroll_offset = 0;
+        return;
+    }
+
+    uint32_t half_window = g_state->visible_samples / 2;
+
+    if (trigger_position <= half_window) {
+        g_state->scroll_offset = 0;
+        return;
+    }
+
+    uint32_t max_start = g_state->buffer_size - g_state->visible_samples;
+    uint32_t desired_start = trigger_position - half_window;
+
+    if (desired_start > max_start)
+        g_state->scroll_offset = max_start;
+    else
+        g_state->scroll_offset = desired_start;
+}
+
+// center the waveform on the trigger
+void visualizer_set_zoom(ZoomState* g_state, uint32_t time_div, uint32_t trigger_position) {
+    if (g_state == 0)
+        return;
+
+    g_state->time_div = time_div;
+
+    uint32_t visible_samples = time_div_to_samples(time_div);
+    g_state->visible_samples = clamp_visible_samples(visible_samples, g_state->buffer_size);
+
+    center_view_on_trigger(g_state, trigger_position);
+}
 /********************************
  *  Function Implementations
  ********************************/
 // initazlize the zoom state
-void zoom_state_init(ZoomState* g_state) {
+void zoom_state_init(ZoomState* g_state, uint32_t default_visible_samples) {
     if (g_state == 0)  // uninitalized state->return
         return;
 
@@ -120,26 +160,16 @@ void zoom_state_init(ZoomState* g_state) {
     g_state->buffer_size = BUFFER_SIZE;
     g_state->vertical_divisions = VERTICAL_DIVISIONS;
 
-    // default zoom: 96 if possible, otherwise clamp to what fits
-    g_state->visible_samples = clamp_visible_samples(96, BUFFER_SIZE);
+    // default zoom if possible, otherwise clamp to what fits
+    g_state->visible_samples = clamp_visible_samples(default_visible_samples, BUFFER_SIZE);
     g_state->scroll_offset = 0;  // to start, show from the 0th position
 
-    clamp_scroll_offset(g_state);
-}
-
-// pick a new zoom (time div) and check for errors
-void visualizer_set_zoom(ZoomState* g_state, uint32_t time_div) {
-    if (g_state == 0)
-        return;
-    g_state->time_div = time_div;
-    g_state->visible_samples = time_div_to_samples(g_state->time_div);
-    // uint32_t visible_samples = time_div_to_samples(time_div);
-    // g_state->visible_samples = clamp_visible_samples(visible_samples, g_state->buffer_size);
-    clamp_scroll_offset(g_state);
+    int idx = find_best_zoom_index(g_state->visible_samples);
+    g_state->time_div = zoom_levels_time_div[idx];
 }
 
 // Zoom in given the user presses a button
-bool visualizer_zoom_in(ZoomState* g_state) {
+bool visualizer_zoom_in(ZoomState* g_state, uint32_t trigger_position) {
     if (g_state == 0 || g_state->buffer_size == 0)
         return false;
 
@@ -155,14 +185,14 @@ bool visualizer_zoom_in(ZoomState* g_state) {
 
     // move to smaller window if possible
     if (idx > 0) {
-        visualizer_set_zoom(g_state, zoom_levels_time_div[idx--]);
+        visualizer_set_zoom(g_state, zoom_levels_time_div[idx - 1], trigger_position);
         return true;
     }
     return false;
 }
 
 // Zoom in given the user presses a button
-bool visualizer_zoom_out(ZoomState* g_state) {
+bool visualizer_zoom_out(ZoomState* g_state, uint32_t trigger_position) {
     if (g_state == 0 || g_state->buffer_size == 0)
         return false;
 
@@ -178,9 +208,10 @@ bool visualizer_zoom_out(ZoomState* g_state) {
 
     // move to smaller window if possible
     if (idx < ZOOM_LVL_COUNT - 1) {
-        visualizer_set_zoom(g_state, zoom_levels_time_div[idx++]);
+        visualizer_set_zoom(g_state, zoom_levels_time_div[idx + 1], trigger_position);
         return true;
     }
+
     return false;
 }
 
@@ -190,30 +221,31 @@ void visualizer_scroll_left(ZoomState* g_state) {
         return;
 
     uint32_t step = visualizer_get_scroll_step(g_state);
-
-    // update the start
-    int new_start = g_state->scroll_offset - step;
-    g_state->scroll_offset = new_start;
-
-    if (new_start < 0)
+    if (step > g_state->scroll_offset)  // step size is too large, user scrolled off screen, stop them
         g_state->scroll_offset = 0;
-    else if (new_start > g_state->buffer_size)  // if the user scrolls beyond buffer size, stop them
-        clamp_scroll_offset(g_state);
+    else
+        g_state->scroll_offset -= step;
 }
 
 // scroll right given the user tries to
-void visualizer_scroll_left(ZoomState* g_state) {
+void visualizer_scroll_right(ZoomState* g_state) {
     if (g_state == 0)
         return;
 
     uint32_t step = visualizer_get_scroll_step(g_state);
+    uint32_t max_start = g_state->buffer_size - g_state->visible_samples;
 
-    // update the start
-    int new_start = g_state->scroll_offset + step;
-    g_state->scroll_offset = new_start;
+    if (g_state->scroll_offset + step > max_start)  // if the user scrolls too far, clamp them
+        g_state->scroll_offset = max_start;
+    else
+        g_state->scroll_offset += step;
+}
 
-    if (new_start < 0)
-        g_state->scroll_offset = 0;
-    else if (new_start > g_state->buffer_size)  // if the user scrolls beyond buffer size, stop them
-        clamp_scroll_offset(g_state);
+// get the last sample to help with plotting
+uint32_t visualizer_get_end_sample(const ZoomState* g_state) {
+    if (g_state == 0 || g_state->buffer_size == 0)
+        return 0;
+
+    uint32_t end = g_state->scroll_offset + g_state->visible_samples;
+    return (end < g_state->buffer_size) ? end : g_state->buffer_size;
 }
