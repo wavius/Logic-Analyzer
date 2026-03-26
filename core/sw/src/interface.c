@@ -11,6 +11,24 @@
 #define DEFAULT_ZOOM 96
 
 /********************************
+ *  Temp, hex stuff
+ ********************************/
+// 7-segment encoding for each character (active-low, segments a-g)
+#define SEG_S 0x6D
+#define SEG_T 0x78
+#define SEG_C 0x39
+#define SEG_E 0x79
+#define SEG_1 0x06
+#define SEG_2 0x5B
+#define SEG_3 0x4F
+#define SEG_4 0x66
+#define SEG_5 0x6D
+#define SEG_6 0x7D
+#define SEG_7 0x07
+#define SEG_8 0x7F
+#define SEG_BLANK 0x00
+
+/********************************
  *  Internal global variables
  ********************************/
 static uint16_t LA_output[BUFFER_SIZE];
@@ -20,19 +38,26 @@ ZoomState g_state;  // handling zooming logic
 Channel channels[TOTAL_SIGNALS];  // all information to draw the signals
 int key_channel = 0;
 
+bool la_is_running = false;
+
 /********************************
  *  Helper function declarations
  ********************************/
 void clear_signals();
 int get_current_selected_channel_value();
 bool get_signals(bool trigger_running);
-void draw();
 void get_signals_test();
 void enable_signal(int current_channel);
+void hex_display(uint8_t value);
 
 /********************************
  *  Helper Functions
  ********************************/
+void hex_display(uint8_t value) {
+    volatile uint32_t* HEX = (volatile uint32_t*)HEX3_HEX0_BASE;
+    *HEX = value;  // display on HEX0 only, HEX1-3 stay blank
+}
+
 // select the given channel
 void select_channel(int selected) {
     // note: selected channels support [-1, 8] because -1 and 8 states reflect user scrolling off screen and nothing selected
@@ -88,7 +113,10 @@ void get_signals_test() {
 void clear_signals() {
     memset(channel_buffers, 0, sizeof(channel_buffers));  // clear the signal values
     memset(LA_output, 0, sizeof(LA_output));              // clear all other assoicated data
-    la_stop();                                            // stop the logic analyzer
+    if (la_is_running) {
+        la_stop();  // stop the logic analyzer
+        la_is_running = false;
+    }
 }
 
 void enable_signal(int current_channel) {
@@ -130,7 +158,7 @@ void setup_init() {
 
 // recieve all 16 buffers from the logic analyzer
 bool get_signals(bool trigger_running) {
-    if (!trigger_running)
+    if (!trigger_running || !la_is_running)
         return false;
 
     bool successful_read = false;
@@ -153,15 +181,18 @@ bool get_signals(bool trigger_running) {
 // wipes everything off the screen, clears the buffer, and stops the logic analyzer
 void clear_everything() {
     // -- clear out the buffer -- //
-    uint16_t throwaway[BUFFER_SIZE];
-    la_reset_read_pointer();
-    while (!la_is_done()) {
-    }  // clear out the buffer
-    la_download_buffer(throwaway, BUFFER_SIZE);
-    la_reset_read_pointer();  // reset it anyway
+    if (la_is_running) {
+        uint16_t throwaway[BUFFER_SIZE];
+        la_reset_read_pointer();
+        while (!la_is_done()) {
+        }  // clear out the buffer
+        la_download_buffer(throwaway, BUFFER_SIZE);
+        la_reset_read_pointer();  // reset it anyway
 
-    // -- stop logic analyzer -- //
-    la_stop();
+        // -- stop logic analyzer -- //
+        la_stop();
+        la_is_running = false;
+    }
 
     // -- clear out all the signals -- //
     clear_signals();
@@ -170,6 +201,9 @@ void clear_everything() {
 
 // trigger the logic analyzer and draw it to the screen
 void trigger_logic_analyzer() {
+    if (!la_is_running)
+        return;
+
     bool trigger_running = false;
 
     int current_channel_num = get_current_selected_channel_value();
@@ -259,39 +293,53 @@ void keyboard_poll_user_input() {
                 break;
 
             case KEY_S:
-                if (is_new_press(key.s, ev.pressed))
+                if (is_new_press(key.s, ev.pressed)) {
                     la_start();  // start the logic analyzer
+                    la_is_running = true;
+                    hex_display(SEG_S);
+                }
+
                 key.s = ev.pressed;
                 break;
 
             case KEY_T:
-                if (is_new_press(key.t, ev.pressed))
+                if (is_new_press(key.t, ev.pressed)) {
                     trigger_logic_analyzer();
+                    hex_display(SEG_T);
+                }
                 key.t = ev.pressed;
                 break;
 
             case KEY_C:
                 if (is_new_press(key.c, ev.pressed)) {
                     clear_everything();
+                    hex_display(SEG_C);
                 }
                 key.c = ev.pressed;
                 break;
 
             case KEY_E:
-                if (is_new_press(key.e, ev.pressed))
+                if (is_new_press(key.e, ev.pressed)) {
                     enable_signal(get_current_selected_channel_value());
+                    hex_display(SEG_E);
+                }
                 key.e = ev.pressed;
                 break;
 
             case KEY_1:
-                if (is_new_press(key.channel[0], ev.pressed))
+                if (is_new_press(key.channel[0], ev.pressed)) {
                     select_channel(0);
+                    hex_display(SEG_1);
+                }
                 key.channel[0] = ev.pressed;
                 break;
 
             case KEY_2:
-                if (is_new_press(key.channel[1], ev.pressed))
+                if (is_new_press(key.channel[1], ev.pressed)) {
                     select_channel(1);
+                    hex_display(SEG_2);
+                }
+
                 key.channel[1] = ev.pressed;
                 break;
 

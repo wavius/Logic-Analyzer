@@ -23,7 +23,7 @@ extern uint8_t channel_buffers[TOTAL_SIGNALS][BUFFER_SIZE];
 /********************************
  *  Functions
  ********************************/
-
+void draw();
 void setup_init();
 void clear_everything();
 void trigger_logic_analyzer();
