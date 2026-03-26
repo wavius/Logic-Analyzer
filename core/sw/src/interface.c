@@ -11,24 +11,6 @@
 #define DEFAULT_ZOOM 96
 
 /********************************
- *  Temp, hex stuff
- ********************************/
-// 7-segment encoding for each character (active-low, segments a-g)
-#define SEG_S 0x6D
-#define SEG_T 0x78
-#define SEG_C 0x39
-#define SEG_E 0x79
-#define SEG_1 0x06
-#define SEG_2 0x5B
-#define SEG_3 0x4F
-#define SEG_4 0x66
-#define SEG_5 0x6D
-#define SEG_6 0x7D
-#define SEG_7 0x07
-#define SEG_8 0x7F
-#define SEG_BLANK 0x00
-
-/********************************
  *  Internal global variables
  ********************************/
 static uint16_t LA_output[BUFFER_SIZE];
@@ -296,7 +278,6 @@ void keyboard_poll_user_input() {
                 if (is_new_press(key.s, ev.pressed)) {
                     la_start();  // start the logic analyzer
                     la_is_running = true;
-                    hex_display(SEG_S);
                 }
 
                 key.s = ev.pressed;
@@ -305,7 +286,6 @@ void keyboard_poll_user_input() {
             case KEY_T:
                 if (is_new_press(key.t, ev.pressed)) {
                     trigger_logic_analyzer();
-                    hex_display(SEG_T);
                 }
                 key.t = ev.pressed;
                 break;
@@ -313,7 +293,6 @@ void keyboard_poll_user_input() {
             case KEY_C:
                 if (is_new_press(key.c, ev.pressed)) {
                     clear_everything();
-                    hex_display(SEG_C);
                 }
                 key.c = ev.pressed;
                 break;
@@ -321,7 +300,6 @@ void keyboard_poll_user_input() {
             case KEY_E:
                 if (is_new_press(key.e, ev.pressed)) {
                     enable_signal(get_current_selected_channel_value());
-                    hex_display(SEG_E);
                 }
                 key.e = ev.pressed;
                 break;
@@ -329,7 +307,6 @@ void keyboard_poll_user_input() {
             case KEY_1:
                 if (is_new_press(key.channel[0], ev.pressed)) {
                     select_channel(0);
-                    hex_display(SEG_1);
                 }
                 key.channel[0] = ev.pressed;
                 break;
@@ -337,7 +314,6 @@ void keyboard_poll_user_input() {
             case KEY_2:
                 if (is_new_press(key.channel[1], ev.pressed)) {
                     select_channel(1);
-                    hex_display(SEG_2);
                 }
 
                 key.channel[1] = ev.pressed;
