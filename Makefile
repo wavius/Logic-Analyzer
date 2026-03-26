@@ -5,8 +5,11 @@ MAIN := core/sw/src/main.c
 # Finds all .h files in your include directory, plus your external address map
 HDRS := $(wildcard core/sw/inc/*.h)
 
-# Finds all .c files in your source directory
-SRCS := $(wildcard core/sw/src/*.c)
+# don't compile logic analyzer stuff cause testing purposes
+SRCS := $(filter-out \
+    core/sw/src/interface.c \
+    core/sw/src/logic_analyzer.c, \
+    $(wildcard core/sw/src/*.c))
 
 SHELL	:= cmd.exe
 
