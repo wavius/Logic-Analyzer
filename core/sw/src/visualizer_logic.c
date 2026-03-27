@@ -132,6 +132,8 @@ void center_view_on_trigger(ZoomState* g_state, uint32_t trigger_position) {
         g_state->scroll_offset = max_start;
     else
         g_state->scroll_offset = desired_start;
+
+    clamp_scroll_offset(g_state);
 }
 
 // center the waveform on the trigger

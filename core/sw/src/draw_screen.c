@@ -188,8 +188,8 @@ static void draw_channel_labels(const Channel* channels, const int lanes) {
         int label_row = (y_top + lane_height / 2) / 4;
 
         uint16_t stripe_color = channels[i].enabled
-                                    ? channel_colors[i]
-                                    : dim_color(channel_colors[i]);
+                                    ? channels[i].color
+                                    : dim_color(channels[i].color);
 
         uint16_t label_bg = channels[i].enabled
                                 ? left_bar_color

@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>  // for snprintf
 
 #include "visualizer_logic.h"
 
