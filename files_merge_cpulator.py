@@ -1,13 +1,12 @@
 import os
 import re
 
-FILES_TO_MERGE = ['core/sw/inc/ps2_input.h',  'core/sw/src/ps2_input.c','core/sw/src/main.c']
-# FILES_TO_MERGE = [  'core/sw/inc/visualizer_logic.h', 'core/sw/src/visualizer_logic.c', 
-#                     'core/sw/inc/draw_screen.h', 'core/sw/draw_screen.c',
-#                     'core/sw/inc/vga_driver.h',  'core/sw/src/vga_driver.c',  
-#                     'core/sw/inc/visualizer_logic.h',  'core/sw/src/visualizer_logic.c', 
-#                     'core/sw/inc/ps2_input.h',  'core/sw/src/ps2_input.c', 
-#                     'core/sw/main.c'] 
+FILES_TO_MERGE = [  'core/sw/inc/vga_driver.h',  'core/sw/src/vga_driver.c',
+                    'core/sw/inc/ps2_input.h',  'core/sw/src/ps2_input.c',  
+                    'core/sw/inc/test_la_c.h',  'core/sw/src/test_la_c.c', 
+                    'core/sw/inc/visualizer_logic.h', 'core/sw/src/visualizer_logic.c', 
+                    'core/sw/inc/draw_screen.h', 'core/sw/src/draw_screen.c',
+                    'core/sw/src/main.c'] 
 OUTPUT_FILE = 'combined_cpulator.c'
 
 def merge_files():
