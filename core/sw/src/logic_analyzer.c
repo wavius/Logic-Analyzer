@@ -40,6 +40,6 @@ uint32_t la_get_trigger_index(void) {
 
 void la_get_trigger_samples(uint16_t *post_trigger, uint16_t *pre_trigger) {
     uint32_t samples = LA->TRIGGER_SAMPLES;
-    *post_trigger = samples & 0xFFFF0000;
-    *pre_trigger  = samples & 0x0000FFFF;
+    *post_trigger = (uint16_t)(samples >> 16);
+    *pre_trigger  = (uint16_t)samples;
 }
