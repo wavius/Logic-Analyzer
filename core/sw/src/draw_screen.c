@@ -4,7 +4,7 @@
 #include "vga_driver.h"
 
 ////////////// temporary include for debugging reasons
-#include "interface.h"
+#include "io.h"
 /////////////////////////////////////////////////////
 
 // ----- Screen constants ----- //
@@ -96,18 +96,38 @@ static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color) {
             plot_pixel(x_cord + i, y_cord + j, color);
 }
 
+// for dimming the color of text drawn to screen (used for channel labels for example)
+static uint16_t dim_color(uint16_t color) {
+    uint16_t r = (color >> 11) & 0x1F;
+    uint16_t g = (color >> 5) & 0x3F;
+    uint16_t b = color & 0x1F;
+
+    r >>= 1;
+    g >>= 1;
+    b >>= 1;
+
+    return (r << 11) | (g << 5) | b;
+}
+
+// clear buffer
+static void text_clear(void) {
+    volatile char* char_buf = (volatile char*)FPGA_CHAR_BASE;
+
+    for (int row = 0; row < CHAR_ROWS; row++) {
+        for (int col = 0; col < CHAR_COLS; col++) {
+            char_buf[(row << 7) + col] = ' ';  // row stride = 128
+        }
+    }
+}
+
 // store a single char in a string buffer
 static void text_plot_char(int col, int row, char c) {
     if (col < 0 || col >= CHAR_COLS || row < 0 || row >= CHAR_ROWS)
         return;
 
-    // pointer to controller
-    volatile int* ctrl = (int*)CHAR_BUF_CTRL_BASE;
+    volatile char* char_buf = (volatile char*)FPGA_CHAR_BASE;
 
-    // first register = character buffer address
-    volatile char* char_buf = (volatile char*)(ctrl[0]);
-
-    char_buf[row * CHAR_COLS + col] = c;
+    char_buf[(row << 7) + col] = c;  // same as row * 128 + col
 }
 
 // draw text to screen
@@ -137,31 +157,6 @@ static void text_draw_string(int col, int row, const char* text) {
 
         text++;
     }
-}
-
-// clear buffer or smth? idk
-static void text_clear(void) {
-    volatile int* ctrl = (int*)CHAR_BUF_CTRL_BASE;
-    volatile char* char_buf = (volatile char*)(ctrl[0]);
-
-    for (int row = 0; row < CHAR_ROWS; row++) {
-        for (int col = 0; col < CHAR_COLS; col++) {
-            char_buf[row * CHAR_COLS + col] = ' ';
-        }
-    }
-}
-
-// for dimming the color of text drawn to screen (used for channel labels for example)
-static uint16_t dim_color(uint16_t color) {
-    uint16_t r = (color >> 11) & 0x1F;
-    uint16_t g = (color >> 5) & 0x3F;
-    uint16_t b = color & 0x1F;
-
-    r >>= 1;
-    g >>= 1;
-    b >>= 1;
-
-    return (r << 11) | (g << 5) | b;
 }
 
 // draws labels
@@ -270,41 +265,32 @@ static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_positio
  ********************************/
 // draws the main static part of the background
 void draw_logic_ui_frame(const Channel* channels, const int lanes) {
-    put_on_leds(7);
     if (lanes <= 0 || (lanes > TOTAL_SIGNALS))
         return;
 
     // Top bar
-    put_on_leds(2);
     fill_rect(0, 0, SCREEN_W, top_bar_height, top_bar_color);
 
     // bottom bar
-    put_on_leds(8);
     fill_rect(0, SCREEN_H - bottom_bar_height, SCREEN_W, bottom_bar_height, bottom_bar_color);
 
     // Left label column
-    put_on_leds(12);
     fill_rect(0, top_bar_height, left_bar_width, channel_area_height, left_bar_color);
 
     // Vertical grid lines
-    put_on_leds(14);
     for (int x = left_bar_width; x < SCREEN_W; x += grid_spacing_x) {
         draw_vline(x, top_bar_height, SCREEN_H - bottom_bar_height - 1, grid_color);
     }
 
     // Channel separators
-    put_on_leds(20);
     int spacing = 27;
-    put_on_leds(spacing);
     for (int i = 1; i < lanes; i++) {
         int y = top_bar_height + i * 27;
         draw_hline(0, SCREEN_W - 1, y, separator_color);
     }
 
     // labels + stripes
-    put_on_leds(32);
     draw_channel_labels(channels, lanes);
-    put_on_leds(600);
 }
 
 // based on recieved array samples and count (the amount of cycles), draws any given digital waveform
@@ -361,17 +347,14 @@ void draw_signals(const ZoomState* state, const Channel* channels, const int sig
 // draw given page
 void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trigger_position) {
     int start_index = current_page * TOTAL_SIGNALS_ON_SCREEN;  // either 0 or 8
-    put_on_leds(1);
     draw_logic_ui_frame(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
-    put_on_leds(2);
     draw_signals(state, &channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
-    put_on_leds(4);
     draw_trigger_marker(state, trigger_position);
-    put_on_leds(8);
 }
 
 // switch to the other page
 void switch_ui_page() {
+    text_clear();       // clear previous text
     current_page ^= 1;  // Toggle page (0 or 1)
 }
 

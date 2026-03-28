@@ -25,6 +25,5 @@ void setup_init();
 void clear_everything();
 void trigger_logic_analyzer();
 void keyboard_poll_user_input();
-void put_on_leds(uint32_t led_val);
 
 #endif

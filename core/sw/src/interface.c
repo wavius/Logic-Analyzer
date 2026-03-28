@@ -4,10 +4,9 @@
 #include <string.h>
 
 #include "address_map_niosV.h"
+#include "io.h"
 #include "vga_driver.h"
 
-#define BUFFER_SIZE 4096
-#define TOTAL_SIGNALS 16
 #define DEFAULT_ZOOM 96
 
 /********************************
@@ -22,8 +21,6 @@ int key_channel = 0;
 
 bool la_is_running = false;
 
-volatile uint32_t* led_ptr = (volatile uint32_t*)LEDR_BASE;
-
 /********************************
  *  Helper function declarations
  ********************************/
@@ -36,9 +33,6 @@ void enable_signal(int current_channel);
 /********************************
  *  Helper Functions
  ********************************/
-void put_on_leds(uint32_t led_val) {
-    *led_ptr = led_val;
-}
 
 // select the given channel
 void select_channel(int selected) {
@@ -106,8 +100,10 @@ void enable_signal(int current_channel) {
     // (deselected when current_channel_num == -1 or 8)
     if (current_channel == -1 || current_channel >= TOTAL_SIGNALS_ON_SCREEN)
         return;
-
-    channels[current_channel].enabled = true;
+    if (!(channels[current_channel].enabled))
+        channels[current_channel].enabled = true;  // enable if off
+    else if (channels[current_channel].enabled)
+        channels[current_channel].enabled = false;  // disable if on
 }
 
 bool populate_channels(bool successful_read) {
@@ -130,17 +126,13 @@ bool populate_channels(bool successful_read) {
 void setup_init() {
     // -- intitalize peripheral devices -- //
     vga_init();
-    put_on_leds(2);
     keyboard_init(&kb);
-    put_on_leds(4);
     // add mouse stuff here too if added
 
     // -- Other initalizations -- //
-    put_on_leds(8);
     zoom_state_init(&g_state, DEFAULT_ZOOM);
-    put_on_leds(16);
     channels_init(channels, TOTAL_SIGNALS);  // all information to DRAW the signals
-    put_on_leds(32);
+    text_clear();
 }
 
 // recieve all 16 buffers from the logic analyzer
@@ -211,15 +203,11 @@ void trigger_logic_analyzer() {
 
 // draw to the screen every frame
 void draw() {
-    put_on_leds(2);
     clear_screen();
-    put_on_leds(1023);
     draw_ui_page(channels, &g_state, la_get_trigger_index());
     draw_logic_ui_frame(channels, TOTAL_SIGNALS_ON_SCREEN);
     draw_signals(&g_state, channels, TOTAL_SIGNALS_ON_SCREEN);
-    put_on_leds(39);
     wait_for_vsync();
-    put_on_leds(0);
 }
 
 // poll for the user's input with keyboard

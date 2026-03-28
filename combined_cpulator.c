@@ -1,3 +1,14 @@
+/* --- START OF core/sw/inc/constants.h --- */
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#define TOTAL_SIGNALS 16           // hard coded to be 16
+#define TOTAL_SIGNALS_ON_SCREEN 8  // hard coded to be 8
+#define BUFFER_SIZE 4096           // hard coded to be 4096
+
+#endif
+/* --- END OF core/sw/inc/constants.h --- */
+
 /* --- START OF core/sw/inc/vga_driver.h --- */
 #ifndef VGA_DRIVER_H
 #define VGA_DRIVER_H
@@ -36,13 +47,13 @@ struct frame_buffer_controller {
 /********************************
  *  Global Variables
  ********************************/
-volatile struct frame_buffer_controller* frameBuf =
+static volatile struct frame_buffer_controller* frameBuf =
     (struct frame_buffer_controller*)0xFF203020;
-volatile int pixel_buffer_start;
+static volatile int pixel_buffer_start;
 
 // ----- Two frame buffers (double buffering) ----- //
-uint16_t Buffer1[240][512];
-uint16_t Buffer2[240][512];
+static uint16_t Buffer1[240][512];
+static uint16_t Buffer2[240][512];
 
 /********************************
  *  Function Implementations
@@ -174,7 +185,7 @@ bool keyboard_read_event(Keyboard* kb, KeyEvent* ev);
 /********************************
  *  Helper Functions
  ********************************/
-bool ps2_read_byte(Keyboard* kb, uint8_t* out) {
+static bool ps2_read_byte(Keyboard* kb, uint8_t* out) {
     if (kb == 0 || kb->regs == 0 || out == 0)
         return false;
 
@@ -187,14 +198,14 @@ bool ps2_read_byte(Keyboard* kb, uint8_t* out) {
     return true;
 }
 
-void keyboard_clear_fifo(Keyboard* kb) {
+static void keyboard_clear_fifo(Keyboard* kb) {
     uint8_t dummy;
     while (ps2_read_byte(kb, &dummy)) {
     }
 }
 
 // PS/2 Set 2 make codes
-const KeyCode normal_map[256] = {
+static const KeyCode normal_map[256] = {
     // letters
     [0x1C] = KEY_A,
     [0x32] = KEY_B,
@@ -237,17 +248,17 @@ const KeyCode normal_map[256] = {
     [0x0D] = KEY_TAB,
     [0x76] = KEY_ESC,
     [0x29] = KEY_SPACE,
-    [0x79] = KEY_PLUS,  // keypad +
-    [0x7B] = KEY_MINUS  // keypad -
+    [0x55] = KEY_PLUS,  // keyboard +
+    [0x4E] = KEY_MINUS  // keyboard -
 };
 
-const KeyCode ext_map[256] = {
+static const KeyCode ext_map[256] = {
     [0x75] = KEY_UP,
     [0x72] = KEY_DOWN,
     [0x6B] = KEY_LEFT,
     [0x74] = KEY_RIGHT};
 
-inline KeyCode decode_key(uint8_t scancode, bool extended) {
+KeyCode decode_key(uint8_t scancode, bool extended) {
     return extended ? ext_map[scancode] : normal_map[scancode];
 }
 
@@ -315,6 +326,165 @@ bool keyboard_read_event(Keyboard* kb, KeyEvent* ev) {
 }
 /* --- END OF core/sw/src/ps2_input.c --- */
 
+/* --- START OF core/sw/inc/io.h --- */
+#ifndef IO_H
+#define IO_H
+
+#include <stdint.h>
+
+// -- Functions -- //
+void hex_write_char(int hex_index, char c);
+void hex_clear_digit(int hex_index);
+void hex_clear_all(void);
+
+
+#endif
+/* --- END OF core/sw/inc/io.h --- */
+
+/* --- START OF core/sw/src/io.c --- */
+// Removed include: core/sw/src/io.c
+
+// Removed include: core/sw/src/io.c
+
+/********************************
+ *  Helper Functions and stuff
+ ********************************/
+volatile uint32_t* led_ptr = (volatile uint32_t*)0xFF200000;
+
+// returns active-low 7-seg encoding for the fpga
+static uint8_t hex_encode_char(char c) {
+    switch (c) {
+        // digits
+        case '0':
+            return 0x40;
+        case '1':
+            return 0x79;
+        case '2':
+            return 0x24;
+        case '3':
+            return 0x30;
+        case '4':
+            return 0x19;
+        case '5':
+            return 0x12;
+        case '6':
+            return 0x02;
+        case '7':
+            return 0x78;
+        case '8':
+            return 0x00;
+        case '9':
+            return 0x10;
+
+        // hex letters
+        case 'A':
+        case 'a':
+            return 0x08;
+
+        case 'B':
+        case 'b':
+            return 0x03;  // displayed like lowercase b
+
+        case 'C':
+        case 'c':
+            return 0x46;
+
+        case 'D':
+        case 'd':
+            return 0x21;  // displayed like lowercase d
+
+        case 'E':
+        case 'e':
+            return 0x06;
+
+        case 'F':
+        case 'f':
+            return 0x0E;
+
+        // a few extra useful ones
+        case 'H':
+        case 'h':
+            return 0x0B;
+
+        case 'L':
+        case 'l':
+            return 0x47;
+
+        case 'P':
+        case 'p':
+            return 0x0C;
+
+        case 'U':
+        case 'u':
+            return 0x41;
+
+        case 'Y':
+        case 'y':
+            return 0x11;
+
+        case '-':
+            return 0x3F;
+        case '_':
+            return 0x77;
+        case ' ':
+            return 0x7F;  // blank, all segments off
+
+        default:
+            return 0x7F;  // unsupported char -> blank
+    }
+}
+
+/********************************
+ * Visible Functions
+ ********************************/
+// put values on leds
+void put_on_leds(uint32_t led_val) {
+    *led_ptr = led_val;
+}
+
+// write one character to one HEX display
+void hex_write_char(int hex_index, char c) {
+    if (hex_index < 0 || hex_index > 5)
+        return;
+
+    uint8_t seg = hex_encode_char(c);
+
+    if (hex_index <= 3) {
+        volatile uint32_t* hex30 = (volatile uint32_t*)0xFF200020;
+        uint32_t shift = hex_index * 8;
+        uint32_t mask = 0xFFu << shift;
+
+        uint32_t value = *hex30;
+        value &= ~mask;
+        value |= ((uint32_t)seg << shift);
+        *hex30 = value;
+    } else {
+        volatile uint32_t* hex54 = (volatile uint32_t*)0xFF200030;
+        uint32_t shift = (hex_index - 4) * 8;
+        uint32_t mask = 0xFFu << shift;
+
+        uint32_t value = *hex54;
+        value &= ~mask;
+        value |= ((uint32_t)seg << shift);
+        *hex54 = value;
+    }
+}
+
+// clear one HEX display
+void hex_clear_digit(int hex_index) {
+    hex_write_char(hex_index, ' ');
+}
+
+// clear all HEX displays
+void hex_clear_all(void) {
+    volatile uint32_t* hex30 = (volatile uint32_t*)0xFF200020;
+    volatile uint32_t* hex54 = (volatile uint32_t*)0xFF200030;
+
+    *hex30 = 0x7F7F7F7F;
+    *hex54 = 0x00007F7F;
+}
+/* --- END OF core/sw/src/io.c --- */
+
 /* --- START OF core/sw/inc/test_la_c.h --- */
 #ifndef TEST_LA_C_H
 #define TEST_LA_C_H
@@ -322,13 +492,13 @@ bool keyboard_read_event(Keyboard* kb, KeyEvent* ev) {
 #include <stdbool.h>
 #include <stdint.h>
 
+// Removed include: core/sw/inc/test_la_c.h
+
 // ---------------------------------------------------------------------------
 //  Drop-in replacements for the custom LA hardware module
 //  Include this instead of real LA header for CPUlator
 //  All signals are synthetically generated in software
 // ---------------------------------------------------------------------------
-
-#define BUFFER_SIZE 4096
 
 // Call once before la_start() to choose which channel edge triggers capture.
 void la_set_trigger_channel(int channel);
@@ -361,10 +531,10 @@ int la_get_trigger_index(void);
 // ---------------------------------------------------------------------------
 //  Internal state
 // ---------------------------------------------------------------------------
-uint16_t test_buffer[BUFFER_SIZE];  // packed: bit i of sample[s] = channel i
-bool buffer_ready = false;
-int trigger_channel = 0;
-int trigger_index = 0;
+static uint16_t test_buffer[BUFFER_SIZE];  // packed: bit i of sample[s] = channel i
+static bool buffer_ready = false;
+static int trigger_channel = 0;
+static int trigger_index = 0;
 
 // ---------------------------------------------------------------------------
 //  Waveform generators
@@ -372,38 +542,38 @@ int trigger_index = 0;
 // ---------------------------------------------------------------------------
 
 // Square wave: period in samples
-int square(int s, int period) {
+static int square(int s, int period) {
     return (s % period) < (period / 2) ? 1 : 0;
 }
 
 // Single pulse: high for `width` samples starting at `offset`
-int pulse(int s, int offset, int width) {
+static int pulse(int s, int offset, int width) {
     return (s >= offset && s < offset + width) ? 1 : 0;
 }
 
 // Clock-like burst: active only during [burst_start, burst_end)
-int burst(int s, int period, int burst_start, int burst_end) {
+static int burst(int s, int period, int burst_start, int burst_end) {
     if (s < burst_start || s >= burst_end) return 0;
     return square(s, period);
 }
 
 // Simple PWM: 30 % duty cycle
-int pwm(int s, int period) {
+static int pwm(int s, int period) {
     return (s % period) < (period * 3 / 10) ? 1 : 0;
 }
 
 // Alternating 1-0 (fastest possible toggle each sample)
-int toggle(int s) {
+static int toggle(int s) {
     return s & 1;
 }
 
 // Always high / always low
-int constant(int val) { return val; }
+static int constant(int val) { return val; }
 
 // ---------------------------------------------------------------------------
 //  Build the packed buffer
 // ---------------------------------------------------------------------------
-void generate_signals(void) {
+static void generate_signals(void) {
     for (int s = 0; s < BUFFER_SIZE; s++) {
         uint16_t packed = 0;
 
@@ -445,7 +615,7 @@ void generate_signals(void) {
 }
 
 // Find the first rising edge on `channel` and store the sample index.
-void compute_trigger_index(void) {
+static void compute_trigger_index(void) {
     trigger_index = 0;  // fallback: start of buffer
 
     for (int s = 1; s < BUFFER_SIZE; s++) {
@@ -502,9 +672,7 @@ int la_get_trigger_index(void) {
 #include <stdbool.h>
 #include <stdint.h>
 
-#define BUFFER_SIZE 4096       // hard coded to be 4096
-#define SAMPLE_RATE 100000000  // hard coded to be 100 MHz
-#define VERTICAL_DIVISIONS 8   // hard coded to hold 8
+// Removed include: core/sw/inc/visualizer_logic.h
 
 /********************************
  *  Structs
@@ -542,28 +710,30 @@ void center_view_on_trigger(ZoomState* g_state, uint32_t trigger_position);
 #include <stddef.h>
 
 #define ZOOM_LVL_COUNT 6
+#define SAMPLE_RATE 100000000  // hard coded to be 100 MHz
+#define VERTICAL_DIVISIONS 8   // hard coded to hold 8
 
 /********************************
  *  Structs + global variables
  ********************************/
-const uint32_t zoom_levels_samples[ZOOM_LVL_COUNT] = {64, 96, 128, 256, 512, 1024};
-uint32_t zoom_levels_time_div[ZOOM_LVL_COUNT];
+static const uint32_t zoom_levels_samples[ZOOM_LVL_COUNT] = {64, 96, 128, 256, 512, 1024};
+static uint32_t zoom_levels_time_div[ZOOM_LVL_COUNT];
 
 /********************************
  *  Helper Function Declarations
  ********************************/
-int find_best_zoom_index(uint32_t visible_samples);
-void clamp_scroll_offset(ZoomState* g_state);
-uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t buffer_size);
+static int find_best_zoom_index(uint32_t visible_samples);
+static void clamp_scroll_offset(ZoomState* g_state);
+static uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t buffer_size);
 uint32_t visualizer_get_scroll_step(const ZoomState* g_state);
-void calc_time_div_zoom_lvls();
+static void calc_time_div_zoom_lvls();
 uint32_t time_div_to_samples(uint32_t time_div);
 
 /********************************
  *  Helper Functions
  ********************************/
 // returns zoom index if found exactly, otherwise nearest valid index
-int find_best_zoom_index(uint32_t visible_samples) {
+static int find_best_zoom_index(uint32_t visible_samples) {
     int best_index = 0;
     uint32_t best_diff = (zoom_levels_samples[0] > visible_samples) ? (zoom_levels_samples[0] - visible_samples) : (visible_samples - zoom_levels_samples[0]);
 
@@ -580,7 +750,7 @@ int find_best_zoom_index(uint32_t visible_samples) {
 }
 
 // ensures visible_samples is valid and does not exceed capture size
-uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t buffer_size) {
+static uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t buffer_size) {
     // for a hardcoded 4096 bit buffer, this function does nothing other than call find_best_zoom_index
     if (buffer_size == 0)  // buffer contains no samples (shouldn't ever happen)
         return 0;
@@ -604,7 +774,7 @@ uint32_t clamp_visible_samples(uint32_t visible_samples, uint32_t buffer_size) {
 }
 
 // keeps start_sample within valid range
-void clamp_scroll_offset(ZoomState* g_state) {
+static void clamp_scroll_offset(ZoomState* g_state) {
     if (g_state == 0)  // uninitalized state->return
         return;
 
@@ -627,17 +797,19 @@ void clamp_scroll_offset(ZoomState* g_state) {
 }
 
 // calculate time div in nanoseconds/div
-void calc_time_div_zoom_lvls() {
+static void calc_time_div_zoom_lvls() {
     for (int i = 0; i < ZOOM_LVL_COUNT; i++) {
-        zoom_levels_time_div[i] =
-            ((uint64_t)zoom_levels_samples[i] * 1000000000ULL) /
-            ((uint64_t)VERTICAL_DIVISIONS * SAMPLE_RATE);
+        // (samples * 1e9) / (8 divisions * 100MHz)
+        // = samples * 1000000000 / 800000000
+        // = samples * 10 / 8
+        // = samples * 5 / 4
+        zoom_levels_time_div[i] = zoom_levels_samples[i] * 5 / 4;
     }
 }
 
 // go from time/div (in nanoseconds/div) to samples
 uint32_t time_div_to_samples(uint32_t time_div) {
-    return (uint32_t)(((uint64_t)time_div * SAMPLE_RATE * VERTICAL_DIVISIONS) / 1000000000ULL);
+    return time_div * 4 / 5;
 }
 
 // get the amount each attempt to scroll will shift the scroll offset of the buffer
@@ -798,12 +970,9 @@ uint32_t visualizer_get_end_sample(const ZoomState* g_state) {
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>  // for snprintf
 
 // Removed include: core/sw/inc/draw_screen.h
-
-#define TOTAL_SIGNALS 16
-#define BUFFER_SIZE 4096
+// Removed include: core/sw/inc/draw_screen.h
 
 // ----- Structs ----- //
 // all info needed to draw a singal
@@ -837,10 +1006,13 @@ void channels_init(Channel* channels, const int size);
 // Removed include: core/sw/src/draw_screen.c
 // Removed include: core/sw/src/draw_screen.c
 
+////////////// temporary include for debugging reasons
+// Removed include: core/sw/src/draw_screen.c
+/////////////////////////////////////////////////////
+
 // ----- Screen constants ----- //
 #define SCREEN_W 320
 #define SCREEN_H 240
-#define TOTAL_SIGNALS_ON_SCREEN 8
 
 // ----- Char buffer ----- //
 #define CHAR_COLS 80
@@ -850,26 +1022,27 @@ void channels_init(Channel* channels, const int size);
  *  Structs + global variables
  ********************************/
 //-- screen sizing variables --//
-const int top_bar_height = 15;
-const int left_bar_width = 32;  // cause there are 8 major vertical grid ticks. (320 - 32)/8 = 36
-const int bottom_bar_height = 7;
-const int channel_area_height = SCREEN_H - (top_bar_height + bottom_bar_height);
+static const int top_bar_height = 15;
+static const int left_bar_width = 32;  // cause there are 8 major vertical grid ticks. (320 - 32)/8 = 36
+static const int bottom_bar_height = 7;
+static const int channel_area_height = 218;  // 240 - 15 - 7
 
 //-- waveform / grid layout variables --//
-const int grid_spacing_x = (SCREEN_W - left_bar_width) / 8;
-const int waveform_margin_divisor = 4;
-const int waveform_min_margin = 1;
+
+static const int grid_spacing_x = 36;  // (320 - 32) / 8
+static const int waveform_margin_divisor = 4;
+static const int waveform_min_margin = 1;
 
 //-- UI color variables --//
-const uint16_t top_bar_color = 0x18e3;
-const uint16_t bottom_bar_color = 0x18e3;
-const uint16_t left_bar_color = 0x18e3;
-const uint16_t separator_color = 0x39c7;
-const uint16_t grid_color = 0x18e3;
-const uint16_t text_color = 0xd69a;
+static const uint16_t top_bar_color = 0x18e3;
+static const uint16_t bottom_bar_color = 0x18e3;
+static const uint16_t left_bar_color = 0x18e3;
+static const uint16_t separator_color = 0x39c7;
+static const uint16_t grid_color = 0x18e3;
+static const uint16_t text_color = 0xd69a;
 
 // color options for the signals drawn to screen
-const uint16_t channel_colors[16] = {
+static const uint16_t channel_colors[16] = {
     0x5D6B, 0x8E24, 0x8E24, 0xC7C0,
     0xE7E0, 0xF580, 0xE3A0, 0xD820,
     0x72A9, 0x5249, 0x3A89, 0x44CB,
@@ -885,29 +1058,29 @@ uint8_t zero_samples[4096];
  *  Helper Function Declarations (idk if we need )
  ********************************/
 // ----- Basic Drawing Stuff ----- //
-void draw_hline(int x_start, int x_end, int y, uint16_t color);
-void draw_vline(int x, int y_start, int y_end, uint16_t color);
-void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color);
-int calculate_channel_height(const int lanes, const int available_height);
-void text_plot_char(int col, int row, char c);
-void text_draw_string(int col, int row, const char* text);
-void text_clear(void);
-void draw_channel_labels(const Channel* channels, int lanes);
-uint16_t dim_color(uint16_t color);
-void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
-void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position);
+static void draw_hline(int x_start, int x_end, int y, uint16_t color);
+static void draw_vline(int x, int y_start, int y_end, uint16_t color);
+static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color);
+static void text_plot_char(int col, int row, char c);
+static void text_draw_string(int col, int row, const char* text);
+static void text_clear(void);
+static void draw_channel_labels(const Channel* channels, int lanes);
+static uint16_t dim_color(uint16_t color);
+static void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
+static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position);
+void put_on_leds(uint32_t led_val);
 
 /********************************
  *  Helper Functions
  ********************************/
 // draw a horizontal line
-void draw_hline(int x_start, int x_end, int y, uint16_t color) {
+static void draw_hline(int x_start, int x_end, int y, uint16_t color) {
     for (int x = x_start; x <= x_end; x++)
         plot_pixel(x, y, color);
 }
 
 // draw a vertical line
-void draw_vline(int x, int y_start, int y_end, uint16_t color) {
+static void draw_vline(int x, int y_start, int y_end, uint16_t color) {
     // swap for negative lines
     if (y_start > y_end) {
         int temp = y_start;
@@ -920,36 +1093,49 @@ void draw_vline(int x, int y_start, int y_end, uint16_t color) {
 }
 
 // draw a filled rectangle (to draw bars / labels)
-void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color) {
+static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color) {
     // note: x_cord and y_cord define the top left corner of the rectangle being drawn
     for (int j = 0; j < h; j++)
         for (int i = 0; i < w; i++)
             plot_pixel(x_cord + i, y_cord + j, color);
 }
 
-// if want n channels, draw n - 1 lines spaced (available_height / lanes) apart
-int calculate_channel_height(const int lanes, const int available_height) {
-    if (lanes <= 0)
-        return 0;
-    return available_height / lanes;
+// for dimming the color of text drawn to screen (used for channel labels for example)
+static uint16_t dim_color(uint16_t color) {
+    uint16_t r = (color >> 11) & 0x1F;
+    uint16_t g = (color >> 5) & 0x3F;
+    uint16_t b = color & 0x1F;
+
+    r >>= 1;
+    g >>= 1;
+    b >>= 1;
+
+    return (r << 11) | (g << 5) | b;
+}
+
+// clear buffer
+static void text_clear(void) {
+    volatile char* char_buf = (volatile char*)0x09000000;
+
+    for (int row = 0; row < CHAR_ROWS; row++) {
+        for (int col = 0; col < CHAR_COLS; col++) {
+            char_buf[(row << 7) + col] = ' ';  // row stride = 128
+        }
+    }
 }
 
 // store a single char in a string buffer
-void text_plot_char(int col, int row, char c) {
+static void text_plot_char(int col, int row, char c) {
     if (col < 0 || col >= CHAR_COLS || row < 0 || row >= CHAR_ROWS)
         return;
 
-    // pointer to controller
-    volatile int* ctrl = (int*)0xFF203030;
+    volatile char* char_buf = (volatile char*)0x09000000;
 
-    // first register = character buffer address
-    volatile char* char_buf = (volatile char*)(ctrl[0]);
-
-    char_buf[row * CHAR_COLS + col] = c;
+    char_buf[(row << 7) + col] = c;  // same as row * 128 + col
 }
 
 // draw text to screen
-void text_draw_string(int col, int row, const char* text) {
+static void text_draw_string(int col, int row, const char* text) {
     if (text == 0)
         return;
 
@@ -977,37 +1163,12 @@ void text_draw_string(int col, int row, const char* text) {
     }
 }
 
-// clear buffer or smth? idk
-void text_clear(void) {
-    volatile int* ctrl = (int*)0xFF203030;
-    volatile char* char_buf = (volatile char*)(ctrl[0]);
-
-    for (int row = 0; row < CHAR_ROWS; row++) {
-        for (int col = 0; col < CHAR_COLS; col++) {
-            char_buf[row * CHAR_COLS + col] = ' ';
-        }
-    }
-}
-
-// for dimming the color of text drawn to screen (used for channel labels for example)
-uint16_t dim_color(uint16_t color) {
-    uint16_t r = (color >> 11) & 0x1F;
-    uint16_t g = (color >> 5) & 0x3F;
-    uint16_t b = color & 0x1F;
-
-    r >>= 1;
-    g >>= 1;
-    b >>= 1;
-
-    return (r << 11) | (g << 5) | b;
-}
-
 // draws labels
-void draw_channel_labels(const Channel* channels, const int lanes) {
+static void draw_channel_labels(const Channel* channels, const int lanes) {
     if (channels == 0 || lanes <= 0 || lanes > TOTAL_SIGNALS)
         return;
 
-    int lane_height = calculate_channel_height(lanes, channel_area_height);
+    int lane_height = 27;
 
     // character placement inside left panel
     // 80 cols over 320 px => 4 px per char cell
@@ -1056,7 +1217,7 @@ void draw_logic_view(const ZoomState* state, const Channel* channels, int signal
 
     uint32_t visible_count = end - start;
 
-    int lane_height = calculate_channel_height(signals_per_page, channel_area_height);
+    int lane_height = 27;
     int x_start = left_bar_width;
     int waveform_width = SCREEN_W - left_bar_width;
 
@@ -1078,7 +1239,7 @@ void draw_logic_view(const ZoomState* state, const Channel* channels, int signal
 }
 
 // draw vertical trigger marker line across waveform area
-void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position) {
+static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position) {
     if (state == 0 || state->visible_samples == 0)
         return;
 
@@ -1121,13 +1282,14 @@ void draw_logic_ui_frame(const Channel* channels, const int lanes) {
     fill_rect(0, top_bar_height, left_bar_width, channel_area_height, left_bar_color);
 
     // Vertical grid lines
-    for (int x = left_bar_width; x < SCREEN_W; x += grid_spacing_x)
+    for (int x = left_bar_width; x < SCREEN_W; x += grid_spacing_x) {
         draw_vline(x, top_bar_height, SCREEN_H - bottom_bar_height - 1, grid_color);
+    }
 
     // Channel separators
-    int spacing = calculate_channel_height(lanes, channel_area_height);
+    int spacing = 27;
     for (int i = 1; i < lanes; i++) {
-        int y = top_bar_height + i * spacing;
+        int y = top_bar_height + i * 27;
         draw_hline(0, SCREEN_W - 1, y, separator_color);
     }
 
@@ -1196,6 +1358,7 @@ void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trig
 
 // switch to the other page
 void switch_ui_page() {
+    text_clear();       // clear previous text
     current_page ^= 1;  // Toggle page (0 or 1)
 }
 
@@ -1205,24 +1368,439 @@ void channels_init(Channel* channels, const int total_signals) {
         channels[i].samples = channel_buffers[i];  // assign a buffer to each channel
         channels[i].count = 0;
         channels[i].enabled = false;
-        snprintf(channels[i].label, sizeof(channels[i].label), "CH%d", i);  // give each channel it's appropriate label
-        channels[i].color = channel_colors[i];                              // give each signal it's color
+        channels[i].color = channel_colors[i];  // give each signal it's color
+
+        // give each signal it's label
+        channels[i].label[0] = 'C';
+        channels[i].label[1] = 'H';
+        if (i < 10) {
+            channels[i].label[2] = '0' + i;
+            channels[i].label[3] = '\0';
+        } else {
+            channels[i].label[2] = '1';
+            channels[i].label[3] = '0' + (i - 10);
+            channels[i].label[4] = '\0';
+        }
     }
 }
 
 /* --- END OF core/sw/src/draw_screen.c --- */
+
+/* --- START OF core/sw/inc/interface.h --- */
+#ifndef INTERFACE_H
+#define INTERFACE_H
+
+// Removed include: core/sw/inc/interface.h
+// Removed include: core/sw/inc/interface.h
+// Removed include: core/sw/inc/interface.h
+// Removed include: core/sw/inc/interface.h
+// Removed include: core/sw/inc/interface.h
+
+/********************************
+ *  Global variables
+ ********************************/
+extern Keyboard kb;            // keyboard for user input
+extern ZoomState g_state;      // handling zooming logic
+extern uint32_t current_page;  // defines what the current page is (defined in draw_screen module)
+
+extern Channel channels[TOTAL_SIGNALS];  // all information to draw the signals
+extern uint8_t channel_buffers[TOTAL_SIGNALS][BUFFER_SIZE];
+
+/********************************
+ *  Functions
+ ********************************/
+void draw();
+void setup_init();
+void clear_everything();
+void trigger_logic_analyzer();
+void keyboard_poll_user_input();
+
+#endif
+/* --- END OF core/sw/inc/interface.h --- */
+
+/* --- START OF core/sw/src/interface.c --- */
+// Removed include: core/sw/src/interface.c
+
+#include <stdio.h>
+#include <string.h>
+
+// Removed include: core/sw/src/interface.c
+// Removed include: core/sw/src/interface.c
+// Removed include: core/sw/src/interface.c
+
+#define DEFAULT_ZOOM 96
+
+/********************************
+ *  Internal global variables
+ ********************************/
+static uint16_t LA_output[BUFFER_SIZE];
+Keyboard kb;        // keyboard for user input
+ZoomState g_state;  // handling zooming logic
+
+Channel channels[TOTAL_SIGNALS];  // all information to draw the signals
+int key_channel = 0;
+
+bool la_is_running = false;
+
+/********************************
+ *  Helper function declarations
+ ********************************/
+void clear_signals();
+int get_current_selected_channel_value();
+bool get_signals(bool trigger_running);
+void get_signals_test();
+void enable_signal(int current_channel);
+
+/********************************
+ *  Helper Functions
+ ********************************/
+
+// select the given channel
+void select_channel(int selected) {
+    // note: selected channels support [-1, 8] because -1 and 8 states reflect user scrolling off screen and nothing selected
+    if (selected < -1 || selected > TOTAL_SIGNALS_ON_SCREEN)
+        return;  // out of bounds selection
+    key_channel = selected;
+}
+
+// increment or decrement selected channel
+void increment_channel_selected(int increment_direction) {
+    if (increment_direction != -1 && increment_direction != 1)
+        return;  // invalid choice, this function can only add by one or subtract by one
+
+    if (key_channel <= -1 && increment_direction == -1)
+        return;  // cannot decrement anymore
+
+    if (key_channel >= (TOTAL_SIGNALS_ON_SCREEN - 1) && increment_direction == 1)
+        return;  // cannot increment anymore
+
+    key_channel += increment_direction;
+}
+
+// figure out which channel the user currently has selected
+int get_current_selected_channel_value() {
+    // check the user is not in the deselected mode for selecting channels
+    // (deselected when current_channel_num == -1 or 8)
+    if (key_channel == -1 || key_channel == TOTAL_SIGNALS_ON_SCREEN)
+        return -1;                                // show deselected state
+    uint16_t page_offset = current_page ? 8 : 0;  // current_page is from draw_screen lofic
+    return key_channel + page_offset;             // ig 16 signals max, will always be in range [0, 15]
+}
+
+// helper function for keyboard_poll_user_input. helps call functions only on rising edge of make code
+bool is_new_press(bool previous_state, bool current_pressed) {
+    return current_pressed && !previous_state;
+}
+
+// a test for plotting signals (DELETE LATER)
+void get_signals_test() {
+    for (int i = 0; i < TOTAL_SIGNALS; i++) {
+        channels[i].count = 4096;
+        for (int j = 0; j < BUFFER_SIZE; j++) {
+            channels[0].samples[j] = channels[0].samples[j] ^ 1;
+        }
+        for (int j = 0; j < TOTAL_SIGNALS_ON_SCREEN; j++) {
+            channels[j].enabled = true;
+            strcpy(channels[i].label, "CH0");
+        }
+    }
+}
+
+// clear signal buffer array
+void clear_signals() {
+    memset(channel_buffers, 0, sizeof(channel_buffers));  // clear the signal values
+    memset(LA_output, 0, sizeof(LA_output));              // clear all other assoicated data
+    if (la_is_running) {
+        la_stop();  // stop the logic analyzer
+        la_is_running = false;
+    }
+}
+
+void enable_signal(int current_channel) {
+    // check the user is not in the deselected mode for selecting channels
+    // (deselected when current_channel_num == -1 or 8)
+    if (current_channel == -1 || current_channel >= TOTAL_SIGNALS_ON_SCREEN)
+        return;
+    if (!(channels[current_channel].enabled))
+        channels[current_channel].enabled = true;  // enable if off
+    else if (channels[current_channel].enabled)
+        channels[current_channel].enabled = false;  // disable if on
+}
+
+bool populate_channels(bool successful_read) {
+    if (!successful_read)
+        return false;
+
+    // -- polulate the channels to draw on the screen --//
+    for (int i = 0; i < TOTAL_SIGNALS; i++) {
+        for (int p = 0; p < BUFFER_SIZE; p++) {
+            channels[i].samples[p] = (LA_output[p] >> i) & 1;
+        }
+    }
+    return true;
+}
+
+/********************************
+ *  Functions
+ ********************************/
+// intitalize peripheral devices and other fundamental logic
+void setup_init() {
+    // -- intitalize peripheral devices -- //
+    vga_init();
+    keyboard_init(&kb);
+    // add mouse stuff here too if added
+
+    // -- Other initalizations -- //
+    zoom_state_init(&g_state, DEFAULT_ZOOM);
+    channels_init(channels, TOTAL_SIGNALS);  // all information to DRAW the signals
+    text_clear();
+}
+
+// recieve all 16 buffers from the logic analyzer
+bool get_signals(bool trigger_running) {
+    if (!trigger_running || !la_is_running)
+        return false;
+
+    bool successful_read = false;
+
+    while (!la_is_done()) {
+    }  // get all the signals from the buffer
+
+    la_download_buffer(LA_output, BUFFER_SIZE);
+
+    successful_read = true;
+
+    if (!populate_channels(successful_read)) {
+        clear_everything();  // clear and reset signals and LA
+        return false;        // something went wrong, don't try to draw
+    }
+
+    return true;
+}
+
+// wipes everything off the screen, clears the buffer, and stops the logic analyzer
+void clear_everything() {
+    // -- clear out the buffer -- //
+    if (la_is_running) {
+        uint16_t throwaway[BUFFER_SIZE];
+        la_reset_read_pointer();
+        while (!la_is_done()) {
+        }  // clear out the buffer
+        la_download_buffer(throwaway, BUFFER_SIZE);
+        la_reset_read_pointer();  // reset it anyway
+
+        // -- stop logic analyzer -- //
+        la_stop();
+        la_is_running = false;
+    }
+
+    // -- clear out all the signals -- //
+    clear_signals();
+    channels_init(channels, TOTAL_SIGNALS);  // reset
+}
+
+// trigger the logic analyzer and draw it to the screen
+void trigger_logic_analyzer() {
+    if (!la_is_running)
+        return;
+
+    bool trigger_running = false;
+
+    int current_channel_num = get_current_selected_channel_value();
+
+    // check the user is not in the deselected mode for selecting channels
+    // (deselected when current_channel_num == -1)
+    if (current_channel_num == -1)
+        return;
+    if (!channels[current_channel_num].enabled)  // not enabled, return
+        return;
+
+    la_set_trigger_channel(current_channel_num);
+    trigger_running = true;
+
+    get_signals(trigger_running);  // populates channel array to be passed in to draw_screen
+    // get_signals_test();
+}
+
+// draw to the screen every frame
+void draw() {
+    clear_screen();
+    draw_ui_page(channels, &g_state, la_get_trigger_index());
+    draw_logic_ui_frame(channels, TOTAL_SIGNALS_ON_SCREEN);
+    draw_signals(&g_state, channels, TOTAL_SIGNALS_ON_SCREEN);
+    wait_for_vsync();
+}
+
+// poll for the user's input with keyboard
+void keyboard_poll_user_input() {
+    KeyEvent ev;
+    static KeyPressed key = {0};
+
+    while (keyboard_read_event(&kb, &ev)) {  // drain the entire FIFO (important to prevent lagging! do not change this! )
+        switch (ev.key) {                    // figure out what key is currently being pressed/released and call approritate function
+            // continuous keys (i.e. holding them will keep triggering their corresponding logic)
+            case KEY_LEFT:
+                key.arrow_left = ev.pressed;
+                break;
+
+            case KEY_RIGHT:
+                key.arrow_right = ev.pressed;
+                break;
+
+            // one-shot keys (holding won't keep triggering logic. Logic will only be triggered once)
+            case KEY_UP:
+                if (is_new_press(key.arrow_up, ev.pressed)) {
+                    increment_channel_selected(1);
+                }
+                key.arrow_up = ev.pressed;
+                break;
+
+            case KEY_DOWN:
+                if (is_new_press(key.arrow_down, ev.pressed)) {
+                    increment_channel_selected(-1);
+                }
+                key.arrow_down = ev.pressed;
+                break;
+
+            case KEY_TAB:
+                if (is_new_press(key.tab, ev.pressed)) {
+                    switch_ui_page();
+                }
+
+                key.tab = ev.pressed;
+                break;
+
+            case KEY_ESC:
+                if (is_new_press(key.esc, ev.pressed))
+                    select_channel(-1);
+                key.esc = ev.pressed;
+                break;
+
+            case KEY_SPACE:
+                if (is_new_press(key.space, ev.pressed))
+                    enable_signal(get_current_selected_channel_value());
+                key.space = ev.pressed;
+                break;
+
+            case KEY_PLUS:
+                if (is_new_press(key.plus, ev.pressed))
+                    visualizer_zoom_in(&g_state, la_get_trigger_index());
+                key.plus = ev.pressed;
+                break;
+
+            case KEY_MINUS:
+                if (is_new_press(key.minus, ev.pressed))
+                    visualizer_zoom_out(&g_state, la_get_trigger_index());
+                key.minus = ev.pressed;
+                break;
+
+            case KEY_S:
+                if (is_new_press(key.s, ev.pressed)) {
+                    la_start();  // start the logic analyzer
+                    la_is_running = true;
+                }
+
+                key.s = ev.pressed;
+                break;
+
+            case KEY_T:
+                if (is_new_press(key.t, ev.pressed)) {
+                    trigger_logic_analyzer();
+                }
+                key.t = ev.pressed;
+                break;
+
+            case KEY_C:
+                if (is_new_press(key.c, ev.pressed)) {
+                    clear_everything();
+                }
+                key.c = ev.pressed;
+                break;
+
+            case KEY_E:
+                if (is_new_press(key.e, ev.pressed)) {
+                    enable_signal(get_current_selected_channel_value());
+                }
+                key.e = ev.pressed;
+                break;
+
+            case KEY_1:
+                if (is_new_press(key.channel[0], ev.pressed)) {
+                    select_channel(0);
+                }
+                key.channel[0] = ev.pressed;
+                break;
+
+            case KEY_2:
+                if (is_new_press(key.channel[1], ev.pressed)) {
+                    select_channel(1);
+                }
+
+                key.channel[1] = ev.pressed;
+                break;
+
+            case KEY_3:
+                if (is_new_press(key.channel[2], ev.pressed))
+                    select_channel(2);
+                key.channel[2] = ev.pressed;
+                break;
+
+            case KEY_4:
+                if (is_new_press(key.channel[3], ev.pressed))
+                    select_channel(3);
+                key.channel[3] = ev.pressed;
+                break;
+
+            case KEY_5:
+                if (is_new_press(key.channel[4], ev.pressed))
+                    select_channel(4);
+                key.channel[4] = ev.pressed;
+                break;
+
+            case KEY_6:
+                if (is_new_press(key.channel[5], ev.pressed))
+                    select_channel(5);
+                key.channel[5] = ev.pressed;
+                break;
+
+            case KEY_7:
+                if (is_new_press(key.channel[6], ev.pressed))
+                    select_channel(6);
+                key.channel[6] = ev.pressed;
+                break;
+
+            case KEY_8:
+                if (is_new_press(key.channel[7], ev.pressed))
+                    select_channel(7);
+                key.channel[7] = ev.pressed;
+                break;
+
+            default:
+                break;  // ignore keys we do not care about
+        }
+    }
+
+    // continuous actions: run once per poll/frame while held
+    if (key.arrow_right && !key.arrow_left) {
+        visualizer_scroll_right(&g_state);
+    } else if (key.arrow_left && !key.arrow_right) {
+        visualizer_scroll_left(&g_state);
+    }
+}
+/* --- END OF core/sw/src/interface.c --- */
 
 /* --- START OF core/sw/src/main.c --- */
 #include <stdbool.h>
 #include <stdint.h>
 
 // Removed include: core/sw/src/main.c
+// Removed include: core/sw/src/main.c
 
 // NOTE: CURRENTLY HARD CODED FOR 16 CHANNELS. DO NOT ENTER MORE. WILL LEAD TO UNDEFINED BEHAVIOUR
 int main(void) {
     setup_init();
-    clear_everything();
     draw();  // draw inital frame upon start up
+
     while (1) {
         keyboard_poll_user_input();
         draw();

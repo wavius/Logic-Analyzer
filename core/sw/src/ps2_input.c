@@ -72,8 +72,8 @@ static const KeyCode normal_map[256] = {
     [0x0D] = KEY_TAB,
     [0x76] = KEY_ESC,
     [0x29] = KEY_SPACE,
-    [0x79] = KEY_PLUS,  // keypad +
-    [0x7B] = KEY_MINUS  // keypad -
+    [0x55] = KEY_PLUS,  // keyboard +
+    [0x4E] = KEY_MINUS  // keyboard -
 };
 
 static const KeyCode ext_map[256] = {
