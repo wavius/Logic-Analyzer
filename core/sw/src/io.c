@@ -8,87 +8,118 @@
 volatile uint32_t* led_ptr = (volatile uint32_t*)LEDR_BASE;
 
 // returns active-low 7-seg encoding for the fpga
+
+//clang-format off
 static uint8_t hex_encode_char(char c) {
+    uint8_t seg;
+
     switch (c) {
         // digits
         case '0':
-            return 0x40;
+            seg = 0x3F;
+            break;  // abcdef
         case '1':
-            return 0x79;
+            seg = 0x06;
+            break;  // bc
         case '2':
-            return 0x24;
+            seg = 0x5B;
+            break;  // abdeg
         case '3':
-            return 0x30;
+            seg = 0x4F;
+            break;  // abcdg
         case '4':
-            return 0x19;
+            seg = 0x66;
+            break;  // bcfg
         case '5':
-            return 0x12;
+            seg = 0x6D;
+            break;  // acdfg
         case '6':
-            return 0x02;
+            seg = 0x7D;
+            break;  // acdefg
         case '7':
-            return 0x78;
+            seg = 0x07;
+            break;  // abc
         case '8':
-            return 0x00;
+            seg = 0x7F;
+            break;  // abcdefg
         case '9':
-            return 0x10;
+            seg = 0x6F;
+            break;  // abcdfg
 
         // hex letters
         case 'A':
         case 'a':
-            return 0x08;
+            seg = 0x77;
+            break;  // abcefg
 
         case 'B':
         case 'b':
-            return 0x03;  // displayed like lowercase b
+            seg = 0x7C;
+            break;  // cdefg
 
         case 'C':
         case 'c':
-            return 0x46;
+            seg = 0x39;
+            break;  // adef
 
         case 'D':
         case 'd':
-            return 0x21;  // displayed like lowercase d
+            seg = 0x5E;
+            break;  // bcdeg
 
         case 'E':
         case 'e':
-            return 0x06;
+            seg = 0x79;
+            break;  // adefg
 
         case 'F':
         case 'f':
-            return 0x0E;
+            seg = 0x71;
+            break;  // aefg
 
-        // a few extra useful ones
+        // extra letters that look decent on 7-seg
         case 'H':
         case 'h':
-            return 0x0B;
+            seg = 0x76;
+            break;  // bcefg
 
         case 'L':
         case 'l':
-            return 0x47;
+            seg = 0x38;
+            break;  // def
 
         case 'P':
         case 'p':
-            return 0x0C;
+            seg = 0x73;
+            break;  // abefg
 
         case 'U':
         case 'u':
-            return 0x41;
+            seg = 0x3E;
+            break;  // bcdef
 
         case 'Y':
         case 'y':
-            return 0x11;
+            seg = 0x6E;
+            break;  // bcdfg
 
         case '-':
-            return 0x3F;
+            seg = 0x40;
+            break;  // g
         case '_':
-            return 0x77;
+            seg = 0x08;
+            break;  // d
         case ' ':
-            return 0x7F;  // blank, all segments off
+            seg = 0x00;
+            break;  // blank
 
         default:
-            return 0x7F;  // unsupported char -> blank
+            seg = 0x00;
+            break;  // unsupported -> blank
     }
+    return seg;
 }
+//clang-format on
 
 /********************************
  * Visible Functions

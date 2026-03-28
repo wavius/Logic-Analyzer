@@ -3,8 +3,9 @@
 
 #include "constants.h"
 #include "draw_screen.h"
-#include "logic_analyzer.h"
+// #include "logic_analyzer.h"
 #include "ps2_input.h"
+#include "test_la_c.h"
 #include "visualizer_logic.h"
 
 /********************************

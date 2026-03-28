@@ -6,8 +6,8 @@ void la_set_trigger_channel(uint16_t channel) {
 }
 
 void la_start(void) {
-    LA->CONTROL = 0x0; // Write 0 to ensure FSM is reset
-    LA->CONTROL = 0x1; // Write 1 to start capture
+    LA->CONTROL = 0x0;  // Write 0 to ensure FSM is reset
+    LA->CONTROL = 0x1;  // Write 1 to start capture
 }
 
 void la_stop(void) {
@@ -22,10 +22,10 @@ int la_is_done(void) {
 
 void la_reset_read_pointer(void) {
     // Verilog: if (write && address == 3'h3) read_pointer <= '0;
-    LA->DATA_WINDOW = 0x0; 
+    LA->DATA_WINDOW = 0x0;
 }
 
-void la_download_buffer(uint16_t *dest, int size) {
+void la_download_buffer(uint16_t* dest, int size) {
     la_reset_read_pointer();
     for (int i = 0; i < size; i++) {
         // Verilog: readdata = {16'b0, buffer[read_pointer]};
@@ -38,8 +38,8 @@ uint32_t la_get_trigger_index(void) {
     return LA->TRIGGER_PTR;
 }
 
-void la_get_trigger_samples(uint16_t *post_trigger, uint16_t *pre_trigger) {
+void la_get_trigger_samples(uint16_t* post_trigger, uint16_t* pre_trigger) {
     uint32_t samples = LA->TRIGGER_SAMPLES;
     *post_trigger = (uint16_t)(samples >> 16);
-    *pre_trigger  = (uint16_t)samples;
+    *pre_trigger = (uint16_t)samples;
 }

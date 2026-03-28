@@ -60,7 +60,6 @@ static void draw_vline(int x, int y_start, int y_end, uint16_t color);
 static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color);
 static void text_plot_char(int col, int row, char c);
 static void text_draw_string(int col, int row, const char* text);
-static void text_clear(void);
 static void draw_channel_labels(const Channel* channels, int lanes);
 static uint16_t dim_color(uint16_t color);
 static void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
@@ -110,7 +109,7 @@ static uint16_t dim_color(uint16_t color) {
 }
 
 // clear buffer
-static void text_clear(void) {
+void text_clear(void) {
     volatile char* char_buf = (volatile char*)FPGA_CHAR_BASE;
 
     for (int row = 0; row < CHAR_ROWS; row++) {

@@ -2,9 +2,9 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define TOTAL_SIGNALS 16           // hard coded to be 16
-#define TOTAL_SIGNALS_ON_SCREEN 8  // hard coded to be 8
-#define BUFFER_SIZE 4096           // hard coded to be 4096
+#define TOTAL_SIGNALS 16 // hard coded to be 16
+#define TOTAL_SIGNALS_ON_SCREEN 8 // hard coded to be 8
+#define BUFFER_SIZE 4096 // hard coded to be 4096
 
 #endif
 /* --- END OF core/sw/inc/constants.h --- */
@@ -352,87 +352,117 @@ void hex_clear_all(void);
 volatile uint32_t* led_ptr = (volatile uint32_t*)0xFF200000;
 
 // returns active-low 7-seg encoding for the fpga
+
+//clang-format off
 static uint8_t hex_encode_char(char c) {
+    uint8_t seg;
+
     switch (c) {
         // digits
         case '0':
-            return 0x40;
+            seg = 0x3F;
+            break;  // abcdef
         case '1':
-            return 0x79;
+            seg = 0x06;
+            break;  // bc
         case '2':
-            return 0x24;
+            seg = 0x5B;
+            break;  // abdeg
         case '3':
-            return 0x30;
+            seg = 0x4F;
+            break;  // abcdg
         case '4':
-            return 0x19;
+            seg = 0x66;
+            break;  // bcfg
         case '5':
-            return 0x12;
+            seg = 0x6D;
+            break;  // acdfg
         case '6':
-            return 0x02;
+            seg = 0x7D;
+            break;  // acdefg
         case '7':
-            return 0x78;
+            seg = 0x07;
+            break;  // abc
         case '8':
-            return 0x00;
+            seg = 0x7F;
+            break;  // abcdefg
         case '9':
-            return 0x10;
+            seg = 0x6F;
+            break;  // abcdfg
 
         // hex letters
         case 'A':
         case 'a':
-            return 0x08;
+            seg = 0x77;
+            break;  // abcefg
 
         case 'B':
         case 'b':
-            return 0x03;  // displayed like lowercase b
+            seg = 0x7C;
+            break;  // cdefg
 
         case 'C':
         case 'c':
-            return 0x46;
+            seg = 0x39;
+            break;  // adef
 
         case 'D':
         case 'd':
-            return 0x21;  // displayed like lowercase d
+            seg = 0x5E;
+            break;  // bcdeg
 
         case 'E':
         case 'e':
-            return 0x06;
+            seg = 0x79;
+            break;  // adefg
 
         case 'F':
         case 'f':
-            return 0x0E;
+            seg = 0x71;
+            break;  // aefg
 
-        // a few extra useful ones
+        // extra letters that look decent on 7-seg
         case 'H':
         case 'h':
-            return 0x0B;
+            seg = 0x76;
+            break;  // bcefg
 
         case 'L':
         case 'l':
-            return 0x47;
+            seg = 0x38;
+            break;  // def
 
         case 'P':
         case 'p':
-            return 0x0C;
+            seg = 0x73;
+            break;  // abefg
 
         case 'U':
         case 'u':
-            return 0x41;
+            seg = 0x3E;
+            break;  // bcdef
 
         case 'Y':
         case 'y':
-            return 0x11;
+            seg = 0x6E;
+            break;  // bcdfg
 
         case '-':
-            return 0x3F;
+            seg = 0x40;
+            break;  // g
         case '_':
-            return 0x77;
+            seg = 0x08;
+            break;  // d
         case ' ':
-            return 0x7F;  // blank, all segments off
+            seg = 0x00;
+            break;  // blank
 
         default:
-            return 0x7F;  // unsupported char -> blank
+            seg = 0x00;
+            break;  // unsupported -> blank
     }
 }
+//clang-format on
 
 /********************************
  * Visible Functions
@@ -1450,31 +1480,47 @@ int get_current_selected_channel_value();
 bool get_signals(bool trigger_running);
 void get_signals_test();
 void enable_signal(int current_channel);
+char int_to_char(int val);
 
 /********************************
  *  Helper Functions
  ********************************/
+// turn an int from 0-9 into a char to pass into hex function
+char int_to_char(int x) {
+    if (x < 0)
+        x = 8;
+    return '0' + x;
+}
 
 // select the given channel
 void select_channel(int selected) {
-    // note: selected channels support [-1, 8] because -1 and 8 states reflect user scrolling off screen and nothing selected
-    if (selected < -1 || selected > TOTAL_SIGNALS_ON_SCREEN)
+    // note: selected channels support [-1, 7] because -1 reflects user scrolling off screen and nothing selected
+    if (selected < -1 || selected >= TOTAL_SIGNALS_ON_SCREEN) {
+        key_channel = -1;
+        hex_write_char(0, int_to_char(key_channel));
         return;  // out of bounds selection
+    }
     key_channel = selected;
+    hex_write_char(0, int_to_char(key_channel));
 }
 
 // increment or decrement selected channel
-void increment_channel_selected(int increment_direction) {
-    if (increment_direction != -1 && increment_direction != 1)
-        return;  // invalid choice, this function can only add by one or subtract by one
+void increment_channel_selected(int dir) {
+    if (dir != -1 && dir != 1)  // only increment/decrement by steps of 1
+        return;
 
-    if (key_channel <= -1 && increment_direction == -1)
-        return;  // cannot decrement anymore
+    int new_channel = key_channel + dir;
 
-    if (key_channel >= (TOTAL_SIGNALS_ON_SCREEN - 1) && increment_direction == 1)
-        return;  // cannot increment anymore
-
-    key_channel += increment_direction;
+    if (new_channel < -1) {  // user is off the screen on deselected mode
+        hex_write_char(0, int_to_char(key_channel));
+        return;
+    } else if (new_channel > (TOTAL_SIGNALS_ON_SCREEN - 1)) {  // range: [0, 7]
+        key_channel = -1;                                      // force into deselected state
+        hex_write_char(0, int_to_char(key_channel));
+        return;
+    }
+    key_channel = new_channel;
+    hex_write_char(0, int_to_char(key_channel));
 }
 
 // figure out which channel the user currently has selected
@@ -1516,6 +1562,7 @@ void clear_signals() {
     }
 }
 
+// enable signal based on current selected channel
 void enable_signal(int current_channel) {
     // check the user is not in the deselected mode for selecting channels
     // (deselected when current_channel_num == -1 or 8)
@@ -1527,6 +1574,7 @@ void enable_signal(int current_channel) {
         channels[current_channel].enabled = false;  // disable if on
 }
 
+// once downloaded from LA buffer populate channels samples buffer
 bool populate_channels(bool successful_read) {
     if (!successful_read)
         return false;
@@ -1554,6 +1602,7 @@ void setup_init() {
     zoom_state_init(&g_state, DEFAULT_ZOOM);
     channels_init(channels, TOTAL_SIGNALS);  // all information to DRAW the signals
     text_clear();
+    hex_write_char(0, int_to_char(key_channel));
 }
 
 // recieve all 16 buffers from the logic analyzer
@@ -1650,14 +1699,14 @@ void keyboard_poll_user_input() {
             // one-shot keys (holding won't keep triggering logic. Logic will only be triggered once)
             case KEY_UP:
                 if (is_new_press(key.arrow_up, ev.pressed)) {
-                    increment_channel_selected(1);
+                    increment_channel_selected(-1);
                 }
                 key.arrow_up = ev.pressed;
                 break;
 
             case KEY_DOWN:
                 if (is_new_press(key.arrow_down, ev.pressed)) {
-                    increment_channel_selected(-1);
+                    increment_channel_selected(1);
                 }
                 key.arrow_down = ev.pressed;
                 break;

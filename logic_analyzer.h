@@ -2,6 +2,7 @@
 #define LOGIC_ANALYZER_H
 
 #include <stdint.h>
+
 #include "address_map_niosV.h"
 
 /* --- Hardware Register Mapping --- */
@@ -11,16 +12,16 @@
  * Matches the 'case' statements in signal_capture.v
  */
 typedef struct {
-    volatile uint32_t CONTROL;        // Offset 0x00: [0] = Run
-    volatile uint32_t STATUS;         // Offset 0x04: [0] = Run, [1] = Full, [2] = Triggered
-    volatile uint32_t TRIGGER_CFG;    // Offset 0x08: [15:0] = Trigger Channel (1-16)
-    volatile uint32_t DATA_WINDOW;    // Offset 0x0C: Read-only Buffer / Write-to-Reset Ptr
-    volatile uint32_t TRIGGER_PTR;    // Offset 0x10: Buffer index where trigger fired
-    volatile uint32_t TRIGGER_SAMPLES;// Offset 0x14: [31:16] = Post-samples, [15:0] = Pre-samples
+    volatile uint32_t CONTROL;          // Offset 0x00: [0] = Run
+    volatile uint32_t STATUS;           // Offset 0x04: [0] = Run, [1] = Full, [2] = Triggered
+    volatile uint32_t TRIGGER_CFG;      // Offset 0x08: [15:0] = Trigger Channel (1-16)
+    volatile uint32_t DATA_WINDOW;      // Offset 0x0C: Read-only Buffer / Write-to-Reset Ptr
+    volatile uint32_t TRIGGER_PTR;      // Offset 0x10: Buffer index where trigger fired
+    volatile uint32_t TRIGGER_SAMPLES;  // Offset 0x14: [31:16] = Post-samples, [15:0] = Pre-samples
 } LA_t;
 
 // Pointer to the hardware
-#define LA ((LA_t*) LA_BASE)
+#define LA ((LA_t*)LA_BASE)
 
 /* --- Function Prototypes --- */
 
@@ -56,7 +57,7 @@ void la_reset_read_pointer(void);
  * @param dest Pointer to a 16-bit array to store the data.
  * @param size Number of samples to read (usually BUFFER_SIZE).
  */
-void la_download_buffer(uint16_t *dest, int size);
+void la_download_buffer(uint16_t* dest, int size);
 
 /**
  * @brief Gets the exact buffer index where the trigger occurred.
@@ -66,6 +67,6 @@ uint32_t la_get_trigger_index(void);
 /**
  * @brief Gets the number of post trigger and pre trigger samples.
  */
-void la_get_trigger_samples(uint16_t *post_trigger, uint16_t *pre_trigger);
+void la_get_trigger_samples(uint16_t* post_trigger, uint16_t* pre_trigger);
 
-#endif // LOGIC_ANALYZER_H
+#endif  // LOGIC_ANALYZER_H
