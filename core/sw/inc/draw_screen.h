@@ -3,12 +3,9 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>  // for snprintf
 
+#include "constants.h"
 #include "visualizer_logic.h"
-
-#define TOTAL_SIGNALS 16
-#define BUFFER_SIZE 4096
 
 // ----- Structs ----- //
 // all info needed to draw a singal

@@ -3,10 +3,13 @@
 #include "address_map_niosV.h"
 #include "vga_driver.h"
 
+////////////// temporary include for debugging reasons
+#include "interface.h"
+/////////////////////////////////////////////////////
+
 // ----- Screen constants ----- //
 #define SCREEN_W 320
 #define SCREEN_H 240
-#define TOTAL_SIGNALS_ON_SCREEN 8
 
 // ----- Char buffer ----- //
 #define CHAR_COLS 80
@@ -19,10 +22,11 @@
 static const int top_bar_height = 15;
 static const int left_bar_width = 32;  // cause there are 8 major vertical grid ticks. (320 - 32)/8 = 36
 static const int bottom_bar_height = 7;
-static const int channel_area_height = SCREEN_H - (top_bar_height + bottom_bar_height);
+static const int channel_area_height = 218;  // 240 - 15 - 7
 
 //-- waveform / grid layout variables --//
-static const int grid_spacing_x = (SCREEN_W - left_bar_width) / 8;
+
+static const int grid_spacing_x = 36;  // (320 - 32) / 8
 static const int waveform_margin_divisor = 4;
 static const int waveform_min_margin = 1;
 
@@ -54,7 +58,6 @@ uint8_t zero_samples[4096];
 static void draw_hline(int x_start, int x_end, int y, uint16_t color);
 static void draw_vline(int x, int y_start, int y_end, uint16_t color);
 static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color);
-static int calculate_channel_height(const int lanes, const int available_height);
 static void text_plot_char(int col, int row, char c);
 static void text_draw_string(int col, int row, const char* text);
 static void text_clear(void);
@@ -91,13 +94,6 @@ static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color) {
     for (int j = 0; j < h; j++)
         for (int i = 0; i < w; i++)
             plot_pixel(x_cord + i, y_cord + j, color);
-}
-
-// if want n channels, draw n - 1 lines spaced (available_height / lanes) apart
-static int calculate_channel_height(const int lanes, const int available_height) {
-    if (lanes <= 0)
-        return 0;
-    return available_height / lanes;
 }
 
 // store a single char in a string buffer
@@ -173,7 +169,7 @@ static void draw_channel_labels(const Channel* channels, const int lanes) {
     if (channels == 0 || lanes <= 0 || lanes > TOTAL_SIGNALS)
         return;
 
-    int lane_height = calculate_channel_height(lanes, channel_area_height);
+    int lane_height = 27;
 
     // character placement inside left panel
     // 80 cols over 320 px => 4 px per char cell
@@ -222,7 +218,7 @@ void draw_logic_view(const ZoomState* state, const Channel* channels, int signal
 
     uint32_t visible_count = end - start;
 
-    int lane_height = calculate_channel_height(signals_per_page, channel_area_height);
+    int lane_height = 27;
     int x_start = left_bar_width;
     int waveform_width = SCREEN_W - left_bar_width;
 
@@ -274,31 +270,41 @@ static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_positio
  ********************************/
 // draws the main static part of the background
 void draw_logic_ui_frame(const Channel* channels, const int lanes) {
+    put_on_leds(7);
     if (lanes <= 0 || (lanes > TOTAL_SIGNALS))
         return;
 
     // Top bar
+    put_on_leds(2);
     fill_rect(0, 0, SCREEN_W, top_bar_height, top_bar_color);
 
     // bottom bar
+    put_on_leds(8);
     fill_rect(0, SCREEN_H - bottom_bar_height, SCREEN_W, bottom_bar_height, bottom_bar_color);
 
     // Left label column
+    put_on_leds(12);
     fill_rect(0, top_bar_height, left_bar_width, channel_area_height, left_bar_color);
 
     // Vertical grid lines
-    for (int x = left_bar_width; x < SCREEN_W; x += grid_spacing_x)
+    put_on_leds(14);
+    for (int x = left_bar_width; x < SCREEN_W; x += grid_spacing_x) {
         draw_vline(x, top_bar_height, SCREEN_H - bottom_bar_height - 1, grid_color);
+    }
 
     // Channel separators
-    int spacing = calculate_channel_height(lanes, channel_area_height);
+    put_on_leds(20);
+    int spacing = 27;
+    put_on_leds(spacing);
     for (int i = 1; i < lanes; i++) {
-        int y = top_bar_height + i * spacing;
+        int y = top_bar_height + i * 27;
         draw_hline(0, SCREEN_W - 1, y, separator_color);
     }
 
     // labels + stripes
+    put_on_leds(32);
     draw_channel_labels(channels, lanes);
+    put_on_leds(600);
 }
 
 // based on recieved array samples and count (the amount of cycles), draws any given digital waveform
@@ -355,9 +361,13 @@ void draw_signals(const ZoomState* state, const Channel* channels, const int sig
 // draw given page
 void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trigger_position) {
     int start_index = current_page * TOTAL_SIGNALS_ON_SCREEN;  // either 0 or 8
+    put_on_leds(1);
     draw_logic_ui_frame(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
+    put_on_leds(2);
     draw_signals(state, &channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
+    put_on_leds(4);
     draw_trigger_marker(state, trigger_position);
+    put_on_leds(8);
 }
 
 // switch to the other page
@@ -371,7 +381,18 @@ void channels_init(Channel* channels, const int total_signals) {
         channels[i].samples = channel_buffers[i];  // assign a buffer to each channel
         channels[i].count = 0;
         channels[i].enabled = false;
-        snprintf(channels[i].label, sizeof(channels[i].label), "CH%d", i);  // give each channel it's appropriate label
-        channels[i].color = channel_colors[i];                              // give each signal it's color
+        channels[i].color = channel_colors[i];  // give each signal it's color
+
+        // give each signal it's label
+        channels[i].label[0] = 'C';
+        channels[i].label[1] = 'H';
+        if (i < 10) {
+            channels[i].label[2] = '0' + i;
+            channels[i].label[3] = '\0';
+        } else {
+            channels[i].label[2] = '1';
+            channels[i].label[3] = '0' + (i - 10);
+            channels[i].label[4] = '\0';
+        }
     }
 }

@@ -22,6 +22,8 @@ int key_channel = 0;
 
 bool la_is_running = false;
 
+volatile uint32_t* led_ptr = (volatile uint32_t*)LEDR_BASE;
+
 /********************************
  *  Helper function declarations
  ********************************/
@@ -34,10 +36,14 @@ void enable_signal(int current_channel);
 /********************************
  *  Helper Functions
  ********************************/
+void put_on_leds(uint32_t led_val) {
+    *led_ptr = led_val;
+}
+
 // select the given channel
 void select_channel(int selected) {
     // note: selected channels support [-1, 8] because -1 and 8 states reflect user scrolling off screen and nothing selected
-    if (selected < -1 || selected > SIGNALS_PER_SCREEN)
+    if (selected < -1 || selected > TOTAL_SIGNALS_ON_SCREEN)
         return;  // out of bounds selection
     key_channel = selected;
 }
@@ -50,7 +56,7 @@ void increment_channel_selected(int increment_direction) {
     if (key_channel <= -1 && increment_direction == -1)
         return;  // cannot decrement anymore
 
-    if (key_channel >= (SIGNALS_PER_SCREEN - 1) && increment_direction == 1)
+    if (key_channel >= (TOTAL_SIGNALS_ON_SCREEN - 1) && increment_direction == 1)
         return;  // cannot increment anymore
 
     key_channel += increment_direction;
@@ -60,7 +66,7 @@ void increment_channel_selected(int increment_direction) {
 int get_current_selected_channel_value() {
     // check the user is not in the deselected mode for selecting channels
     // (deselected when current_channel_num == -1 or 8)
-    if (key_channel == -1 || key_channel == SIGNALS_PER_SCREEN)
+    if (key_channel == -1 || key_channel == TOTAL_SIGNALS_ON_SCREEN)
         return -1;                                // show deselected state
     uint16_t page_offset = current_page ? 8 : 0;  // current_page is from draw_screen lofic
     return key_channel + page_offset;             // ig 16 signals max, will always be in range [0, 15]
@@ -78,7 +84,7 @@ void get_signals_test() {
         for (int j = 0; j < BUFFER_SIZE; j++) {
             channels[0].samples[j] = channels[0].samples[j] ^ 1;
         }
-        for (int j = 0; j < SIGNALS_PER_SCREEN; j++) {
+        for (int j = 0; j < TOTAL_SIGNALS_ON_SCREEN; j++) {
             channels[j].enabled = true;
             strcpy(channels[i].label, "CH0");
         }
@@ -98,7 +104,7 @@ void clear_signals() {
 void enable_signal(int current_channel) {
     // check the user is not in the deselected mode for selecting channels
     // (deselected when current_channel_num == -1 or 8)
-    if (current_channel == -1 || current_channel >= SIGNALS_PER_SCREEN)
+    if (current_channel == -1 || current_channel >= TOTAL_SIGNALS_ON_SCREEN)
         return;
 
     channels[current_channel].enabled = true;
@@ -124,12 +130,17 @@ bool populate_channels(bool successful_read) {
 void setup_init() {
     // -- intitalize peripheral devices -- //
     vga_init();
+    put_on_leds(2);
     keyboard_init(&kb);
+    put_on_leds(4);
     // add mouse stuff here too if added
 
     // -- Other initalizations -- //
+    put_on_leds(8);
     zoom_state_init(&g_state, DEFAULT_ZOOM);
+    put_on_leds(16);
     channels_init(channels, TOTAL_SIGNALS);  // all information to DRAW the signals
+    put_on_leds(32);
 }
 
 // recieve all 16 buffers from the logic analyzer
@@ -200,9 +211,15 @@ void trigger_logic_analyzer() {
 
 // draw to the screen every frame
 void draw() {
+    put_on_leds(2);
     clear_screen();
+    put_on_leds(1023);
     draw_ui_page(channels, &g_state, la_get_trigger_index());
+    draw_logic_ui_frame(channels, TOTAL_SIGNALS_ON_SCREEN);
+    draw_signals(&g_state, channels, TOTAL_SIGNALS_ON_SCREEN);
+    put_on_leds(39);
     wait_for_vsync();
+    put_on_leds(0);
 }
 
 // poll for the user's input with keyboard

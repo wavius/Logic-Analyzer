@@ -4,9 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#define BUFFER_SIZE 4096       // hard coded to be 4096
-#define SAMPLE_RATE 100000000  // hard coded to be 100 MHz
-#define VERTICAL_DIVISIONS 8   // hard coded to hold 8
+#include "constants.h"
 
 /********************************
  *  Structs

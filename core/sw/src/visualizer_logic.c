@@ -3,6 +3,8 @@
 #include <stddef.h>
 
 #define ZOOM_LVL_COUNT 6
+#define SAMPLE_RATE 100000000  // hard coded to be 100 MHz
+#define VERTICAL_DIVISIONS 8   // hard coded to hold 8
 
 /********************************
  *  Structs + global variables
@@ -90,15 +92,17 @@ static void clamp_scroll_offset(ZoomState* g_state) {
 // calculate time div in nanoseconds/div
 static void calc_time_div_zoom_lvls() {
     for (int i = 0; i < ZOOM_LVL_COUNT; i++) {
-        zoom_levels_time_div[i] =
-            ((uint64_t)zoom_levels_samples[i] * 1000000000ULL) /
-            ((uint64_t)VERTICAL_DIVISIONS * SAMPLE_RATE);
+        // (samples * 1e9) / (8 divisions * 100MHz)
+        // = samples * 1000000000 / 800000000
+        // = samples * 10 / 8
+        // = samples * 5 / 4
+        zoom_levels_time_div[i] = zoom_levels_samples[i] * 5 / 4;
     }
 }
 
 // go from time/div (in nanoseconds/div) to samples
 uint32_t time_div_to_samples(uint32_t time_div) {
-    return (uint32_t)(((uint64_t)time_div * SAMPLE_RATE * VERTICAL_DIVISIONS) / 1000000000ULL);
+    return time_div * 4 / 5;
 }
 
 // get the amount each attempt to scroll will shift the scroll offset of the buffer
