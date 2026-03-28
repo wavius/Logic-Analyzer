@@ -59,6 +59,7 @@ static const KeyCode normal_map[256] = {
     [0x1A] = KEY_Z,
 
     // numbers
+    [0x45] = KEY_0,
     [0x16] = KEY_1,
     [0x1E] = KEY_2,
     [0x26] = KEY_3,

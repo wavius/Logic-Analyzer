@@ -36,18 +36,18 @@ char int_to_char(int val);
  ********************************/
 // turn an int from 0-9 into a char to pass into hex function
 char int_to_char(int x) {
-    if (x < 0)
-        x = 8;
+    if (x < 0)  // should never trigger but perform the check anyway
+        return '0';
     return '0' + x;
 }
 
 // select the given channel
 void select_channel(int selected) {
     // note: selected channels support [-1, 7] because -1 reflects user scrolling off screen and nothing selected
-    if (selected < -1 || selected >= TOTAL_SIGNALS_ON_SCREEN) {
+    if (selected <= -1 || selected >= TOTAL_SIGNALS_ON_SCREEN) {
         key_channel = -1;
-        hex_write_char(0, int_to_char(key_channel));
-        return;  // out of bounds selection
+        hex_clear_digit(0);  // remove any channel selection indications
+        return;              // out of bounds selection
     }
     key_channel = selected;
     hex_write_char(0, int_to_char(key_channel));
@@ -55,28 +55,28 @@ void select_channel(int selected) {
 
 // increment or decrement selected channel
 void increment_channel_selected(int dir) {
-    if (dir != -1 && dir != 1)  // only increment/decrement by steps of 1
+    if (dir != -1 && dir != 1)
         return;
 
     int new_channel = key_channel + dir;
 
-    if (new_channel < -1) {  // user is off the screen on deselected mode
+    if (new_channel < -1) {
+        key_channel = -1;
+        hex_clear_digit(0);
+    } else if (new_channel >= TOTAL_SIGNALS_ON_SCREEN) {
+        key_channel = TOTAL_SIGNALS_ON_SCREEN;
+        hex_clear_digit(0);
+    } else {
+        key_channel = new_channel;
         hex_write_char(0, int_to_char(key_channel));
-        return;
-    } else if (new_channel > (TOTAL_SIGNALS_ON_SCREEN - 1)) {  // range: [0, 7]
-        key_channel = -1;                                      // force into deselected state
-        hex_write_char(0, int_to_char(key_channel));
-        return;
     }
-    key_channel = new_channel;
-    hex_write_char(0, int_to_char(key_channel));
 }
 
 // figure out which channel the user currently has selected
 int get_current_selected_channel_value() {
     // check the user is not in the deselected mode for selecting channels
     // (deselected when current_channel_num == -1 or 8)
-    if (key_channel == -1 || key_channel == TOTAL_SIGNALS_ON_SCREEN)
+    if (key_channel == -1)
         return -1;                                // show deselected state
     uint16_t page_offset = current_page ? 8 : 0;  // current_page is from draw_screen lofic
     return key_channel + page_offset;             // ig 16 signals max, will always be in range [0, 15]
@@ -321,15 +321,13 @@ void keyboard_poll_user_input() {
                 }
                 key.e = ev.pressed;
                 break;
-
-            case KEY_1:
+            case KEY_0:
                 if (is_new_press(key.channel[0], ev.pressed)) {
                     select_channel(0);
                 }
                 key.channel[0] = ev.pressed;
                 break;
-
-            case KEY_2:
+            case KEY_1:
                 if (is_new_press(key.channel[1], ev.pressed)) {
                     select_channel(1);
                 }
@@ -337,37 +335,36 @@ void keyboard_poll_user_input() {
                 key.channel[1] = ev.pressed;
                 break;
 
-            case KEY_3:
+            case KEY_2:
                 if (is_new_press(key.channel[2], ev.pressed))
                     select_channel(2);
                 key.channel[2] = ev.pressed;
                 break;
 
-            case KEY_4:
+            case KEY_3:
                 if (is_new_press(key.channel[3], ev.pressed))
                     select_channel(3);
                 key.channel[3] = ev.pressed;
                 break;
-
-            case KEY_5:
+            case KEY_4:
                 if (is_new_press(key.channel[4], ev.pressed))
                     select_channel(4);
                 key.channel[4] = ev.pressed;
                 break;
 
-            case KEY_6:
+            case KEY_5:
                 if (is_new_press(key.channel[5], ev.pressed))
                     select_channel(5);
                 key.channel[5] = ev.pressed;
                 break;
 
-            case KEY_7:
+            case KEY_6:
                 if (is_new_press(key.channel[6], ev.pressed))
                     select_channel(6);
                 key.channel[6] = ev.pressed;
                 break;
 
-            case KEY_8:
+            case KEY_7:
                 if (is_new_press(key.channel[7], ev.pressed))
                     select_channel(7);
                 key.channel[7] = ev.pressed;

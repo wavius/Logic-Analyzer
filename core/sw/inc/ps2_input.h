@@ -23,7 +23,7 @@ typedef enum {
 
     KEY_TAB, KEY_ESC, KEY_SPACE, KEY_PLUS, KEY_MINUS, 
 
-    KEY_1, KEY_2, KEY_3, KEY_4, 
+    KEY_0, KEY_1, KEY_2, KEY_3, KEY_4, 
     KEY_5, KEY_6, KEY_7, KEY_8,
 
     KEY_A, KEY_B, KEY_C, KEY_D, KEY_E, KEY_F,
@@ -50,7 +50,7 @@ typedef struct {
     bool arrow_up, arrow_down, arrow_left, arrow_right;  // for scrolling
     bool tab, esc, space, plus, minus;                   // for controlling states of UI (i.e. switch pages, zoom in, zoom out)
     bool s, t, c, e;                                     // for controlling states of logic analyzer or UI (i.e. switch pages, start, trigger, clear)
-    bool channel[8];                                     // for selecting channels
+    bool channel[9];                                     // for selecting channels
 } KeyPressed;
 
 /********************************

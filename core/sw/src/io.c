@@ -8,11 +8,8 @@
 volatile uint32_t* led_ptr = (volatile uint32_t*)LEDR_BASE;
 
 // returns active-low 7-seg encoding for the fpga
-
-//clang-format off
 static uint8_t hex_encode_char(char c) {
     uint8_t seg;
-
     switch (c) {
         // digits
         case '0':
@@ -119,7 +116,6 @@ static uint8_t hex_encode_char(char c) {
     }
     return seg;
 }
-//clang-format on
 
 /********************************
  * Visible Functions
@@ -131,7 +127,7 @@ void put_on_leds(uint32_t led_val) {
 
 // write one character to one HEX display
 void hex_write_char(int hex_index, char c) {
-    if (hex_index < 0 || hex_index > 5)
+    if (hex_index < 0 || hex_index > 5)  // options of hex displays to put stuff on is restricted
         return;
 
     uint8_t seg = hex_encode_char(c);
