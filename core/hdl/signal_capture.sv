@@ -83,20 +83,23 @@ module signal_capture #(
   end
 
   // Avalon read logic
-  always_comb begin
-    readdata = 32'h0; // Default
-    if (read && chipselect) begin
-      case (address)
-        3'h0: readdata = control_reg;
-        3'h1: readdata = {29'b0, triggered, buffer_full, run};
-        3'h2: readdata = trigger_config;
-        3'h3: readdata = {16'b0, buffer[read_pointer]};
-        3'h4: readdata = {16'b0, trigger_ptr};
-        3'h5: readdata = {post_trigger_count, pre_trigger_count};
-        default: readdata = 32'hDEADBEEF;
-      endcase
-    end
+  always_ff @(posedge clk or negedge nreset) begin
+  if (!nreset) begin
+    readdata <= 32'h0;
+  end else if (chipselect && read) begin
+    case (address)
+      3'h0: readdata <= control_reg;
+      3'h1: readdata <= {29'b0, triggered, buffer_full, run};
+      3'h2: readdata <= trigger_config;
+      3'h3: readdata <= {16'b0, buffer[read_pointer]};
+      3'h4: readdata <= {16'b0, trigger_ptr};
+      3'h5: readdata <= {post_trigger_count, pre_trigger_count};
+      default: readdata <= 32'hDEADBEEF;
+    endcase
+  end else begin
+    readdata <= 32'h0; // Drive 0 when not selected to keep the bus quiet
   end
+end
 
   // FSM enum
   typedef enum logic [1:0] {
