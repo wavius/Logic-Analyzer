@@ -3,7 +3,7 @@
 
 # Ignore compiled binaries (for Nios V)
 *.sv
-*.elf 
+# *.elf 
 *.o
 *.obj
 
