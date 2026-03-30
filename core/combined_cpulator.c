@@ -1024,6 +1024,8 @@ void draw_signals(const ZoomState* state, const Channel* channels, const int sig
 void switch_ui_page();
 void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trigger_position);
 void draw_digital_waveform(const uint8_t* samples, const int count, int x0, int y0, int w, int h, uint16_t color);
+void draw_select_line(const Channel* channels, int selected_channel);
+void draw_la_status_icon(bool la_is_running);
 void channels_init(Channel* channels, const int size);
 
 #endif
@@ -1070,8 +1072,8 @@ static const uint16_t text_color = 0xd69a;
 static const uint16_t channel_colors[16] = {
     0x5D6B, 0x8E24, 0x8E24, 0xC7C0,
     0xE7E0, 0xF580, 0xE3A0, 0xD820,
-    0x72A9, 0x5249, 0x3A89, 0x44CB,
-    0x5CFE, 0x65FF, 0x65D7, 0x61ED};
+    0xfd20, 0xfc26, 0xfb0c, 0xdacf,
+    0xba92, 0x92b4, 0x3cd9, 0xbefd};
 
 uint32_t current_page = 0;
 
@@ -1338,7 +1340,7 @@ static void draw_time_scale(const ZoomState* state) {
     }
 }
 
-// draw labels
+// draw labels and channel strips
 static void draw_channel_labels(const Channel* channels, const int lanes) {
     if (channels == 0 || lanes <= 0 || lanes > TOTAL_SIGNALS)
         return;
@@ -1370,10 +1372,6 @@ static void draw_channel_labels(const Channel* channels, const int lanes) {
 
         // draw color stripe at far left
         fill_rect(0, y_top, stripe_width, lane_height, stripe_color);
-
-        // clear a small text band inside the label area so text is readable
-        // optional but helps consistency
-        // here we just rely on the background already drawn
 
         // draw the channel name
         if (channels[i].label[0] != '\0') {  // make sure string isn't empty (first element would be the null terminator )
@@ -1550,6 +1548,67 @@ void switch_ui_page() {
     current_page ^= 1;  // Toggle page (0 or 1)
 }
 
+// to show what location the user's channel select is at, draw a line (helper function for interface.c)
+void draw_select_line(const Channel* channels, int selected_channel) {
+    if (channels == 0)
+        return;
+
+    if (selected_channel < 0 || selected_channel >= TOTAL_SIGNALS_ON_SCREEN)
+        return;  // deselected / invalid state
+
+    int start_index = current_page * TOTAL_SIGNALS_ON_SCREEN;  // either 0 or 8
+
+    const int lane_height = 27;
+    const int underline_x_start = 10;
+    const int underline_x_end = left_bar_width - 14;
+
+    int y_top = top_bar_height + selected_channel * lane_height;
+
+    uint16_t color = channels[selected_channel].enabled ? channels[start_index + selected_channel].color
+                                                        : dim_color(channels[start_index + selected_channel].color);
+
+    // channel label is roughly centered vertically in the lane,
+    // so place underline a bit below that
+    int y_underline = y_top + (lane_height / 2) + 6;
+
+    // keep underline inside lane
+    if (y_underline >= y_top + lane_height - 1)
+        y_underline = y_top + lane_height - 2;
+
+    draw_hline(underline_x_start, underline_x_end, y_underline,
+               color);
+}
+
+// show the current state of the logic analyzer (play or pause)
+void draw_la_status_icon(bool la_is_running) {
+    const int size = 3;
+    const int padding = 2;
+
+    const int x_right = SCREEN_W - padding - 1;
+    const int y_top = 0;
+
+    const int x_left = x_right - size + 1;
+
+    if (la_is_running) {
+        // --- PLAY (triangle) ---
+        uint16_t color = 0x8e8f;  // matcha green lol
+        draw_vline(x_left, y_top + 0, y_top + 2, color);
+        draw_vline(x_left + 1, y_top + 0, y_top + 2, color);
+        draw_vline(x_left + 2, y_top + 1, y_top + 1, color);
+
+    } else {
+        // --- PAUSE (two vertical bars) ---
+        uint16_t color = 0x9a29;  // grey red
+
+        // two vertical bars
+        int bar1_x = x_left;
+        int bar2_x = x_left + 2;
+
+        draw_vline(bar1_x, y_top, y_top + size - 1, color);
+        draw_vline(bar2_x, y_top, y_top + size - 1, color);
+    }
+}
+
 // initalize channels struct (from draw_screen module)
 void channels_init(Channel* channels, const int total_signals) {
     for (int i = 0; i < total_signals; i++) {
@@ -1684,12 +1743,11 @@ void increment_channel_selected(int dir) {
 
 // figure out which channel the user currently has selected
 int get_current_selected_channel_value() {
-    // check the user is not in the deselected mode for selecting channels
-    // (deselected when current_channel_num == -1 or 8)
-    if (key_channel == -1)
-        return -1;                                // show deselected state
-    uint16_t page_offset = current_page ? 8 : 0;  // current_page is from draw_screen lofic
-    return key_channel + page_offset;             // ig 16 signals max, will always be in range [0, 15]
+    if (key_channel < 0 || key_channel >= TOTAL_SIGNALS_ON_SCREEN)
+        return -1;
+
+    int page_offset = current_page * TOTAL_SIGNALS_ON_SCREEN;
+    return key_channel + page_offset;
 }
 
 // helper function for keyboard_poll_user_input. helps call functions only on rising edge of make code
@@ -1723,16 +1781,12 @@ void clear_signals() {
 
 // enable signal based on current selected channel
 void enable_signal(int current_channel) {
-    // check the user is not in the deselected mode for selecting channels
-    // (deselected when current_channel_num == -1 or 8)
-    if (current_channel == -1 || current_channel >= TOTAL_SIGNALS_ON_SCREEN)
+    // current_channel here is the ABSOLUTE channel index [0, 15]
+    if (current_channel < 0 || current_channel >= TOTAL_SIGNALS)
         return;
-    if (!(channels[current_channel].enabled))
-        channels[current_channel].enabled = true;  // enable if off
-    else if (channels[current_channel].enabled)
-        channels[current_channel].enabled = false;  // disable if on
-}
 
+    channels[current_channel].enabled = !channels[current_channel].enabled;
+}
 // once downloaded from LA buffer populate channels samples buffer
 bool populate_channels(bool successful_read) {
     if (!successful_read)
@@ -1833,7 +1887,9 @@ void trigger_logic_analyzer() {
 // draw to the screen every frame
 void draw() {
     clear_screen();
-    draw_ui_page(channels, &g_state, la_get_trigger_index());
+    draw_ui_page(channels, &g_state, la_get_trigger_index());  // draw the entire page
+    draw_select_line(channels, key_channel);                   // show what was selected, overlay #1
+    draw_la_status_icon(la_is_running);                        // draw status, overlay #2
     wait_for_vsync();
 }
 

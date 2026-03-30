@@ -2,6 +2,7 @@
 .vscode/
 
 # Ignore compiled binaries (for Nios V)
+*.sv
 *.elf 
 *.o
 *.obj

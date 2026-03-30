@@ -74,12 +74,11 @@ void increment_channel_selected(int dir) {
 
 // figure out which channel the user currently has selected
 int get_current_selected_channel_value() {
-    // check the user is not in the deselected mode for selecting channels
-    // (deselected when current_channel_num == -1 or 8)
-    if (key_channel == -1)
-        return -1;                                // show deselected state
-    uint16_t page_offset = current_page ? 8 : 0;  // current_page is from draw_screen lofic
-    return key_channel + page_offset;             // ig 16 signals max, will always be in range [0, 15]
+    if (key_channel < 0 || key_channel >= TOTAL_SIGNALS_ON_SCREEN)
+        return -1;
+
+    int page_offset = current_page * TOTAL_SIGNALS_ON_SCREEN;
+    return key_channel + page_offset;
 }
 
 // helper function for keyboard_poll_user_input. helps call functions only on rising edge of make code
@@ -113,16 +112,12 @@ void clear_signals() {
 
 // enable signal based on current selected channel
 void enable_signal(int current_channel) {
-    // check the user is not in the deselected mode for selecting channels
-    // (deselected when current_channel_num == -1 or 8)
-    if (current_channel == -1 || current_channel >= TOTAL_SIGNALS_ON_SCREEN)
+    // current_channel here is the ABSOLUTE channel index [0, 15]
+    if (current_channel < 0 || current_channel >= TOTAL_SIGNALS)
         return;
-    if (!(channels[current_channel].enabled))
-        channels[current_channel].enabled = true;  // enable if off
-    else if (channels[current_channel].enabled)
-        channels[current_channel].enabled = false;  // disable if on
-}
 
+    channels[current_channel].enabled = !channels[current_channel].enabled;
+}
 // once downloaded from LA buffer populate channels samples buffer
 bool populate_channels(bool successful_read) {
     if (!successful_read)
@@ -223,7 +218,9 @@ void trigger_logic_analyzer() {
 // draw to the screen every frame
 void draw() {
     clear_screen();
-    draw_ui_page(channels, &g_state, la_get_trigger_index());
+    draw_ui_page(channels, &g_state, la_get_trigger_index());  // draw the entire page
+    draw_select_line(channels, key_channel);                   // show what was selected, overlay #1
+    draw_la_status_icon(la_is_running);                        // draw status, overlay #2
     wait_for_vsync();
 }
 
