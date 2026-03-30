@@ -4,7 +4,7 @@
 
 #define TOTAL_SIGNALS 16 // hard coded to be 16
 #define TOTAL_SIGNALS_ON_SCREEN 8 // hard coded to be 8
-#define BUFFER_SIZE 4096 // hard coded to be 4096
+#define BUFFER_SIZE 128 // hard coded to be 4096
 
 #endif
 /* --- END OF core/sw/inc/constants.h --- */
@@ -21,6 +21,7 @@ void vga_init();
 void plot_pixel(int x, int y, uint16_t color);
 void wait_for_vsync();
 void clear_screen();
+void text_clear();
 
 // ----- Other ----- //
 // int getXres(); //implemented for debugging purposes
@@ -134,7 +135,7 @@ typedef enum {
 
     KEY_TAB, KEY_ESC, KEY_SPACE, KEY_PLUS, KEY_MINUS, 
 
-    KEY_1, KEY_2, KEY_3, KEY_4, 
+    KEY_0, KEY_1, KEY_2, KEY_3, KEY_4, 
     KEY_5, KEY_6, KEY_7, KEY_8,
 
     KEY_A, KEY_B, KEY_C, KEY_D, KEY_E, KEY_F,
@@ -161,7 +162,7 @@ typedef struct {
     bool arrow_up, arrow_down, arrow_left, arrow_right;  // for scrolling
     bool tab, esc, space, plus, minus;                   // for controlling states of UI (i.e. switch pages, zoom in, zoom out)
     bool s, t, c, e;                                     // for controlling states of logic analyzer or UI (i.e. switch pages, start, trigger, clear)
-    bool channel[8];                                     // for selecting channels
+    bool channel[9];                                     // for selecting channels
 } KeyPressed;
 
 /********************************
@@ -235,6 +236,7 @@ static const KeyCode normal_map[256] = {
     [0x1A] = KEY_Z,
 
     // numbers
+    [0x45] = KEY_0,
     [0x16] = KEY_1,
     [0x1E] = KEY_2,
     [0x26] = KEY_3,
@@ -352,11 +354,8 @@ void hex_clear_all(void);
 volatile uint32_t* led_ptr = (volatile uint32_t*)0xFF200000;
 
 // returns active-low 7-seg encoding for the fpga
-
-//clang-format off
 static uint8_t hex_encode_char(char c) {
     uint8_t seg;
-
     switch (c) {
         // digits
         case '0':
@@ -461,8 +460,8 @@ static uint8_t hex_encode_char(char c) {
             seg = 0x00;
             break;  // unsupported -> blank
     }
+    return seg;
 }
-//clang-format on
 
 /********************************
  * Visible Functions
@@ -474,7 +473,7 @@ void put_on_leds(uint32_t led_val) {
 
 // write one character to one HEX display
 void hex_write_char(int hex_index, char c) {
-    if (hex_index < 0 || hex_index > 5)
+    if (hex_index < 0 || hex_index > 5)  // options of hex displays to put stuff on is restricted
         return;
 
     uint8_t seg = hex_encode_char(c);
@@ -515,14 +514,14 @@ void hex_clear_all(void) {
 }
 /* --- END OF core/sw/src/io.c --- */
 
-/* --- START OF core/sw/inc/test_la_c.h --- */
+/* --- START OF test_la_c.h --- */
 #ifndef TEST_LA_C_H
 #define TEST_LA_C_H
 
 #include <stdbool.h>
 #include <stdint.h>
 
-// Removed include: core/sw/inc/test_la_c.h
+// Removed include: test_la_c.h
 
 // ---------------------------------------------------------------------------
 //  Drop-in replacements for the custom LA hardware module
@@ -551,10 +550,10 @@ void la_reset_read_pointer(void);
 int la_get_trigger_index(void);
 
 #endif  // TEST_LA_C_H
-/* --- END OF core/sw/inc/test_la_c.h --- */
+/* --- END OF test_la_c.h --- */
 
-/* --- START OF core/sw/src/test_la_c.c --- */
-// Removed include: core/sw/src/test_la_c.c
+/* --- START OF test_la_c.c --- */
+// Removed include: test_la_c.c
 
 #include <string.h>
 
@@ -693,7 +692,7 @@ void la_reset_read_pointer(void) {
 int la_get_trigger_index(void) {
     return trigger_index;
 }
-/* --- END OF core/sw/src/test_la_c.c --- */
+/* --- END OF test_la_c.c --- */
 
 /* --- START OF core/sw/inc/visualizer_logic.h --- */
 #ifndef VISUALIZER_LOGIC_H
@@ -1093,7 +1092,6 @@ static void draw_vline(int x, int y_start, int y_end, uint16_t color);
 static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color);
 static void text_plot_char(int col, int row, char c);
 static void text_draw_string(int col, int row, const char* text);
-static void text_clear(void);
 static void draw_channel_labels(const Channel* channels, int lanes);
 static uint16_t dim_color(uint16_t color);
 static void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
@@ -1144,7 +1142,7 @@ static uint16_t dim_color(uint16_t color) {
 }
 
 // clear buffer
-static void text_clear(void) {
+void text_clear(void) {
     volatile char* char_buf = (volatile char*)0x09000000;
 
     for (int row = 0; row < CHAR_ROWS; row++) {
@@ -1424,6 +1422,7 @@ void channels_init(Channel* channels, const int total_signals) {
 // Removed include: core/sw/inc/interface.h
 // Removed include: core/sw/inc/interface.h
 // Removed include: core/sw/inc/interface.h
+// #include "test_la_c.h"
 // Removed include: core/sw/inc/interface.h
 
 /********************************
@@ -1487,18 +1486,18 @@ char int_to_char(int val);
  ********************************/
 // turn an int from 0-9 into a char to pass into hex function
 char int_to_char(int x) {
-    if (x < 0)
-        x = 8;
+    if (x < 0)  // should never trigger but perform the check anyway
+        return '0';
     return '0' + x;
 }
 
 // select the given channel
 void select_channel(int selected) {
     // note: selected channels support [-1, 7] because -1 reflects user scrolling off screen and nothing selected
-    if (selected < -1 || selected >= TOTAL_SIGNALS_ON_SCREEN) {
+    if (selected <= -1 || selected >= TOTAL_SIGNALS_ON_SCREEN) {
         key_channel = -1;
-        hex_write_char(0, int_to_char(key_channel));
-        return;  // out of bounds selection
+        hex_clear_digit(0);  // remove any channel selection indications
+        return;              // out of bounds selection
     }
     key_channel = selected;
     hex_write_char(0, int_to_char(key_channel));
@@ -1506,28 +1505,28 @@ void select_channel(int selected) {
 
 // increment or decrement selected channel
 void increment_channel_selected(int dir) {
-    if (dir != -1 && dir != 1)  // only increment/decrement by steps of 1
+    if (dir != -1 && dir != 1)
         return;
 
     int new_channel = key_channel + dir;
 
-    if (new_channel < -1) {  // user is off the screen on deselected mode
+    if (new_channel < -1) {
+        key_channel = -1;
+        hex_clear_digit(0);
+    } else if (new_channel >= TOTAL_SIGNALS_ON_SCREEN) {
+        key_channel = TOTAL_SIGNALS_ON_SCREEN;
+        hex_clear_digit(0);
+    } else {
+        key_channel = new_channel;
         hex_write_char(0, int_to_char(key_channel));
-        return;
-    } else if (new_channel > (TOTAL_SIGNALS_ON_SCREEN - 1)) {  // range: [0, 7]
-        key_channel = -1;                                      // force into deselected state
-        hex_write_char(0, int_to_char(key_channel));
-        return;
     }
-    key_channel = new_channel;
-    hex_write_char(0, int_to_char(key_channel));
 }
 
 // figure out which channel the user currently has selected
 int get_current_selected_channel_value() {
     // check the user is not in the deselected mode for selecting channels
     // (deselected when current_channel_num == -1 or 8)
-    if (key_channel == -1 || key_channel == TOTAL_SIGNALS_ON_SCREEN)
+    if (key_channel == -1)
         return -1;                                // show deselected state
     uint16_t page_offset = current_page ? 8 : 0;  // current_page is from draw_screen lofic
     return key_channel + page_offset;             // ig 16 signals max, will always be in range [0, 15]
@@ -1772,15 +1771,13 @@ void keyboard_poll_user_input() {
                 }
                 key.e = ev.pressed;
                 break;
-
-            case KEY_1:
+            case KEY_0:
                 if (is_new_press(key.channel[0], ev.pressed)) {
                     select_channel(0);
                 }
                 key.channel[0] = ev.pressed;
                 break;
-
-            case KEY_2:
+            case KEY_1:
                 if (is_new_press(key.channel[1], ev.pressed)) {
                     select_channel(1);
                 }
@@ -1788,37 +1785,36 @@ void keyboard_poll_user_input() {
                 key.channel[1] = ev.pressed;
                 break;
 
-            case KEY_3:
+            case KEY_2:
                 if (is_new_press(key.channel[2], ev.pressed))
                     select_channel(2);
                 key.channel[2] = ev.pressed;
                 break;
 
-            case KEY_4:
+            case KEY_3:
                 if (is_new_press(key.channel[3], ev.pressed))
                     select_channel(3);
                 key.channel[3] = ev.pressed;
                 break;
-
-            case KEY_5:
+            case KEY_4:
                 if (is_new_press(key.channel[4], ev.pressed))
                     select_channel(4);
                 key.channel[4] = ev.pressed;
                 break;
 
-            case KEY_6:
+            case KEY_5:
                 if (is_new_press(key.channel[5], ev.pressed))
                     select_channel(5);
                 key.channel[5] = ev.pressed;
                 break;
 
-            case KEY_7:
+            case KEY_6:
                 if (is_new_press(key.channel[6], ev.pressed))
                     select_channel(6);
                 key.channel[6] = ev.pressed;
                 break;
 
-            case KEY_8:
+            case KEY_7:
                 if (is_new_press(key.channel[7], ev.pressed))
                     select_channel(7);
                 key.channel[7] = ev.pressed;

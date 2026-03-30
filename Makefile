@@ -1,156 +1,103 @@
-INSTALL := C:/intelFPGA_pro/24.1
+############################################
+# Paths & Environment
+############################################
+# Using the path from your previous Linux-style Makefile
+INSTALL      := /home/wavius/Programs/altera_pro
 
-MAIN := core/sw/src/main.c 
+# Specific toolchain sub-path
+RISCV_BIN    := $(INSTALL)/riscfree/toolchain/riscv32-unknown-elf/bin
+GDB_S_BIN    := $(INSTALL)/riscfree/debugger/gdbserver-riscv
+QP_BIN       := $(INSTALL)/qprogrammer/quartus/bin
+AMP_BIN      := $(INSTALL)/fpgacademy/AMP/bin
 
-# Finds all .h files in your include directory, plus your external address map
-HDRS := $(wildcard core/sw/inc/*.h)
+# Exporting these for any sub-shells (like GDB or Programmer calls)
+export PATH := $(RISCV_BIN):$(GDB_S_BIN):$(QP_BIN):$(AMP_BIN):$(PATH)
 
-# Finds all .c files in your source directory
-SRCS := $(wildcard core/sw/src/*.c)
+############################################
+# Programs & Flags (Hard-coded Paths to avoid Error 127)
+############################################
+CC      := $(RISCV_BIN)/riscv32-unknown-elf-gcc
+LD      := $(CC)
+OD      := $(RISCV_BIN)/riscv32-unknown-elf-objdump
+NM      := $(RISCV_BIN)/riscv32-unknown-elf-nm
+RM      := rm -f
 
-SHELL	:= cmd.exe
+# Source and Include Paths
+MAIN    := core/sw/src/main.c
+SRCS    := $(wildcard core/sw/src/*.c)
+HDRS    := $(wildcard core/sw/inc/*.h)
+INCLUDES := -I. -Icore/sw/inc -IComputer_Systems/DE1-SoC/software
 
-# DE1-SoC
-JTAG_INDEX_SoC	:= 2
+# RISC-V Architecture Flags
+ARCH_FLAGS := -march=rv32im_zicsr -mabi=ilp32
 
-# The following variables are set based on the value of the INSTALL variable
-COMPILER		:= $(INSTALL)/fpgacademy/AMP/cygwin64/home/compiler/bin
-BASH			:= $(INSTALL)/fpgacademy/AMP/cygwin64/bin/bash --noprofile -norc -c 
-HW_DE1-SoC		:= "$(INSTALL)/fpgacademy/Computer_Systems/DE1-SoC/DE1-SoC_Computer/niosVg/DE1_SoC_Computer.sof"
-HW_DE10-Lite	:= "$(INSTALL)/fpgacademy/Computer_Systems/DE10-Lite/DE10-Lite_Computer/niosVg/DE10_Lite_Computer.sof"
+# Compilation Flags
+USERCCFLAGS := -g -O1 -ffunction-sections -fno-inline -gdwarf-2 $(INCLUDES)
+# Note: Linux linker symbols do not use the double-dollar sign
+USERLDFLAGS := -Wl,--defsym=__stack_pointer=0x4000000 \
+               -Wl,--defsym,JTAG_UART_BASE=0xff201000 \
+               -Wl,-e,main \
+               -nostartfiles -lm
 
-# for Quartus programmer (two possibilities exist for the path)
-export PATH := $(INSTALL)/quartus/bin64/:$(PATH)
-export PATH := $(INSTALL)/qprogrammer/quartus/bin64/:$(PATH)
-# for GDB server
-export PATH := $(INSTALL)/riscfree/debugger/gdbserver-riscv/:$(PATH)
-# for GDB client
-export PATH := $(INSTALL)/riscfree/toolchain/riscv32-unknown-elf/bin/:$(PATH)
-# for the nios2-terminal
-export PATH := $(INSTALL)/fpgacademy/AMP/bin/:$(PATH)
-# for checking JTAG chain
-export PATH := $(INSTALL)/quartus/sopc_builder/bin/:$(PATH)
-
-CYGWIN_INSTALL := $(shell $(BASH) 'export PATH=/usr/local/bin:/usr/bin; cygpath $(INSTALL)')
-CYGWIN_PATH := export PATH=/usr/local/bin:/usr/bin:$(CYGWIN_INSTALL)/fpgacademy/AMP/bin
-
-# Programs
-CC	:= $(COMPILER)/riscv32-unknown-elf-gcc.exe
-LD	:= $(CC)
-OD	:= $(COMPILER)/riscv32-unknown-elf-objdump.exe
-NM	:= $(COMPILER)/riscv32-unknown-elf-nm.exe
-RM	:= /usr/bin/rm -f
-
-
-# Define all directories containing header files
-INCLUDES := -I. \
-            -Icore/sw/inc \
-            -IComputer_Systems/DE1-SoC/software
-# Flags
-USERCCFLAGS	:= -g -O1 -ffunction-sections -fverbose-asm -fno-inline -gdwarf-2 
-USERLDFLAGS := -Wl,--defsym=__stack_pointer$$=0x4000000 -Wl,--defsym,JTAG_UART_BASE=0xff201000 -lm
-ARCHCCFLAGS	:= -march=rv32im_zicsr -mabi=ilp32
-ARCHLDFLAGS	:= -march=rv32im_zicsr -mabi=ilp32
-CCFLAGS		:= -Wall -c $(USERCCFLAGS) $(ARCHCCFLAGS) $(INCLUDES)
-LDFLAGS		:= $(USERLDFLAGS) $(ARCHLDFLAGS)
+CFLAGS  := $(ARCH_FLAGS) $(USERCCFLAGS) -Wall
+LDFLAGS := $(ARCH_FLAGS) $(USERLDFLAGS)
 
 # Files
-OBJS		:= $(patsubst %, %.o, $(SRCS))
+OBJS    := $(SRCS:.c=.o)
+ELF     := $(MAIN:.c=.elf)
 
 ############################################
-# GDB Macros
-
-# Programs
-GDB_SERVER		:= ash-riscv-gdb-server.exe
-GDB_CLIENT		:= riscv32-unknown-elf-gdb.exe
-
+# Formatting
 ############################################
-# System Macros
-
-# Programs
-QP_PROGRAMMER	:= quartus_pgm.exe
-
-# Flags
-# DE10-Lite
-SYS_FLAG_CABLE_Lite		:= -c "USB-Blaster [USB-0]"
-# SYS_FLAG_USB_Lite		:= "USB-0"
-# DE1-SoC
-SYS_FLAG_CABLE_SoC 		:= -c "DE-SoC [USB-1]"
-# SYS_FLAG_USB_SoC		:= "USB-1"
-
-# DE10-Lite
-JTAG_INDEX_Lite	:= 1
-RED_TEXT		:= @$(BASH) 'printf "\033[31m"'
-GREEN_TEXT		:= @$(BASH) 'printf "\033[32m"'
-CYAN_TEXT		:= @$(BASH) 'printf "\033[36m"'
-YELLOW_TEXT		:= @$(BASH) 'printf "\033[33m"'
-DEF_TEXT		:= @$(BASH) 'printf "\033[0m"'
+RED    := \033[31m
+GREEN  := \033[32m
+CYAN   := \033[36m
+RESET  := \033[0m
 
 ############################################
 # Compilation Targets
 
-COMPILE: $(basename $(MAIN)).elf
+all: $(ELF)
 
-$(basename $(MAIN)).elf: $(OBJS)
-	@$(BASH) 'cd "$(CURDIR)"; $(RM) $@'
-	$(CYAN_TEXT)
-	@echo Linking
-	@$(BASH) 'printf "$(LD) "'
-	$(DEF_TEXT)
-	@echo $(LDFLAGS) $(OBJS) -o $@
-	@$(BASH) 'printf "\n"'
-	@$(BASH) 'cd "$(CURDIR)"; $(CYGWIN_PATH); $(LD) $(LDFLAGS) $(OBJS) -o $@'
+$(ELF): $(OBJS)
+	@echo -e "$(CYAN)Linking $@$(RESET)"
+	$(LD) $(LDFLAGS) $(OBJS) -o $@
 
-%.c.o: %.c $(HDRS)
-	@$(BASH) 'cd "$(CURDIR)"; $(RM) $@'
-	$(GREEN_TEXT)
-	@echo Compiling
-	@$(BASH) 'printf "$(CC) "'
-	$(DEF_TEXT)
-	@echo $(CCFLAGS) $< -o $@
-	@$(BASH) 'cd "$(CURDIR)"; $(CYGWIN_PATH); $(CC) $(CCFLAGS) $< -o $@'
+%.o: %.c $(HDRS)
+	@echo -e "$(GREEN)Compiling $<$(RESET)"
+	$(CC) $(CFLAGS) -c $< -o $@
 
-SYMBOLS: $(basename $(MAIN)).elf
-	@echo $(NM) -p $<
-	@$(BASH) 'cd "$(CURDIR)"; $(CYGWIN_PATH); $(NM) -p $<'
+CLEAN:
+	@echo -e "$(RED)Cleaning files...$(RESET)"
+	$(RM) $(OBJS) $(ELF)
 
-OBJDUMP: $(basename $(MAIN)).elf
-	@echo $(OD) -d -S $<
-	@$(BASH) 'cd "$(CURDIR)"; $(CYGWIN_PATH); $(OD) -d -S $<'
+SYMBOLS: $(ELF)
+	$(NM) -p $<
 
-CLEAN: 
-	$(RED_TEXT)
-	@$(BASH) 'printf "$(RM) "'
-	$(DEF_TEXT)
-	@echo $(basename $(MAIN)).elf $(OBJS)
-	@$(BASH) 'cd "$(CURDIR)"; $(RM) $(basename $(MAIN)).elf $(OBJS)'
+OBJDUMP: $(ELF)
+	$(OD) -d -S $<
 
 ############################################
 # System Targets
 
-DETECT_DEVICES:
-	$(QP_PROGRAMMER) $(SYS_FLAG_CABLE) --auto
-
 DE1-SoC:
-	$(QP_PROGRAMMER) $(SYS_FLAG_CABLE_SoC) -m jtag -o "P;$(HW_DE1-SoC)@$(JTAG_INDEX_SoC)"
-
-DE10-Lite:
-	$(QP_PROGRAMMER) $(SYS_FLAG_CABLE_Lite) -m jtag -o "P;$(HW_DE10-Lite)@$(JTAG_INDEX_Lite)"
+	$(INSTALL)/qprogrammer/quartus/bin/quartus_pgm -c "DE-SoC" -m jtag -o "P;$(INSTALL)/fpgacademy/Computer_Systems/DE1-SoC/DE1-SoC_Computer/niosVg/DE1_SoC_Computer.sof@2"
 
 TERMINAL:
-	nios2-terminal.exe --instance 0
+	$(INSTALL)/fpgacademy/AMP/bin/nios2-terminal --instance 0
 
 ############################################
 # GDB Targets
 
-GDB_SERVER: 
-	$(GDB_SERVER) --device 02D120DD --gdb-port 2454 --instance 1 --probe-type USB-Blaster-2 --transport-type jtag --auto-detect true
+GDB_SERVER:
+	$(GDB_S_BIN)/ash-riscv-gdb-server --device 02D120DD --gdb-port 2454 --instance 1 --probe-type USB-Blaster-2 --transport-type jtag --auto-detect true
 
-GDB_CLIENT: 
-	$(GDB_CLIENT) -silent -ex "target remote:2454" -ex "set $$mstatus=0" -ex "set $$mtvec=0" -ex "load" -ex "set $$pc=_start" -ex "info reg pc" "$(basename $(MAIN)).elf"
+GDB_CLIENT:
+	$(RISCV_BIN)/riscv32-unknown-elf-gdb -silent "$(ELF)" \
+	-ex "target remote:2454" \
+	-ex "load" \
+	-ex "set \$$sp=0x4000000" \
+	-ex "set \$$pc=main" \
+	-ex "info reg pc sp"
 
-############################################
-# EXTRAS
-
-.SILENT: SYMBOLS OBJDUMP
-
+.PHONY: all CLEAN DE1-SoC GDB_SERVER GDB_CLIENT TERMINAL
