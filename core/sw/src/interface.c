@@ -209,10 +209,6 @@ void trigger_logic_analyzer() {
         return;
 
     la_set_trigger_channel(current_channel_num);
-    trigger_running = true;
-
-    get_signals(trigger_running);  // populates channel array to be passed in to draw_screen
-    // get_signals_test();
 }
 
 // draw to the screen every frame
@@ -289,7 +285,9 @@ void keyboard_poll_user_input() {
 
             case KEY_S:
                 if (is_new_press(key.s, ev.pressed)) {
-                    la_start();  // start the logic analyzer
+                    la_start();         // start the logic analyzer
+                    get_signals(true);  // populates channel array to be passed in to draw_screen
+                                        // get_signals_test();
                     la_is_running = true;
                 }
 
