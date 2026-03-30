@@ -148,6 +148,7 @@ void setup_init() {
     // add mouse stuff here too if added
 
     // -- Other initalizations -- //
+    text_clear();
     zoom_state_init(&g_state, DEFAULT_ZOOM);
     channels_init(channels, TOTAL_SIGNALS);  // all information to DRAW the signals
     hex_write_char(0, int_to_char(key_channel));
