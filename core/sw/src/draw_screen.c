@@ -64,6 +64,11 @@ static void draw_channel_labels(const Channel* channels, int lanes);
 static uint16_t dim_color(uint16_t color);
 static void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
 static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position);
+static void draw_time_scale(const ZoomState* state);
+static const uint8_t* get_glyph_8x8(char ch);
+static void draw_char_bitmap(int x, int y, char ch, uint16_t fg, uint16_t bg, bool transparent_bg, int scale);
+static void draw_text_bitmap(int x, int y, const char* text, uint16_t fg, uint16_t bg, bool transparent_bg, int scale);
+static void draw_uint_bitmap(int x, int y, uint32_t value, uint16_t fg, uint16_t bg, bool transparent_bg, int scale);
 
 /********************************
  *  Helper Functions
@@ -108,17 +113,6 @@ static uint16_t dim_color(uint16_t color) {
     return (r << 11) | (g << 5) | b;
 }
 
-// clear buffer
-void text_clear(void) {
-    volatile char* char_buf = (volatile char*)FPGA_CHAR_BASE;
-
-    for (int row = 0; row < CHAR_ROWS; row++) {
-        for (int col = 0; col < CHAR_COLS; col++) {
-            char_buf[(row << 7) + col] = ' ';  // row stride = 128
-        }
-    }
-}
-
 // store a single char in a string buffer
 static void text_plot_char(int col, int row, char c) {
     if (col < 0 || col >= CHAR_COLS || row < 0 || row >= CHAR_ROWS)
@@ -158,24 +152,20 @@ static void text_draw_string(int col, int row, const char* text) {
     }
 }
 
-// draws labels
+// draw labels
 static void draw_channel_labels(const Channel* channels, const int lanes) {
     if (channels == 0 || lanes <= 0 || lanes > TOTAL_SIGNALS)
         return;
 
-    int lane_height = 27;
-
-    // character placement inside left panel
-    // 80 cols over 320 px => 4 px per char cell
-    // 60 rows over 240 px => 4 px per char cell
-    const int text_col = 2;  // a little padding from left side
+    const int lane_height = 27;
     const int stripe_width = 2;
+
+    const int text_scale = 1;  // smallest readable size
+    const int glyph_h = 8 * text_scale;
+    const int text_x = stripe_width + 2;
 
     for (int i = 0; i < lanes; i++) {
         int y_top = top_bar_height + i * lane_height;
-
-        // center label vertically in lane
-        int label_row = (y_top + lane_height / 2) / 4;
 
         uint16_t stripe_color = channels[i].enabled
                                     ? channels[i].color
@@ -185,25 +175,30 @@ static void draw_channel_labels(const Channel* channels, const int lanes) {
                                 ? left_bar_color
                                 : dim_color(left_bar_color);
 
-        // fill the label area background per-lane
-        fill_rect(0, y_top, left_bar_width, lane_height, label_bg);
+        uint16_t label_fg = channels[i].enabled
+                                ? 0xFFFF
+                                : dim_color(0xFFFF);
 
-        // draw color stripe at far left
+        fill_rect(0, y_top, left_bar_width, lane_height, label_bg);
         fill_rect(0, y_top, stripe_width, lane_height, stripe_color);
 
-        // clear a small text band inside the label area so text is readable
-        // optional but helps consistency
-        // here we just rely on the background already drawn
+        int text_y = y_top + (lane_height - glyph_h) / 2;
 
-        // draw the channel name
-        if (channels[i].label[0] != '\0') {  // make sure string isn't empty (first element would be the null terminator )
-            text_draw_string(text_col, label_row, channels[i].label);
+        if (channels[i].label[0] != '\0') {
+            draw_text_bitmap(
+                text_x,
+                text_y,
+                channels[i].label,
+                label_fg,
+                label_bg,
+                true,  // transparent background so lane bg shows through
+                text_scale);
         }
     }
 }
 
 // handle zooming logic by determining the sample window for each enabled channel and prints it out using draw_digital_waveform(...)
-void draw_logic_view(const ZoomState* state, const Channel* channels, int signals_per_page) {
+static void draw_logic_view(const ZoomState* state, const Channel* channels, int signals_per_page) {
     uint32_t start = state->scroll_offset;
     uint32_t end = visualizer_get_end_sample(state);
 
@@ -259,6 +254,33 @@ static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_positio
     draw_vline(x, top_bar_height, SCREEN_H - bottom_bar_height - 1, 0xFFE0);
 }
 
+// draw the time scale (top bar, x - axis) on the screen to update with changes in zoom or scrolling
+static void draw_time_scale(const ZoomState* state) {
+    if (state == 0 || state->visible_samples == 0)
+        return;
+
+    const int divisions = 8;
+    const int text_scale = 1;
+    const int glyph_h = 8 * text_scale;
+    const int y = top_bar_height - glyph_h - 1;  // near bottom of top bar
+    const uint16_t fg = text_color;
+    const uint16_t bg = top_bar_color;
+
+    uint32_t samples_per_div = state->visible_samples / divisions;
+    if (samples_per_div == 0)
+        return;
+
+    uint32_t left_div = state->scroll_offset / samples_per_div;
+    uint32_t left_time_ns = left_div * state->time_div;
+
+    for (int i = 0; i <= divisions; i++) {
+        int x = left_bar_width + i * grid_spacing_x + 1;
+        uint32_t tick_time_ns = left_time_ns + ((uint32_t)i * state->time_div);
+
+        draw_uint_bitmap(x, y, tick_time_ns, fg, bg, true, text_scale);
+    }
+}
+
 /********************************
  *  Function Implementations
  ********************************/
@@ -282,14 +304,11 @@ void draw_logic_ui_frame(const Channel* channels, const int lanes) {
     }
 
     // Channel separators
-    int spacing = 27;
+    // int spacing = 27;
     for (int i = 1; i < lanes; i++) {
         int y = top_bar_height + i * 27;
         draw_hline(0, SCREEN_W - 1, y, separator_color);
     }
-
-    // labels + stripes
-    draw_channel_labels(channels, lanes);
 }
 
 // based on recieved array samples and count (the amount of cycles), draws any given digital waveform
@@ -347,13 +366,14 @@ void draw_signals(const ZoomState* state, const Channel* channels, const int sig
 void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trigger_position) {
     int start_index = current_page * TOTAL_SIGNALS_ON_SCREEN;  // either 0 or 8
     draw_logic_ui_frame(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
+    draw_channel_labels(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
+    draw_time_scale(state);
     draw_signals(state, &channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
     draw_trigger_marker(state, trigger_position);
 }
 
 // switch to the other page
 void switch_ui_page() {
-    text_clear();       // clear previous text
     current_page ^= 1;  // Toggle page (0 or 1)
 }
 
@@ -376,5 +396,207 @@ void channels_init(Channel* channels, const int total_signals) {
             channels[i].label[3] = '0' + (i - 10);
             channels[i].label[4] = '\0';
         }
+    }
+}
+
+/********************************
+ *  Text draing helpers
+ ********************************/
+
+// each byte = one row, bit 7 is leftmost pixel
+static const uint8_t GLYPH_SPACE[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+static const uint8_t GLYPH_DASH[8] = {0x00, 0x00, 0x00, 0x7E, 0x00, 0x00, 0x00, 0x00};
+static const uint8_t GLYPH_COLON[8] = {0x00, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18, 0x00};
+
+// digits
+static const uint8_t GLYPH_0[8] = {0x3C, 0x66, 0x6E, 0x76, 0x66, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_1[8] = {0x18, 0x38, 0x18, 0x18, 0x18, 0x18, 0x7E, 0x00};
+static const uint8_t GLYPH_2[8] = {0x3C, 0x66, 0x06, 0x0C, 0x30, 0x60, 0x7E, 0x00};
+static const uint8_t GLYPH_3[8] = {0x3C, 0x66, 0x06, 0x1C, 0x06, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_4[8] = {0x0C, 0x1C, 0x3C, 0x6C, 0x7E, 0x0C, 0x0C, 0x00};
+static const uint8_t GLYPH_5[8] = {0x7E, 0x60, 0x7C, 0x06, 0x06, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_6[8] = {0x1C, 0x30, 0x60, 0x7C, 0x66, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_7[8] = {0x7E, 0x66, 0x06, 0x0C, 0x18, 0x18, 0x18, 0x00};
+static const uint8_t GLYPH_8[8] = {0x3C, 0x66, 0x66, 0x3C, 0x66, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_9[8] = {0x3C, 0x66, 0x66, 0x3E, 0x06, 0x0C, 0x38, 0x00};
+
+// uppercase letters
+static const uint8_t GLYPH_A[8] = {0x18, 0x3C, 0x66, 0x66, 0x7E, 0x66, 0x66, 0x00};
+static const uint8_t GLYPH_B[8] = {0x7C, 0x66, 0x66, 0x7C, 0x66, 0x66, 0x7C, 0x00};
+static const uint8_t GLYPH_C[8] = {0x3C, 0x66, 0x60, 0x60, 0x60, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_D[8] = {0x78, 0x6C, 0x66, 0x66, 0x66, 0x6C, 0x78, 0x00};
+static const uint8_t GLYPH_E[8] = {0x7E, 0x60, 0x60, 0x7C, 0x60, 0x60, 0x7E, 0x00};
+static const uint8_t GLYPH_F[8] = {0x7E, 0x60, 0x60, 0x7C, 0x60, 0x60, 0x60, 0x00};
+static const uint8_t GLYPH_G[8] = {0x3C, 0x66, 0x60, 0x6E, 0x66, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_H[8] = {0x66, 0x66, 0x66, 0x7E, 0x66, 0x66, 0x66, 0x00};
+static const uint8_t GLYPH_I[8] = {0x3C, 0x18, 0x18, 0x18, 0x18, 0x18, 0x3C, 0x00};
+static const uint8_t GLYPH_J[8] = {0x1E, 0x0C, 0x0C, 0x0C, 0x0C, 0x6C, 0x38, 0x00};
+static const uint8_t GLYPH_K[8] = {0x66, 0x6C, 0x78, 0x70, 0x78, 0x6C, 0x66, 0x00};
+static const uint8_t GLYPH_L[8] = {0x60, 0x60, 0x60, 0x60, 0x60, 0x60, 0x7E, 0x00};
+static const uint8_t GLYPH_M[8] = {0x63, 0x77, 0x7F, 0x6B, 0x63, 0x63, 0x63, 0x00};
+static const uint8_t GLYPH_N[8] = {0x66, 0x76, 0x7E, 0x7E, 0x6E, 0x66, 0x66, 0x00};
+static const uint8_t GLYPH_O[8] = {0x3C, 0x66, 0x66, 0x66, 0x66, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_P[8] = {0x7C, 0x66, 0x66, 0x7C, 0x60, 0x60, 0x60, 0x00};
+static const uint8_t GLYPH_Q[8] = {0x3C, 0x66, 0x66, 0x66, 0x6E, 0x3C, 0x0E, 0x00};
+static const uint8_t GLYPH_R[8] = {0x7C, 0x66, 0x66, 0x7C, 0x78, 0x6C, 0x66, 0x00};
+static const uint8_t GLYPH_S[8] = {0x3C, 0x66, 0x60, 0x3C, 0x06, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_T[8] = {0x7E, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x00};
+static const uint8_t GLYPH_U[8] = {0x66, 0x66, 0x66, 0x66, 0x66, 0x66, 0x3C, 0x00};
+static const uint8_t GLYPH_V[8] = {0x66, 0x66, 0x66, 0x66, 0x66, 0x3C, 0x18, 0x00};
+static const uint8_t GLYPH_W[8] = {0x63, 0x63, 0x63, 0x6B, 0x7F, 0x77, 0x63, 0x00};
+static const uint8_t GLYPH_X[8] = {0x66, 0x66, 0x3C, 0x18, 0x3C, 0x66, 0x66, 0x00};
+static const uint8_t GLYPH_Y[8] = {0x66, 0x66, 0x66, 0x3C, 0x18, 0x18, 0x18, 0x00};
+static const uint8_t GLYPH_Z[8] = {0x7E, 0x06, 0x0C, 0x18, 0x30, 0x60, 0x7E, 0x00};
+
+static const uint8_t* get_glyph_8x8(char ch) {
+    switch (ch) {
+        case '0':
+            return GLYPH_0;
+        case '1':
+            return GLYPH_1;
+        case '2':
+            return GLYPH_2;
+        case '3':
+            return GLYPH_3;
+        case '4':
+            return GLYPH_4;
+        case '5':
+            return GLYPH_5;
+        case '6':
+            return GLYPH_6;
+        case '7':
+            return GLYPH_7;
+        case '8':
+            return GLYPH_8;
+        case '9':
+            return GLYPH_9;
+
+        case 'A':
+            return GLYPH_A;
+        case 'B':
+            return GLYPH_B;
+        case 'C':
+            return GLYPH_C;
+        case 'D':
+            return GLYPH_D;
+        case 'E':
+            return GLYPH_E;
+        case 'F':
+            return GLYPH_F;
+        case 'G':
+            return GLYPH_G;
+        case 'H':
+            return GLYPH_H;
+        case 'I':
+            return GLYPH_I;
+        case 'J':
+            return GLYPH_J;
+        case 'K':
+            return GLYPH_K;
+        case 'L':
+            return GLYPH_L;
+        case 'M':
+            return GLYPH_M;
+        case 'N':
+            return GLYPH_N;
+        case 'O':
+            return GLYPH_O;
+        case 'P':
+            return GLYPH_P;
+        case 'Q':
+            return GLYPH_Q;
+        case 'R':
+            return GLYPH_R;
+        case 'S':
+            return GLYPH_S;
+        case 'T':
+            return GLYPH_T;
+        case 'U':
+            return GLYPH_U;
+        case 'V':
+            return GLYPH_V;
+        case 'W':
+            return GLYPH_W;
+        case 'X':
+            return GLYPH_X;
+        case 'Y':
+            return GLYPH_Y;
+        case 'Z':
+            return GLYPH_Z;
+
+        case '-':
+            return GLYPH_DASH;
+        case ':':
+            return GLYPH_COLON;
+        case ' ':
+            return GLYPH_SPACE;
+        default:
+            return GLYPH_SPACE;
+    }
+}
+
+static void draw_char_bitmap(int x, int y, char ch, uint16_t fg, uint16_t bg, bool transparent_bg, int scale) {
+    if (scale <= 0)
+        return;
+
+    if (ch >= 'a' && ch <= 'z')
+        ch = ch - 'a' + 'A';
+
+    const uint8_t* glyph = get_glyph_8x8(ch);
+
+    for (int row = 0; row < 8; row++) {
+        uint8_t bits = glyph[row];
+
+        for (int col = 0; col < 8; col++) {
+            bool pixel_on = (bits & (1 << (7 - col))) != 0;
+            int px = x + col * scale;
+            int py = y + row * scale;
+
+            if (pixel_on) {
+                fill_rect(px, py, scale, scale, fg);
+            } else if (!transparent_bg) {
+                fill_rect(px, py, scale, scale, bg);
+            }
+        }
+    }
+}
+
+static void draw_text_bitmap(int x, int y, const char* text, uint16_t fg, uint16_t bg, bool transparent_bg, int scale) {
+    if (text == 0 || scale <= 0)
+        return;
+
+    while (*text) {
+        if (*text == '\n') {
+            y += 8 * scale + scale;
+            x = 0;  // optional; adjust if you want multiline anchored differently
+        } else {
+            draw_char_bitmap(x, y, *text, fg, bg, transparent_bg, scale);
+            x += 8 * scale;  // no extra spacing, like char buffer
+        }
+        text++;
+    }
+}
+
+static void draw_uint_bitmap(int x, int y, uint32_t value, uint16_t fg, uint16_t bg, bool transparent_bg, int scale) {
+    char digits[11];
+    int count = 0;
+
+    if (scale <= 0)
+        return;
+
+    if (value == 0) {
+        draw_char_bitmap(x, y, '0', fg, bg, transparent_bg, scale);
+        return;
+    }
+
+    while (value > 0 && count < 10) {
+        digits[count] = '0' + (value % 10);
+        value /= 10;
+        count++;
+    }
+
+    for (int i = count - 1; i >= 0; i--) {
+        draw_char_bitmap(x, y, digits[i], fg, bg, transparent_bg, scale);
+        x += 8 * scale;
     }
 }

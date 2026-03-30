@@ -150,7 +150,6 @@ void setup_init() {
     // -- Other initalizations -- //
     zoom_state_init(&g_state, DEFAULT_ZOOM);
     channels_init(channels, TOTAL_SIGNALS);  // all information to DRAW the signals
-    text_clear();
     hex_write_char(0, int_to_char(key_channel));
 }
 
@@ -224,8 +223,6 @@ void trigger_logic_analyzer() {
 void draw() {
     clear_screen();
     draw_ui_page(channels, &g_state, la_get_trigger_index());
-    draw_logic_ui_frame(channels, TOTAL_SIGNALS_ON_SCREEN);
-    draw_signals(&g_state, channels, TOTAL_SIGNALS_ON_SCREEN);
     wait_for_vsync();
 }
 
