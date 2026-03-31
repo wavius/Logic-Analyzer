@@ -32,7 +32,6 @@ static const uint16_t bottom_bar_color = 0x18e3;
 static const uint16_t left_bar_color = 0x18e3;
 static const uint16_t separator_color = 0x39c7;
 static const uint16_t grid_color = 0x18e3;
-static const uint16_t text_color = 0xd69a;
 
 // color options for the signals drawn to screen
 static const uint16_t channel_colors[16] = {

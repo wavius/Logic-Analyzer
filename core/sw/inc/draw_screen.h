@@ -12,13 +12,13 @@
 typedef struct {
     uint8_t* samples;
     int count;
-    // uint16_t color;  // bring back this feature later if I think of a better way to include it
     bool enabled;
     char label[8];
     uint16_t color;
 } Channel;
 
-extern uint32_t current_page;  // declaration only
+// ----- Global Variables ----- //
+extern uint32_t current_page;  // declaration only (defined in draw_screen.c)
 
 extern uint8_t channel_buffers[TOTAL_SIGNALS][BUFFER_SIZE];
 
@@ -31,5 +31,6 @@ void draw_digital_waveform(const uint8_t* samples, const int count, int x0, int 
 void draw_select_line(const Channel* channels, int selected_channel);
 void draw_la_status_icon(bool la_is_running);
 void channels_init(Channel* channels, const int size);
+void text_clear();
 
 #endif

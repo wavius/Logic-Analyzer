@@ -27,7 +27,6 @@ bool la_is_running = false;
 void clear_signals();
 int get_current_selected_channel_value();
 bool get_signals(bool trigger_running);
-void get_signals_test();
 void enable_signal(int current_channel);
 char int_to_char(int val);
 
@@ -36,14 +35,14 @@ char int_to_char(int val);
  ********************************/
 // turn an int from 0-9 into a char to pass into hex function
 char int_to_char(int x) {
-    if (x < 0)  // should never trigger but perform the check anyway
+    if (x < 0)  // should never trigger but perform the check anyway for saftey
         return '0';
     return '0' + x;
 }
 
 // select the given channel
 void select_channel(int selected) {
-    // note: selected channels support [-1, 7] because -1 reflects user scrolling off screen and nothing selected
+    // note: selected channels support [-1, 8] because -1 and 8 reflects user scrolling off screen and nothing selected
     if (selected <= -1 || selected >= TOTAL_SIGNALS_ON_SCREEN) {
         key_channel = -1;
         hex_clear_digit(0);  // remove any channel selection indications
@@ -61,43 +60,29 @@ void increment_channel_selected(int dir) {
     int new_channel = key_channel + dir;
 
     if (new_channel < -1) {
-        key_channel = -1;
-        hex_clear_digit(0);
+        key_channel = -1;    // deselected state
+        hex_clear_digit(0);  // clear hex
     } else if (new_channel >= TOTAL_SIGNALS_ON_SCREEN) {
-        key_channel = TOTAL_SIGNALS_ON_SCREEN;
-        hex_clear_digit(0);
+        key_channel = TOTAL_SIGNALS_ON_SCREEN;  // deselected state
+        hex_clear_digit(0);                     // clear hex
     } else {
         key_channel = new_channel;
-        hex_write_char(0, int_to_char(key_channel));
+        hex_write_char(0, int_to_char(key_channel));  // show the channel on the hex display
     }
 }
 
 // figure out which channel the user currently has selected
 int get_current_selected_channel_value() {
     if (key_channel < 0 || key_channel >= TOTAL_SIGNALS_ON_SCREEN)
-        return -1;
+        return -1;  // return the deselected state (-1 not 8 for the sake of page 2 signals)
 
     int page_offset = current_page * TOTAL_SIGNALS_ON_SCREEN;
-    return key_channel + page_offset;
+    return key_channel + page_offset;  // returns in range [0, 7] or [8, 15] depending on page selection
 }
 
 // helper function for keyboard_poll_user_input. helps call functions only on rising edge of make code
 static inline bool is_new_press(bool previous_state, bool current_pressed) {
     return current_pressed && !previous_state;
-}
-
-// a test for plotting signals (DELETE LATER)
-void get_signals_test() {
-    for (int i = 0; i < TOTAL_SIGNALS; i++) {
-        channels[i].count = 4096;
-        for (int j = 0; j < BUFFER_SIZE; j++) {
-            channels[0].samples[j] = channels[0].samples[j] ^ 1;
-        }
-        for (int j = 0; j < TOTAL_SIGNALS_ON_SCREEN; j++) {
-            channels[j].enabled = true;
-            strcpy(channels[i].label, "CH0");
-        }
-    }
 }
 
 // clear signal buffer array
@@ -173,7 +158,7 @@ bool get_signals(bool trigger_running) {
 
 // wipes everything off the screen, clears the buffer, and stops the logic analyzer
 void clear_everything() {
-    // -- clear out the buffer -- //
+    // -- clear out the buffer IF logic analyzer is running -- //
     if (la_is_running) {
         uint16_t throwaway[BUFFER_SIZE];
         la_reset_read_pointer();
@@ -196,8 +181,6 @@ void clear_everything() {
 void trigger_logic_analyzer() {
     if (!la_is_running)
         return;
-
-    bool trigger_running = false;
 
     int current_channel_num = get_current_selected_channel_value();
 
@@ -227,7 +210,7 @@ void keyboard_poll_user_input() {
 
     while (keyboard_read_event(&kb, &ev)) {  // drain the entire FIFO (important to prevent lagging! do not change this! )
         switch (ev.key) {                    // figure out what key is currently being pressed/released and call approritate function
-            // continuous keys (i.e. holding them will keep triggering their corresponding logic)
+            // continuous keys (i.e. HOLDING them will keep triggering their corresponding logic)
             case KEY_LEFT:
                 key.arrow_left = ev.pressed;
                 break;
@@ -287,7 +270,6 @@ void keyboard_poll_user_input() {
                 if (is_new_press(key.s, ev.pressed)) {
                     la_start();         // start the logic analyzer
                     get_signals(true);  // populates channel array to be passed in to draw_screen
-                                        // get_signals_test();
                     la_is_running = true;
                 }
 

@@ -6,9 +6,7 @@
 
 #include "address_map_niosV.h"
 
-/********************************
- *  Structs and Data Types
- ********************************/
+// ----- Structs and data types ----- //
 typedef struct {
     volatile uint32_t data;
     volatile uint32_t control;
@@ -53,9 +51,7 @@ typedef struct {
     bool channel[9];                                     // for selecting channels
 } KeyPressed;
 
-/********************************
- *  Functions
- ********************************/
+// ----- Functions ----- //
 void keyboard_init(Keyboard* kb);
 bool keyboard_read_event(Keyboard* kb, KeyEvent* ev);
 

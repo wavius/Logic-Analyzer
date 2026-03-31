@@ -4,13 +4,11 @@
 #include "constants.h"
 #include "draw_screen.h"
 #include "ps2_input.h"
-// #include "test_la_c.h"
+// #include "test_la_c.h" //include this if testing on cpulator or not using actual pins on board
+#include "logic_analyzer.h"
 #include "visualizer_logic.h"
-#include "logic_analyzer.h" 
 
-/********************************
- *  Global variables
- ********************************/
+// ----- Global Variables ----- //
 extern Keyboard kb;            // keyboard for user input
 extern ZoomState g_state;      // handling zooming logic
 extern uint32_t current_page;  // defines what the current page is (defined in draw_screen module)
@@ -18,9 +16,7 @@ extern uint32_t current_page;  // defines what the current page is (defined in d
 extern Channel channels[TOTAL_SIGNALS];  // all information to draw the signals
 extern uint8_t channel_buffers[TOTAL_SIGNALS][BUFFER_SIZE];
 
-/********************************
- *  Functions
- ********************************/
+// ----- Functions ----- //
 void draw();
 void setup_init();
 void clear_everything();

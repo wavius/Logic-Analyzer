@@ -4,12 +4,11 @@
 #include <stdint.h>
 #include <string.h>  //for memset
 
-// ----- Core VGA ----- //
+// ----- Core VGA Functions (from lab 7) ----- //
 void vga_init();
 void plot_pixel(int x, int y, uint16_t color);
 void wait_for_vsync();
 void clear_screen();
-void text_clear();
 
 // ----- Other ----- //
 // int getXres(); //implemented for debugging purposes

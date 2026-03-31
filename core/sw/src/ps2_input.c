@@ -23,8 +23,8 @@ static bool ps2_read_byte(Keyboard* kb, uint8_t* out) {
 }
 
 static void keyboard_clear_fifo(Keyboard* kb) {
-    uint8_t dummy;
-    while (ps2_read_byte(kb, &dummy)) {
+    uint8_t throwaway;  // read and throwaway
+    while (ps2_read_byte(kb, &throwaway)) {
     }
 }
 
@@ -106,7 +106,7 @@ bool keyboard_read_event(Keyboard* kb, KeyEvent* ev) {
     bool extended;
     KeyCode key;
 
-    if (kb == 0 || ev == 0)
+    if (kb == 0 || ev == 0)  // return if something wasn't initalized
         return false;
 
     ev->valid = false;
