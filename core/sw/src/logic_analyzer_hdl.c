@@ -1,4 +1,9 @@
-#include "logic_analyzer_hdl.h"
+///////////////////////////////////////////
+// HAL for Logic Analyzer Verilog Module //
+///////////////////////////////////////////
+
+#ifdef USE_HW
+#include "logic_analyzer.h"
 
 void la_set_trigger_channel(uint16_t channel) {
     // Pass channel - 1 to account for Verilog [15:0] indexing
@@ -43,3 +48,4 @@ void la_get_trigger_samples(uint16_t* post_trigger, uint16_t* pre_trigger) {
     *post_trigger = (uint16_t)(samples >> 16);
     *pre_trigger = (uint16_t)samples;
 }
+#endif // USE_HW

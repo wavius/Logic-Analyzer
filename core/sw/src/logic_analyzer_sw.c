@@ -1,6 +1,11 @@
+//////////////////////////////////////////////////////////
+// Soft implementation of Logic Analyzer Verilog Module //
+//////////////////////////////////////////////////////////
+
+#ifdef USE_SW
 #include <string.h>
 
-#include "logic_analyzer_sw.h"
+#include "logic_analyzer.h"
 
 // ---------------------------------------------------------------------------
 //  Hardware Register Mapping
@@ -11,7 +16,7 @@
 //  Internal state
 // ---------------------------------------------------------------------------
 static uint16_t la_buffer[BUFFER_SIZE];
-static bool buffer_ready = false;
+static int buffer_ready = false;
 static int trigger_channel = 0;
 static int trigger_ptr = 0;
 static uint16_t pre_count = 0;
@@ -71,11 +76,11 @@ void la_start(void) {
 //  Visible Driver API
 // ---------------------------------------------------------------------------
 
-void la_set_trigger_channel(int channel) {
+void la_set_trigger_channel(uint16_t channel) {
     trigger_channel = (channel & 0xF);
 }
 
-bool la_is_done(void) {
+int la_is_done(void) {
     return buffer_ready;
 }
 
@@ -83,8 +88,8 @@ void la_stop(void) {
     buffer_ready = false;
 }
 
-int la_get_trigger_index(void) {
-    return pre_count;
+uint32_t la_get_trigger_index(void) {
+    return (uint32_t)pre_count;
 }
 
 void la_get_trigger_samples(uint16_t* post, uint16_t* pre) {
@@ -113,3 +118,5 @@ void la_reset_read_pointer(void) {
     // automatically inside la_download_buffer().
     // This is just here to prevent linker errors from older interface code.
 }
+
+#endif // USE_SW

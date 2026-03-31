@@ -1,22 +1,20 @@
-///////////////////////////////////////////
-// HAL for Logic Analyzer Verilog Module //
-///////////////////////////////////////////
-
 #ifndef LOGIC_ANALYZER_H
 #define LOGIC_ANALYZER_H
 
 #include <stdint.h>
 
-#include "address_map_niosV.h"
+/* --- Software Requirements --- */
+#ifdef USE_SW
+#include <stdbool.h>
+#include "constants.h"
+#endif // USE_SW
 
+/* --- Hardware Requirements --- */
+#ifdef USE_HW
+
+#include "address_map_niosV.h"
 #define LA_BASE 0x04000000// Logic Analyzer
 
-/* --- Hardware Register Mapping --- */
-
-/**
- * Logic Analyzer Register Map
- * Matches the 'case' statements in signal_capture.v
- */
 typedef struct {
     volatile uint32_t CONTROL;          // Offset 0x00: [0] = Run
     volatile uint32_t STATUS;           // Offset 0x04: [0] = Run, [1] = Full, [2] = Triggered
@@ -28,9 +26,9 @@ typedef struct {
 
 // Pointer to the hardware
 #define LA ((LA_t*)LA_BASE)
+#endif // USE_HW
 
 /* --- Function Prototypes --- */
-
 /**
  * @brief Sets the channel to monitor for a rising edge.
  * @param channel The channel index (1 to 16).
