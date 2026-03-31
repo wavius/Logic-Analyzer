@@ -47,6 +47,6 @@ qdb/
 *.o
 *.d
 
-../out/
-../rel/
 o_*.txt
+out/
+Computer_Systems/DE1-SoC/rel/
