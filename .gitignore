@@ -1,8 +1,6 @@
 # Ignore VS Code settings
 .vscode/
 
-# Ignore compiled binaries (for Nios V)
-*.sv
 # *.elf 
 *.o
 *.obj
@@ -10,7 +8,45 @@
 # Ignore Debugger Configs
 *.ini
 
-# Ignore Quartus temporary files
+# Ignore ModelSim files
+*.wlf
+core/hdl/sim/work/
+
+# Ignore Quartus files
 db/
 incremental_db/
 output_files/
+.qsys_edit/
+hps_isw_handoff/
+greybox_tmp/
+hc_output/
+qdb/
+
+*.qws
+*.bak
+*.orig
+*.swp
+*~
+
+*.sof
+*.pof
+*.rbf
+*.jdi
+*.pin
+*.done
+*.qdf
+*.rpt
+*.summary
+*.smsg
+*.txt
+
+*.sopcinfo
+*.elf
+*.map
+*.objdump
+*.o
+*.d
+
+../out/
+../rel/
+o_*.txt

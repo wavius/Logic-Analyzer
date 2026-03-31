@@ -3,20 +3,10 @@
  <debug showDebugMenu="0" />
  <systemtable filter="All Interfaces">
   <columns>
-<<<<<<< Updated upstream
-   <connections preferredWidth="207" />
+   <connections preferredWidth="255" />
    <irq preferredWidth="34" />
   </columns>
  </systemtable>
- <library
-   expandedCategories="Library/University Program/Audio &amp; Video,Library/University Program/Audio &amp; Video/Video,Library/University Program,Project/System,Project,Library" />
- <window width="1938" height="1038" x="-9" y="-9" />
-=======
-   <connections preferredWidth="223" />
-   <irq preferredWidth="34" />
-  </columns>
- </systemtable>
- <library expandedCategories="Library,Project" />
- <window width="1920" height="1036" x="-9" y="-9" />
->>>>>>> Stashed changes
+ <library expandedCategories="Project,Library" />
+ <window width="1920" height="1036" x="0" y="0" />
 </preferences>

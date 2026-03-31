@@ -114,16 +114,16 @@
   <parameter name="device_family" value="Cyclone V" />
   <parameter name="gui_refclk" value="50.0" />
  </module>
- <module name="Sys_Clk" kind="clock_source" version="24.1" enabled="1">
+ <module name="Sys_Clk" kind="clock_source" version="25.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="false" />
   <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
- <connection kind="clock" version="24.1" start="Sys_Clk.clk" end="Audio.clk" />
+ <connection kind="clock" version="25.1" start="Sys_Clk.clk" end="Audio.clk" />
  <connection
    kind="reset"
-   version="24.1"
+   version="25.1"
    start="Sys_Clk.clk_reset"
    end="Audio.reset" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />

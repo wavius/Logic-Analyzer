@@ -330,6 +330,14 @@
    </memoryBlock>
    <memoryBlock>
     <isBridge>false</isBridge>
+    <moduleName>Logic_Analyzer</moduleName>
+    <slaveName>avalon_la_slave</slaveName>
+    <name>Logic_Analyzer.avalon_la_slave</name>
+    <baseAddress>67108864</baseAddress>
+    <span>32</span>
+   </memoryBlock>
+   <memoryBlock>
+    <isBridge>false</isBridge>
     <moduleName>PS2_Port</moduleName>
     <slaveName>avalon_ps2_slave</slaveName>
     <name>PS2_Port.avalon_ps2_slave</name>
@@ -512,6 +520,28 @@
    </assignment>
    </interface>
   </module>
+ <module name="Logic_Analyzer" kind="logic_analyzer" path="Logic_Analyzer">
+  
+  <interface name="avalon_la_slave" kind="avalon_slave">
+   
+   <assignment>
+    <name>embeddedsw.configuration.isFlash</name>
+    <value>0</value>
+   </assignment>
+   <assignment>
+    <name>embeddedsw.configuration.isMemoryDevice</name>
+    <value>0</value>
+   </assignment>
+   <assignment>
+    <name>embeddedsw.configuration.isNonVolatileStorage</name>
+    <value>0</value>
+   </assignment>
+   <assignment>
+    <name>embeddedsw.configuration.isPrintableDevice</name>
+    <value>0</value>
+   </assignment>
+   </interface>
+ </module>
  <module name="NiosVg" kind="intel_niosv_g" path="NiosVg">
   
   <interface name="timer_sw_agent" kind="avalon_slave">
@@ -698,7 +728,7 @@
    <value>0</value>
    </parameter>
   <parameter name="timestamp">
-   <value>1774321873</value>
+   <value>1774940923</value>
    </parameter>
   <interface name="control_slave" kind="avalon_slave">
    
@@ -1268,418 +1298,426 @@
  <module name="Video_In_Subsystem_Video_In_Scaler" kind="altera_up_avalon_video_scaler" path="Video_In_Subsystem.Video_In_Scaler">
   
   </module>
- <connection name="Audio_Subsystem_Sys_Clk.clk/Audio_Subsystem_Audio.clk" kind="clock" version="24.1" start="Audio_Subsystem_Sys_Clk.clk" end="Audio_Subsystem_Audio.clk">
+ <connection name="Audio_Subsystem_Sys_Clk.clk/Audio_Subsystem_Audio.clk" kind="clock" version="25.1" start="Audio_Subsystem_Sys_Clk.clk" end="Audio_Subsystem_Audio.clk">
   </connection>
- <connection name="Audio_Subsystem_Sys_Clk.clk_reset/Audio_Subsystem_Audio.reset" kind="reset" version="24.1" start="Audio_Subsystem_Sys_Clk.clk_reset" end="Audio_Subsystem_Audio.reset">
+ <connection name="Audio_Subsystem_Sys_Clk.clk_reset/Audio_Subsystem_Audio.reset" kind="reset" version="25.1" start="Audio_Subsystem_Sys_Clk.clk_reset" end="Audio_Subsystem_Audio.reset">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_master/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s2" kind="avalon" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_master" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s2">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_master/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s2" kind="avalon" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_master" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s2">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_image_source/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_image_source" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_sink">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_image_source/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_image_source" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_sink">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_pixel_source/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_pixel_source" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_sink">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_pixel_source/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_pixel_source" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_sink">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_source/VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_source" end="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_sink">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_source/VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.avalon_rgb_source" end="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_sink">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_source/VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_ascii_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_source" end="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_ascii_sink">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_source/VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_ascii_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.avalon_scaler_source" end="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.avalon_ascii_sink">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.clk" kind="clock" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.clk">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.clk" kind="clock" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.clk">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.clk" kind="clock" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.clk">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.clk" kind="clock" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.clk">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.clk" kind="clock" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.clk">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.clk" kind="clock" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.clk">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.clk" kind="clock" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.clk">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.clk" kind="clock" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.clk">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.clk" kind="clock" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.clk">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.clk" kind="clock" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.clk">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.clk1" kind="clock" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.clk1">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.clk1" kind="clock" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.clk1">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.reset" kind="reset" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.reset">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.reset" kind="reset" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.reset">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.reset" kind="reset" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.reset">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.reset" kind="reset" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_Scaler.reset">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.reset" kind="reset" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.reset">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.reset" kind="reset" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_ASCII_to_Image.reset">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.reset" kind="reset" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.reset">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.reset" kind="reset" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_RGB_Resampler.reset">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.reset" kind="reset" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.reset">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.reset" kind="reset" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.reset">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.reset1" kind="reset" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.reset1">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.reset1" kind="reset" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.reset1">
   </connection>
- <connection name="VGA_Subsystem_VGA_Alpha_Blender.avalon_blended_source/VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_VGA_Alpha_Blender.avalon_blended_source" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_sink">
+ <connection name="VGA_Subsystem_VGA_Alpha_Blender.avalon_blended_source/VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_VGA_Alpha_Blender.avalon_blended_source" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_sink">
   </connection>
- <connection name="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_source/VGA_Subsystem_VGA_Alpha_Blender.avalon_foreground_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_source" end="VGA_Subsystem_VGA_Alpha_Blender.avalon_foreground_sink">
+ <connection name="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_source/VGA_Subsystem_VGA_Alpha_Blender.avalon_foreground_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_Char_Buf_Subsystem_Set_Black_Transparent.avalon_apply_alpha_source" end="VGA_Subsystem_VGA_Alpha_Blender.avalon_foreground_sink">
   </connection>
- <connection name="VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_source/VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_source" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_sink">
+ <connection name="VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_source/VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_source" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_sink">
   </connection>
- <connection name="VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_source/VGA_Subsystem_VGA_Controller.avalon_vga_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_source" end="VGA_Subsystem_VGA_Controller.avalon_vga_sink">
+ <connection name="VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_source/VGA_Subsystem_VGA_Controller.avalon_vga_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_VGA_Dual_Clock_FIFO.avalon_dc_buffer_source" end="VGA_Subsystem_VGA_Controller.avalon_vga_sink">
   </connection>
- <connection name="VGA_Subsystem_VGA_Pixel_DMA.avalon_pixel_source/VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_VGA_Pixel_DMA.avalon_pixel_source" end="VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_sink">
+ <connection name="VGA_Subsystem_VGA_Pixel_DMA.avalon_pixel_source/VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_VGA_Pixel_DMA.avalon_pixel_source" end="VGA_Subsystem_VGA_Pixel_FIFO.avalon_dc_buffer_sink">
   </connection>
- <connection name="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_source/VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_source" end="VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_sink">
+ <connection name="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_source/VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_source" end="VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_sink">
   </connection>
- <connection name="VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_source/VGA_Subsystem_VGA_Alpha_Blender.avalon_background_sink" kind="avalon_streaming" version="24.1" start="VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_source" end="VGA_Subsystem_VGA_Alpha_Blender.avalon_background_sink">
+ <connection name="VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_source/VGA_Subsystem_VGA_Alpha_Blender.avalon_background_sink" kind="avalon_streaming" version="25.1" start="VGA_Subsystem_VGA_Pixel_Scaler.avalon_scaler_source" end="VGA_Subsystem_VGA_Alpha_Blender.avalon_background_sink">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_DMA.clk" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_DMA.clk">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_DMA.clk" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_DMA.clk">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_RGB_Resampler.clk" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.clk">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_RGB_Resampler.clk" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.clk">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_Scaler.clk" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_Scaler.clk">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_Scaler.clk" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_Scaler.clk">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Alpha_Blender.clk" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Alpha_Blender.clk">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Alpha_Blender.clk" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Alpha_Blender.clk">
   </connection>
- <connection name="VGA_Subsystem_VGA_Clk.clk/VGA_Subsystem_VGA_Controller.clk" kind="clock" version="24.1" start="VGA_Subsystem_VGA_Clk.clk" end="VGA_Subsystem_VGA_Controller.clk">
+ <connection name="VGA_Subsystem_VGA_Clk.clk/VGA_Subsystem_VGA_Controller.clk" kind="clock" version="25.1" start="VGA_Subsystem_VGA_Clk.clk" end="VGA_Subsystem_VGA_Controller.clk">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_in" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_in">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_in" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_in">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_in" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_in">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_in" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_in">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_out" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_out">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_out" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_VGA_Pixel_FIFO.clock_stream_out">
   </connection>
- <connection name="VGA_Subsystem_VGA_Clk.clk/VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_out" kind="clock" version="24.1" start="VGA_Subsystem_VGA_Clk.clk" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_out">
+ <connection name="VGA_Subsystem_VGA_Clk.clk/VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_out" kind="clock" version="25.1" start="VGA_Subsystem_VGA_Clk.clk" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.clock_stream_out">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in" kind="clock" version="24.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in">
+ <connection name="VGA_Subsystem_Sys_Clk.clk/VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in" kind="clock" version="25.1" start="VGA_Subsystem_Sys_Clk.clk" end="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_DMA.reset" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_DMA.reset">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_DMA.reset" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_DMA.reset">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_RGB_Resampler.reset" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.reset">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_RGB_Resampler.reset" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.reset">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_Scaler.reset" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_Scaler.reset">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_Scaler.reset" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_Scaler.reset">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Alpha_Blender.reset" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Alpha_Blender.reset">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Alpha_Blender.reset" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Alpha_Blender.reset">
   </connection>
- <connection name="VGA_Subsystem_VGA_Clk.clk_reset/VGA_Subsystem_VGA_Controller.reset" kind="reset" version="24.1" start="VGA_Subsystem_VGA_Clk.clk_reset" end="VGA_Subsystem_VGA_Controller.reset">
+ <connection name="VGA_Subsystem_VGA_Clk.clk_reset/VGA_Subsystem_VGA_Controller.reset" kind="reset" version="25.1" start="VGA_Subsystem_VGA_Clk.clk_reset" end="VGA_Subsystem_VGA_Controller.reset">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_in" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_in">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_in" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_in">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_in" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_in">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_in" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_in">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_out" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_out">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_out" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_VGA_Pixel_FIFO.reset_stream_out">
   </connection>
- <connection name="VGA_Subsystem_VGA_Clk.clk_reset/VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_out" kind="reset" version="24.1" start="VGA_Subsystem_VGA_Clk.clk_reset" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_out">
+ <connection name="VGA_Subsystem_VGA_Clk.clk_reset/VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_out" kind="reset" version="25.1" start="VGA_Subsystem_VGA_Clk.clk_reset" end="VGA_Subsystem_VGA_Dual_Clock_FIFO.reset_stream_out">
   </connection>
- <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="24.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in_reset">
+ <connection name="VGA_Subsystem_Sys_Clk.clk_reset/VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="25.1" start="VGA_Subsystem_Sys_Clk.clk_reset" end="VGA_Subsystem_Char_Buf_Subsystem_Sys_Clk.clk_in_reset">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_sink">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_1" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_1">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_1" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_1">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_sink">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.avalon_edge_detection_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.avalon_chroma_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_0/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_0" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_0" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_0">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_0/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_0" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_0" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_sink_0">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_1/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_1" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_sink">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_1/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_source_1" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.avalon_chroma_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_sync_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_sync_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_sync_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_sync_sink">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_sync_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_sync_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_sync_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_sync_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.clk">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.clk">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.clk">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.clk">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.clk">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.clk">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.clk">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.clk">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.clk">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.clk">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.clk">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.clk">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.external_interface/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.external_connection" kind="conduit" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.external_interface" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.external_connection">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.external_interface/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.external_connection" kind="conduit" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.external_interface" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.external_connection">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.reset">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.reset">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.reset">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.reset">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.reset">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Filter.reset">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.reset">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection.reset">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.reset">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Chroma_Upsampler.reset">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.reset">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.reset">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_sink">
+ <connection name="Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_source/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_source" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Splitter.avalon_stream_router_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Clipper.avalon_clipper_source/Video_In_Subsystem_Video_In_Scaler.avalon_scaler_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Clipper.avalon_clipper_source" end="Video_In_Subsystem_Video_In_Scaler.avalon_scaler_sink">
+ <connection name="Video_In_Subsystem_Video_In_Clipper.avalon_clipper_source/Video_In_Subsystem_Video_In_Scaler.avalon_scaler_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Clipper.avalon_clipper_source" end="Video_In_Subsystem_Video_In_Scaler.avalon_scaler_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_CSC.avalon_csc_source/Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_CSC.avalon_csc_source" end="Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_sink">
+ <connection name="Video_In_Subsystem_Video_In_CSC.avalon_csc_source/Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_CSC.avalon_csc_source" end="Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In.avalon_decoder_source/Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In.avalon_decoder_source" end="Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_sink">
+ <connection name="Video_In_Subsystem_Video_In.avalon_decoder_source/Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In.avalon_decoder_source" end="Video_In_Subsystem_Video_In_Chroma_Resampler.avalon_chroma_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_source/Video_In_Subsystem_Video_In_Clipper.avalon_clipper_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_source" end="Video_In_Subsystem_Video_In_Clipper.avalon_clipper_sink">
+ <connection name="Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_source/Video_In_Subsystem_Video_In_Clipper.avalon_clipper_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_RGB_Resampler.avalon_rgb_source" end="Video_In_Subsystem_Video_In_Clipper.avalon_clipper_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Scaler.avalon_scaler_source/Video_In_Subsystem_Video_In_DMA.avalon_dma_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Scaler.avalon_scaler_source" end="Video_In_Subsystem_Video_In_DMA.avalon_dma_sink">
+ <connection name="Video_In_Subsystem_Video_In_Scaler.avalon_scaler_source/Video_In_Subsystem_Video_In_DMA.avalon_dma_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Scaler.avalon_scaler_source" end="Video_In_Subsystem_Video_In_DMA.avalon_dma_sink">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_source/Video_In_Subsystem_Video_In_CSC.avalon_csc_sink" kind="avalon_streaming" version="24.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_source" end="Video_In_Subsystem_Video_In_CSC.avalon_csc_sink">
+ <connection name="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_source/Video_In_Subsystem_Video_In_CSC.avalon_csc_sink" kind="avalon_streaming" version="25.1" start="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Video_Stream_Merger.avalon_stream_router_source" end="Video_In_Subsystem_Video_In_CSC.avalon_csc_sink">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In.clk">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In.clk">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Chroma_Resampler.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Chroma_Resampler.clk">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Chroma_Resampler.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Chroma_Resampler.clk">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_CSC.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_CSC.clk">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_CSC.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_CSC.clk">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_RGB_Resampler.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_RGB_Resampler.clk">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_RGB_Resampler.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_RGB_Resampler.clk">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Clipper.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Clipper.clk">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Clipper.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Clipper.clk">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Scaler.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Scaler.clk">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Scaler.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Scaler.clk">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_DMA.clk" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_DMA.clk">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_DMA.clk" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_DMA.clk">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in" kind="clock" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in" kind="clock" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In.reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In.reset">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Chroma_Resampler.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Chroma_Resampler.reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Chroma_Resampler.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Chroma_Resampler.reset">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_CSC.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_CSC.reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_CSC.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_CSC.reset">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_RGB_Resampler.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_RGB_Resampler.reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_RGB_Resampler.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_RGB_Resampler.reset">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Clipper.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Clipper.reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Clipper.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Clipper.reset">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Scaler.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Scaler.reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Scaler.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Scaler.reset">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_DMA.reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_DMA.reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_DMA.reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_DMA.reset">
   </connection>
- <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="24.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in_reset">
+ <connection name="Video_In_Subsystem_Sys_Clk.clk_reset/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="25.1" start="Video_In_Subsystem_Sys_Clk.clk_reset" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Sys_Clk.clk_in_reset">
   </connection>
- <connection name="NiosVg.data_manager/ADC.adc_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="ADC.adc_slave">
+ <connection name="NiosVg.data_manager/ADC.adc_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="ADC.adc_slave">
   </connection>
- <connection name="NiosVg.data_manager/Audio_Subsystem_Audio.avalon_audio_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Audio_Subsystem_Audio.avalon_audio_slave">
+ <connection name="NiosVg.data_manager/Audio_Subsystem_Audio.avalon_audio_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Audio_Subsystem_Audio.avalon_audio_slave">
   </connection>
- <connection name="NiosVg.data_manager/AV_Config.avalon_av_config_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="AV_Config.avalon_av_config_slave">
+ <connection name="NiosVg.data_manager/AV_Config.avalon_av_config_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="AV_Config.avalon_av_config_slave">
   </connection>
- <connection name="NiosVg.data_manager/IrDA.avalon_irda_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="IrDA.avalon_irda_slave">
+ <connection name="NiosVg.data_manager/IrDA.avalon_irda_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="IrDA.avalon_irda_slave">
   </connection>
- <connection name="NiosVg.data_manager/JTAG_UART_NiosV.avalon_jtag_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="JTAG_UART_NiosV.avalon_jtag_slave">
+ <connection name="NiosVg.data_manager/JTAG_UART_NiosV.avalon_jtag_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="JTAG_UART_NiosV.avalon_jtag_slave">
   </connection>
- <connection name="NiosVg.data_manager/PS2_Port.avalon_ps2_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="PS2_Port.avalon_ps2_slave">
+ <connection name="NiosVg.data_manager/Logic_Analyzer.avalon_la_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Logic_Analyzer.avalon_la_slave">
   </connection>
- <connection name="NiosVg.data_manager/PS2_Port_Dual.avalon_ps2_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="PS2_Port_Dual.avalon_ps2_slave">
+ <connection name="NiosVg.data_manager/PS2_Port.avalon_ps2_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="PS2_Port.avalon_ps2_slave">
   </connection>
- <connection name="NiosVg.data_manager/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave">
+ <connection name="NiosVg.data_manager/PS2_Port_Dual.avalon_ps2_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="PS2_Port_Dual.avalon_ps2_slave">
   </connection>
- <connection name="NiosVg.data_manager/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1">
+ <connection name="NiosVg.data_manager/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave">
   </connection>
- <connection name="NiosVg.data_manager/SysID.control_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="SysID.control_slave">
+ <connection name="NiosVg.data_manager/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1">
   </connection>
- <connection name="NiosVg.data_manager/NiosVg.dm_agent" kind="avalon" version="24.1" start="NiosVg.data_manager" end="NiosVg.dm_agent">
+ <connection name="NiosVg.data_manager/SysID.control_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="SysID.control_slave">
   </connection>
- <connection name="NiosVg.data_manager/VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave">
+ <connection name="NiosVg.data_manager/NiosVg.dm_agent" kind="avalon" version="25.1" start="NiosVg.data_manager" end="NiosVg.dm_agent">
   </connection>
- <connection name="NiosVg.data_manager/VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave">
+ <connection name="NiosVg.data_manager/VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave">
   </connection>
- <connection name="NiosVg.data_manager/SDRAM.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="SDRAM.s1">
+ <connection name="NiosVg.data_manager/VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave">
   </connection>
- <connection name="NiosVg.data_manager/Onchip_SRAM.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Onchip_SRAM.s1">
+ <connection name="NiosVg.data_manager/SDRAM.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="SDRAM.s1">
   </connection>
- <connection name="NiosVg.data_manager/LEDs.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="LEDs.s1">
+ <connection name="NiosVg.data_manager/Onchip_SRAM.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Onchip_SRAM.s1">
   </connection>
- <connection name="NiosVg.data_manager/HEX3_HEX0.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="HEX3_HEX0.s1">
+ <connection name="NiosVg.data_manager/LEDs.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="LEDs.s1">
   </connection>
- <connection name="NiosVg.data_manager/HEX5_HEX4.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="HEX5_HEX4.s1">
+ <connection name="NiosVg.data_manager/HEX3_HEX0.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="HEX3_HEX0.s1">
   </connection>
- <connection name="NiosVg.data_manager/Slider_Switches.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Slider_Switches.s1">
+ <connection name="NiosVg.data_manager/HEX5_HEX4.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="HEX5_HEX4.s1">
   </connection>
- <connection name="NiosVg.data_manager/Pushbuttons.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Pushbuttons.s1">
+ <connection name="NiosVg.data_manager/Slider_Switches.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Slider_Switches.s1">
   </connection>
- <connection name="NiosVg.data_manager/Expansion_JP1.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Expansion_JP1.s1">
+ <connection name="NiosVg.data_manager/Pushbuttons.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Pushbuttons.s1">
   </connection>
- <connection name="NiosVg.data_manager/Expansion_JP2.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Expansion_JP2.s1">
+ <connection name="NiosVg.data_manager/Expansion_JP1.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Expansion_JP1.s1">
   </connection>
- <connection name="NiosVg.data_manager/Interval_Timer_NiosV.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Interval_Timer_NiosV.s1">
+ <connection name="NiosVg.data_manager/Expansion_JP2.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Expansion_JP2.s1">
   </connection>
- <connection name="NiosVg.data_manager/Interval_Timer_NiosV_2.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Interval_Timer_NiosV_2.s1">
+ <connection name="NiosVg.data_manager/Interval_Timer_NiosV.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Interval_Timer_NiosV.s1">
   </connection>
- <connection name="NiosVg.data_manager/NiosVg.timer_sw_agent" kind="avalon" version="24.1" start="NiosVg.data_manager" end="NiosVg.timer_sw_agent">
+ <connection name="NiosVg.data_manager/Interval_Timer_NiosV_2.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Interval_Timer_NiosV_2.s1">
   </connection>
- <connection name="NiosVg.data_manager/Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave">
+ <connection name="NiosVg.data_manager/NiosVg.timer_sw_agent" kind="avalon" version="25.1" start="NiosVg.data_manager" end="NiosVg.timer_sw_agent">
   </connection>
- <connection name="NiosVg.data_manager/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1" kind="avalon" version="24.1" start="NiosVg.data_manager" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1">
+ <connection name="NiosVg.data_manager/Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave">
   </connection>
- <connection name="NiosVg.instruction_manager/NiosVg.dm_agent" kind="avalon" version="24.1" start="NiosVg.instruction_manager" end="NiosVg.dm_agent">
+ <connection name="NiosVg.data_manager/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1" kind="avalon" version="25.1" start="NiosVg.data_manager" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1">
   </connection>
- <connection name="NiosVg.instruction_manager/SDRAM.s1" kind="avalon" version="24.1" start="NiosVg.instruction_manager" end="SDRAM.s1">
+ <connection name="NiosVg.instruction_manager/NiosVg.dm_agent" kind="avalon" version="25.1" start="NiosVg.instruction_manager" end="NiosVg.dm_agent">
   </connection>
- <connection name="NiosVg.instruction_manager/Onchip_SRAM.s2" kind="avalon" version="24.1" start="NiosVg.instruction_manager" end="Onchip_SRAM.s2">
+ <connection name="NiosVg.instruction_manager/SDRAM.s1" kind="avalon" version="25.1" start="NiosVg.instruction_manager" end="SDRAM.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/ADC.adc_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="ADC.adc_slave">
+ <connection name="NiosVg.instruction_manager/Onchip_SRAM.s2" kind="avalon" version="25.1" start="NiosVg.instruction_manager" end="Onchip_SRAM.s2">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Audio_Subsystem_Audio.avalon_audio_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Audio_Subsystem_Audio.avalon_audio_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/ADC.adc_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="ADC.adc_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/AV_Config.avalon_av_config_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="AV_Config.avalon_av_config_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/Audio_Subsystem_Audio.avalon_audio_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Audio_Subsystem_Audio.avalon_audio_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/IrDA.avalon_irda_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="IrDA.avalon_irda_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/AV_Config.avalon_av_config_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="AV_Config.avalon_av_config_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/JTAG_UART_NiosV.avalon_jtag_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="JTAG_UART_NiosV.avalon_jtag_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/IrDA.avalon_irda_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="IrDA.avalon_irda_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/PS2_Port.avalon_ps2_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="PS2_Port.avalon_ps2_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/JTAG_UART_NiosV.avalon_jtag_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="JTAG_UART_NiosV.avalon_jtag_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/PS2_Port_Dual.avalon_ps2_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="PS2_Port_Dual.avalon_ps2_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/Logic_Analyzer.avalon_la_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Logic_Analyzer.avalon_la_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/PS2_Port.avalon_ps2_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="PS2_Port.avalon_ps2_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/PS2_Port_Dual.avalon_ps2_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="PS2_Port_Dual.avalon_ps2_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/SysID.control_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="SysID.control_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_Char_Buf_Subsystem_Char_Buf_DMA.avalon_dma_control_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_Char_Buf_Subsystem_Onchip_SRAM.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/SysID.control_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="SysID.control_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/SDRAM.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="SDRAM.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_control_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Onchip_SRAM.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Onchip_SRAM.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="VGA_Subsystem_VGA_Pixel_RGB_Resampler.avalon_rgb_slave">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/LEDs.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="LEDs.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/SDRAM.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="SDRAM.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/HEX3_HEX0.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="HEX3_HEX0.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/Onchip_SRAM.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Onchip_SRAM.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/HEX5_HEX4.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="HEX5_HEX4.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/LEDs.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="LEDs.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Slider_Switches.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Slider_Switches.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/HEX3_HEX0.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="HEX3_HEX0.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Pushbuttons.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Pushbuttons.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/HEX5_HEX4.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="HEX5_HEX4.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Expansion_JP1.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Expansion_JP1.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/Slider_Switches.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Slider_Switches.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Expansion_JP2.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Expansion_JP2.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/Pushbuttons.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Pushbuttons.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Interval_Timer_NiosV.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Interval_Timer_NiosV.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/Expansion_JP1.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Expansion_JP1.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Interval_Timer_NiosV_2.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Interval_Timer_NiosV_2.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/Expansion_JP2.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Expansion_JP2.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave">
+ <connection name="JTAG_to_FPGA_Bridge.master/Interval_Timer_NiosV.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Interval_Timer_NiosV.s1">
   </connection>
- <connection name="JTAG_to_FPGA_Bridge.master/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1" kind="avalon" version="24.1" start="JTAG_to_FPGA_Bridge.master" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/Interval_Timer_NiosV_2.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Interval_Timer_NiosV_2.s1">
   </connection>
- <connection name="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master/SDRAM.s1" kind="avalon" version="24.1" start="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master" end="SDRAM.s1">
+ <connection name="JTAG_to_FPGA_Bridge.master/Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Video_In_Subsystem_Video_In_DMA.avalon_dma_control_slave">
   </connection>
- <connection name="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master/Onchip_SRAM.s2" kind="avalon" version="24.1" start="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master" end="Onchip_SRAM.s2">
+ <connection name="JTAG_to_FPGA_Bridge.master/Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1" kind="avalon" version="25.1" start="JTAG_to_FPGA_Bridge.master" end="Video_In_Subsystem_Video_In_Edge_Detection_Subsystem_Edge_Detection_Router_Controller.s1">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_DMA.avalon_dma_master/Onchip_SRAM.s1" kind="avalon" version="24.1" start="Video_In_Subsystem_Video_In_DMA.avalon_dma_master" end="Onchip_SRAM.s1">
+ <connection name="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master/SDRAM.s1" kind="avalon" version="25.1" start="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master" end="SDRAM.s1">
   </connection>
- <connection name="Video_In_Subsystem_Video_In_DMA.avalon_dma_master/SDRAM.s1" kind="avalon" version="24.1" start="Video_In_Subsystem_Video_In_DMA.avalon_dma_master" end="SDRAM.s1">
+ <connection name="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master/Onchip_SRAM.s2" kind="avalon" version="25.1" start="VGA_Subsystem_VGA_Pixel_DMA.avalon_dma_master" end="Onchip_SRAM.s2">
   </connection>
- <connection name="System_CLK.clk/NiosVg.clk" kind="clock" version="24.1" start="System_CLK.clk" end="NiosVg.clk">
+ <connection name="Video_In_Subsystem_Video_In_DMA.avalon_dma_master/Onchip_SRAM.s1" kind="avalon" version="25.1" start="Video_In_Subsystem_Video_In_DMA.avalon_dma_master" end="Onchip_SRAM.s1">
   </connection>
- <connection name="System_CLK.clk/JTAG_to_FPGA_Bridge.clk" kind="clock" version="24.1" start="System_CLK.clk" end="JTAG_to_FPGA_Bridge.clk">
+ <connection name="Video_In_Subsystem_Video_In_DMA.avalon_dma_master/SDRAM.s1" kind="avalon" version="25.1" start="Video_In_Subsystem_Video_In_DMA.avalon_dma_master" end="SDRAM.s1">
   </connection>
- <connection name="System_CLK.clk/SDRAM.clk" kind="clock" version="24.1" start="System_CLK.clk" end="SDRAM.clk">
+ <connection name="System_CLK.clk/NiosVg.clk" kind="clock" version="25.1" start="System_CLK.clk" end="NiosVg.clk">
   </connection>
- <connection name="System_CLK.clk/LEDs.clk" kind="clock" version="24.1" start="System_CLK.clk" end="LEDs.clk">
+ <connection name="System_CLK.clk/JTAG_to_FPGA_Bridge.clk" kind="clock" version="25.1" start="System_CLK.clk" end="JTAG_to_FPGA_Bridge.clk">
   </connection>
- <connection name="System_CLK.clk/HEX3_HEX0.clk" kind="clock" version="24.1" start="System_CLK.clk" end="HEX3_HEX0.clk">
+ <connection name="System_CLK.clk/SDRAM.clk" kind="clock" version="25.1" start="System_CLK.clk" end="SDRAM.clk">
   </connection>
- <connection name="System_CLK.clk/HEX5_HEX4.clk" kind="clock" version="24.1" start="System_CLK.clk" end="HEX5_HEX4.clk">
+ <connection name="System_CLK.clk/LEDs.clk" kind="clock" version="25.1" start="System_CLK.clk" end="LEDs.clk">
   </connection>
- <connection name="System_CLK.clk/Slider_Switches.clk" kind="clock" version="24.1" start="System_CLK.clk" end="Slider_Switches.clk">
+ <connection name="System_CLK.clk/HEX3_HEX0.clk" kind="clock" version="25.1" start="System_CLK.clk" end="HEX3_HEX0.clk">
   </connection>
- <connection name="System_CLK.clk/Pushbuttons.clk" kind="clock" version="24.1" start="System_CLK.clk" end="Pushbuttons.clk">
+ <connection name="System_CLK.clk/HEX5_HEX4.clk" kind="clock" version="25.1" start="System_CLK.clk" end="HEX5_HEX4.clk">
   </connection>
- <connection name="System_CLK.clk/Expansion_JP1.clk" kind="clock" version="24.1" start="System_CLK.clk" end="Expansion_JP1.clk">
+ <connection name="System_CLK.clk/Slider_Switches.clk" kind="clock" version="25.1" start="System_CLK.clk" end="Slider_Switches.clk">
   </connection>
- <connection name="System_CLK.clk/Expansion_JP2.clk" kind="clock" version="24.1" start="System_CLK.clk" end="Expansion_JP2.clk">
+ <connection name="System_CLK.clk/Pushbuttons.clk" kind="clock" version="25.1" start="System_CLK.clk" end="Pushbuttons.clk">
   </connection>
- <connection name="System_CLK.clk/PS2_Port.clk" kind="clock" version="24.1" start="System_CLK.clk" end="PS2_Port.clk">
+ <connection name="System_CLK.clk/Expansion_JP1.clk" kind="clock" version="25.1" start="System_CLK.clk" end="Expansion_JP1.clk">
   </connection>
- <connection name="System_CLK.clk/PS2_Port_Dual.clk" kind="clock" version="24.1" start="System_CLK.clk" end="PS2_Port_Dual.clk">
+ <connection name="System_CLK.clk/Expansion_JP2.clk" kind="clock" version="25.1" start="System_CLK.clk" end="Expansion_JP2.clk">
   </connection>
- <connection name="System_CLK.clk/JTAG_UART_NiosV.clk" kind="clock" version="24.1" start="System_CLK.clk" end="JTAG_UART_NiosV.clk">
+ <connection name="System_CLK.clk/PS2_Port.clk" kind="clock" version="25.1" start="System_CLK.clk" end="PS2_Port.clk">
   </connection>
- <connection name="System_CLK.clk/IrDA.clk" kind="clock" version="24.1" start="System_CLK.clk" end="IrDA.clk">
+ <connection name="System_CLK.clk/PS2_Port_Dual.clk" kind="clock" version="25.1" start="System_CLK.clk" end="PS2_Port_Dual.clk">
   </connection>
- <connection name="System_CLK.clk/Interval_Timer_NiosV.clk" kind="clock" version="24.1" start="System_CLK.clk" end="Interval_Timer_NiosV.clk">
+ <connection name="System_CLK.clk/JTAG_UART_NiosV.clk" kind="clock" version="25.1" start="System_CLK.clk" end="JTAG_UART_NiosV.clk">
   </connection>
- <connection name="System_CLK.clk/Interval_Timer_NiosV_2.clk" kind="clock" version="24.1" start="System_CLK.clk" end="Interval_Timer_NiosV_2.clk">
+ <connection name="System_CLK.clk/IrDA.clk" kind="clock" version="25.1" start="System_CLK.clk" end="IrDA.clk">
   </connection>
- <connection name="System_CLK.clk/SysID.clk" kind="clock" version="24.1" start="System_CLK.clk" end="SysID.clk">
+ <connection name="System_CLK.clk/Interval_Timer_NiosV.clk" kind="clock" version="25.1" start="System_CLK.clk" end="Interval_Timer_NiosV.clk">
   </connection>
- <connection name="System_CLK.clk/AV_Config.clk" kind="clock" version="24.1" start="System_CLK.clk" end="AV_Config.clk">
+ <connection name="System_CLK.clk/Interval_Timer_NiosV_2.clk" kind="clock" version="25.1" start="System_CLK.clk" end="Interval_Timer_NiosV_2.clk">
   </connection>
- <connection name="System_CLK.clk/ADC.clk" kind="clock" version="24.1" start="System_CLK.clk" end="ADC.clk">
+ <connection name="System_CLK.clk/SysID.clk" kind="clock" version="25.1" start="System_CLK.clk" end="SysID.clk">
   </connection>
- <connection name="System_CLK.clk/Onchip_SRAM.clk1" kind="clock" version="24.1" start="System_CLK.clk" end="Onchip_SRAM.clk1">
+ <connection name="System_CLK.clk/AV_Config.clk" kind="clock" version="25.1" start="System_CLK.clk" end="AV_Config.clk">
   </connection>
- <connection name="System_CLK.clk/VGA_Subsystem_Sys_Clk.clk_in" kind="clock" version="24.1" start="System_CLK.clk" end="VGA_Subsystem_Sys_Clk.clk_in">
+ <connection name="System_CLK.clk/ADC.clk" kind="clock" version="25.1" start="System_CLK.clk" end="ADC.clk">
   </connection>
- <connection name="System_CLK.clk/Audio_Subsystem_Sys_Clk.clk_in" kind="clock" version="24.1" start="System_CLK.clk" end="Audio_Subsystem_Sys_Clk.clk_in">
+ <connection name="System_CLK.clk/Onchip_SRAM.clk1" kind="clock" version="25.1" start="System_CLK.clk" end="Onchip_SRAM.clk1">
   </connection>
- <connection name="System_CLK.clk/Video_In_Subsystem_Sys_Clk.clk_in" kind="clock" version="24.1" start="System_CLK.clk" end="Video_In_Subsystem_Sys_Clk.clk_in">
+ <connection name="System_CLK.clk/Logic_Analyzer.clock" kind="clock" version="25.1" start="System_CLK.clk" end="Logic_Analyzer.clock">
   </connection>
- <connection name="VGA_CLK.clk/VGA_Subsystem_VGA_Clk.clk_in" kind="clock" version="24.1" start="VGA_CLK.clk" end="VGA_Subsystem_VGA_Clk.clk_in">
+ <connection name="System_CLK.clk/VGA_Subsystem_Sys_Clk.clk_in" kind="clock" version="25.1" start="System_CLK.clk" end="VGA_Subsystem_Sys_Clk.clk_in">
   </connection>
- <connection name="NiosVg.platform_irq_rx/Audio_Subsystem_Audio.interrupt" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="Audio_Subsystem_Audio.interrupt">
+ <connection name="System_CLK.clk/Audio_Subsystem_Sys_Clk.clk_in" kind="clock" version="25.1" start="System_CLK.clk" end="Audio_Subsystem_Sys_Clk.clk_in">
   </connection>
- <connection name="NiosVg.platform_irq_rx/PS2_Port.interrupt" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="PS2_Port.interrupt">
+ <connection name="System_CLK.clk/Video_In_Subsystem_Sys_Clk.clk_in" kind="clock" version="25.1" start="System_CLK.clk" end="Video_In_Subsystem_Sys_Clk.clk_in">
   </connection>
- <connection name="NiosVg.platform_irq_rx/PS2_Port_Dual.interrupt" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="PS2_Port_Dual.interrupt">
+ <connection name="VGA_CLK.clk/VGA_Subsystem_VGA_Clk.clk_in" kind="clock" version="25.1" start="VGA_CLK.clk" end="VGA_Subsystem_VGA_Clk.clk_in">
   </connection>
- <connection name="NiosVg.platform_irq_rx/IrDA.interrupt" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="IrDA.interrupt">
+ <connection name="NiosVg.platform_irq_rx/Audio_Subsystem_Audio.interrupt" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="Audio_Subsystem_Audio.interrupt">
   </connection>
- <connection name="NiosVg.platform_irq_rx/Pushbuttons.irq" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="Pushbuttons.irq">
+ <connection name="NiosVg.platform_irq_rx/PS2_Port.interrupt" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="PS2_Port.interrupt">
   </connection>
- <connection name="NiosVg.platform_irq_rx/Expansion_JP1.irq" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="Expansion_JP1.irq">
+ <connection name="NiosVg.platform_irq_rx/PS2_Port_Dual.interrupt" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="PS2_Port_Dual.interrupt">
   </connection>
- <connection name="NiosVg.platform_irq_rx/Expansion_JP2.irq" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="Expansion_JP2.irq">
+ <connection name="NiosVg.platform_irq_rx/IrDA.interrupt" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="IrDA.interrupt">
   </connection>
- <connection name="NiosVg.platform_irq_rx/JTAG_UART_NiosV.irq" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="JTAG_UART_NiosV.irq">
+ <connection name="NiosVg.platform_irq_rx/Pushbuttons.irq" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="Pushbuttons.irq">
   </connection>
- <connection name="NiosVg.platform_irq_rx/Interval_Timer_NiosV.irq" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="Interval_Timer_NiosV.irq">
+ <connection name="NiosVg.platform_irq_rx/Expansion_JP1.irq" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="Expansion_JP1.irq">
   </connection>
- <connection name="NiosVg.platform_irq_rx/Interval_Timer_NiosV_2.irq" kind="interrupt" version="24.1" start="NiosVg.platform_irq_rx" end="Interval_Timer_NiosV_2.irq">
+ <connection name="NiosVg.platform_irq_rx/Expansion_JP2.irq" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="Expansion_JP2.irq">
   </connection>
- <connection name="System_CLK.clk_reset/JTAG_to_FPGA_Bridge.clk_reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="JTAG_to_FPGA_Bridge.clk_reset">
+ <connection name="NiosVg.platform_irq_rx/JTAG_UART_NiosV.irq" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="JTAG_UART_NiosV.irq">
   </connection>
- <connection name="System_CLK.clk_reset/NiosVg.ndm_reset_in" kind="reset" version="24.1" start="System_CLK.clk_reset" end="NiosVg.ndm_reset_in">
+ <connection name="NiosVg.platform_irq_rx/Interval_Timer_NiosV.irq" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="Interval_Timer_NiosV.irq">
   </connection>
- <connection name="System_CLK.clk_reset/NiosVg.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="NiosVg.reset">
+ <connection name="NiosVg.platform_irq_rx/Interval_Timer_NiosV_2.irq" kind="interrupt" version="25.1" start="NiosVg.platform_irq_rx" end="Interval_Timer_NiosV_2.irq">
   </connection>
- <connection name="System_CLK.clk_reset/SDRAM.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="SDRAM.reset">
+ <connection name="System_CLK.clk_reset/JTAG_to_FPGA_Bridge.clk_reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="JTAG_to_FPGA_Bridge.clk_reset">
   </connection>
- <connection name="System_CLK.clk_reset/LEDs.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="LEDs.reset">
+ <connection name="System_CLK.clk_reset/NiosVg.ndm_reset_in" kind="reset" version="25.1" start="System_CLK.clk_reset" end="NiosVg.ndm_reset_in">
   </connection>
- <connection name="System_CLK.clk_reset/HEX3_HEX0.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="HEX3_HEX0.reset">
+ <connection name="System_CLK.clk_reset/NiosVg.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="NiosVg.reset">
   </connection>
- <connection name="System_CLK.clk_reset/HEX5_HEX4.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="HEX5_HEX4.reset">
+ <connection name="System_CLK.clk_reset/SDRAM.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="SDRAM.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Slider_Switches.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Slider_Switches.reset">
+ <connection name="System_CLK.clk_reset/LEDs.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="LEDs.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Pushbuttons.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Pushbuttons.reset">
+ <connection name="System_CLK.clk_reset/HEX3_HEX0.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="HEX3_HEX0.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Expansion_JP1.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Expansion_JP1.reset">
+ <connection name="System_CLK.clk_reset/HEX5_HEX4.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="HEX5_HEX4.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Expansion_JP2.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Expansion_JP2.reset">
+ <connection name="System_CLK.clk_reset/Slider_Switches.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Slider_Switches.reset">
   </connection>
- <connection name="System_CLK.clk_reset/PS2_Port.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="PS2_Port.reset">
+ <connection name="System_CLK.clk_reset/Pushbuttons.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Pushbuttons.reset">
   </connection>
- <connection name="System_CLK.clk_reset/PS2_Port_Dual.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="PS2_Port_Dual.reset">
+ <connection name="System_CLK.clk_reset/Expansion_JP1.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Expansion_JP1.reset">
   </connection>
- <connection name="System_CLK.clk_reset/JTAG_UART_NiosV.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="JTAG_UART_NiosV.reset">
+ <connection name="System_CLK.clk_reset/Expansion_JP2.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Expansion_JP2.reset">
   </connection>
- <connection name="System_CLK.clk_reset/IrDA.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="IrDA.reset">
+ <connection name="System_CLK.clk_reset/PS2_Port.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="PS2_Port.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Interval_Timer_NiosV.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Interval_Timer_NiosV.reset">
+ <connection name="System_CLK.clk_reset/PS2_Port_Dual.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="PS2_Port_Dual.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Interval_Timer_NiosV_2.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Interval_Timer_NiosV_2.reset">
+ <connection name="System_CLK.clk_reset/JTAG_UART_NiosV.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="JTAG_UART_NiosV.reset">
   </connection>
- <connection name="System_CLK.clk_reset/SysID.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="SysID.reset">
+ <connection name="System_CLK.clk_reset/IrDA.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="IrDA.reset">
   </connection>
- <connection name="System_CLK.clk_reset/AV_Config.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="AV_Config.reset">
+ <connection name="System_CLK.clk_reset/Interval_Timer_NiosV.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Interval_Timer_NiosV.reset">
   </connection>
- <connection name="System_CLK.clk_reset/ADC.reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="ADC.reset">
+ <connection name="System_CLK.clk_reset/Interval_Timer_NiosV_2.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Interval_Timer_NiosV_2.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Onchip_SRAM.reset1" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Onchip_SRAM.reset1">
+ <connection name="System_CLK.clk_reset/SysID.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="SysID.reset">
   </connection>
- <connection name="System_CLK.clk_reset/VGA_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="VGA_Subsystem_Sys_Clk.clk_in_reset">
+ <connection name="System_CLK.clk_reset/AV_Config.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="AV_Config.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Audio_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Audio_Subsystem_Sys_Clk.clk_in_reset">
+ <connection name="System_CLK.clk_reset/ADC.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="ADC.reset">
   </connection>
- <connection name="System_CLK.clk_reset/Video_In_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="24.1" start="System_CLK.clk_reset" end="Video_In_Subsystem_Sys_Clk.clk_in_reset">
+ <connection name="System_CLK.clk_reset/Logic_Analyzer.reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Logic_Analyzer.reset">
   </connection>
- <connection name="VGA_CLK.clk_reset/VGA_Subsystem_VGA_Clk.clk_in_reset" kind="reset" version="24.1" start="VGA_CLK.clk_reset" end="VGA_Subsystem_VGA_Clk.clk_in_reset">
+ <connection name="System_CLK.clk_reset/Onchip_SRAM.reset1" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Onchip_SRAM.reset1">
   </connection>
- <connection name="NiosVg.dbg_reset_out/NiosVg.ndm_reset_in" kind="reset" version="24.1" start="NiosVg.dbg_reset_out" end="NiosVg.ndm_reset_in">
+ <connection name="System_CLK.clk_reset/VGA_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="VGA_Subsystem_Sys_Clk.clk_in_reset">
+  </connection>
+ <connection name="System_CLK.clk_reset/Audio_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Audio_Subsystem_Sys_Clk.clk_in_reset">
+  </connection>
+ <connection name="System_CLK.clk_reset/Video_In_Subsystem_Sys_Clk.clk_in_reset" kind="reset" version="25.1" start="System_CLK.clk_reset" end="Video_In_Subsystem_Sys_Clk.clk_in_reset">
+  </connection>
+ <connection name="VGA_CLK.clk_reset/VGA_Subsystem_VGA_Clk.clk_in_reset" kind="reset" version="25.1" start="VGA_CLK.clk_reset" end="VGA_Subsystem_VGA_Clk.clk_in_reset">
+  </connection>
+ <connection name="NiosVg.dbg_reset_out/NiosVg.ndm_reset_in" kind="reset" version="25.1" start="NiosVg.dbg_reset_out" end="NiosVg.ndm_reset_in">
   </connection>
  </EnsembleReport>

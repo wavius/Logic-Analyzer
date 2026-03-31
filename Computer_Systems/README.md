@@ -1,3 +1,6 @@
+# Note
+The source for Computer_Systems can be found on the fpgacademy GitHub [here](https://github.com/fpgacademy/Design_Examples).
+
 # Computer Systems
 
 We have designed Computer Systems specifically for the DE-series boards. Each board has one or more systems depending on the included processor(s) within the system. In addition to one or more processors, the systems include memory ports, basic input/output ports (for switches, lights, etc.), and multimedia ports (for video, audio, and the like). Accompanying the systems is a set of sample programs. To start using the Computer Systems, please download them from the [Design Examples releases](https://github.com/fpgacademy/Design_Examples/releases) page and read the associated user manual for the target board and processor.
@@ -43,7 +46,7 @@ We recommend using the latest version of the *Quartus Prime **Pro** Edition* sof
 
 ### IP Cores
 
-The Computer Systems require a set of IP Core components that can be obtained from their GitHub repository, at https://github.com/fpgacademy/IP_Cores. follow the instructions provided in that repository to install these IP Cores.
+The Computer Systems require a set of IP Core components that can be obtained from their GitHub repository, at https://github.com/fpgacademy/IP_Cores. Follow the instructions provided in that repository to install these IP Cores.
 
 ### Nios II Command Shell
 

@@ -80,16 +80,17 @@ module Computer_System_NiosVg_hart
    output wire [31:0]                instr_awaddr,
    output wire [2:0]                 instr_awprot,
    output wire                       instr_awvalid,
+   input                             instr_awready,
    output wire [2:0]                 instr_awsize,
    output wire [7:0]                 instr_awlen,
    output wire [1:0]                 instr_awburst,
-   input                             instr_awready,
+
    //  data
    output wire                       instr_wvalid,
    output wire [31:0]                instr_wdata,
    output wire [3:0]                 instr_wstrb,
-   output wire                       instr_wlast,
    input                             instr_wready,
+   output wire                       instr_wlast,
 
    //write response
    input                             instr_bvalid,
@@ -100,32 +101,33 @@ module Computer_System_NiosVg_hart
    output wire [31:0]                instr_araddr,
    output wire [2:0]                 instr_arprot,
    output wire                       instr_arvalid,
+   input                             instr_arready,
    output wire [2:0]                 instr_arsize,
    output wire [7:0]                 instr_arlen,
    output wire [1:0]                 instr_arburst,
-   input                             instr_arready,
 
    //read response
    input [31:0]                      instr_rdata,
    input                             instr_rvalid,
    input [1:0]                       instr_rresp,
-   input                             instr_rlast,
    output wire                       instr_rready,
+   input                             instr_rlast,
 
    // write command
    //    address
    output wire [ADDR_W-1:0]          data_awaddr,
    output wire [2:0]                 data_awprot,
    output wire                       data_awvalid,
+   input                             data_awready,
    output wire [2:0]                 data_awsize,
    output wire [7:0]                 data_awlen,
-   input                             data_awready,
+
    //  data
    output wire                       data_wvalid,
    output wire [DATA_W-1:0]          data_wdata,
    output wire [3:0]                 data_wstrb,
-   output wire                       data_wlast,
    input                             data_wready,
+   output wire                       data_wlast,
 
    //write response
    input                             data_bvalid,
@@ -136,16 +138,17 @@ module Computer_System_NiosVg_hart
    output wire [ADDR_W-1:0]          data_araddr,
    output wire [2:0]                 data_arprot,
    output wire                       data_arvalid,
+   input                             data_arready,
    output wire [2:0]                 data_arsize,
    output wire [7:0]                 data_arlen,
-   input                             data_arready,
 
    //read response
    input [DATA_W-1:0]                data_rdata,
    input                             data_rvalid,
    input [1:0]                       data_rresp,
-   input                             data_rlast,
    output wire                       data_rready,
+   input                             data_rlast,
+
 
    input wire                        irq_timer,
    input wire                        irq_sw,
@@ -278,6 +281,32 @@ module Computer_System_NiosVg_hart
    output [1:0]                      dtcs2_rresp,
    input wire                        dtcs2_rready
 
+   `ifdef RISCV_FORMAL
+   // =============== RISC V FORMAL INTERFACE ===============
+   ,
+   output   wire                    rvfi_valid, 
+   output   wire                    rvfi_halt,
+   output   wire                    rvfi_trap,
+   output   wire                    rvfi_intr,
+   output   wire  [         1:0]    rvfi_mode,
+   output   wire  [         1:0]    rvfi_ixl,
+   output   wire  [MXLEN/8 -1:0]    rvfi_mem_rmask,
+   output   wire  [MXLEN/8 -1:0]    rvfi_mem_wmask,
+   output   wire  [         4:0]    rvfi_rs1_addr,
+   output   wire  [         4:0]    rvfi_rs2_addr,
+   output   wire  [         4:0]    rvfi_rd_addr,
+   output   wire  [INSTR_W -1:0]    rvfi_insn,
+   output   wire  [MXLEN   -1:0]    rvfi_pc_rdata,
+   output   wire  [MXLEN   -1:0]    rvfi_pc_wdata,
+   output   wire  [MXLEN   -1:0]    rvfi_rs1_rdata,
+   output   wire  [MXLEN   -1:0]    rvfi_rs2_rdata,
+   output   wire  [MXLEN   -1:0]    rvfi_rd_wdata,
+   output   wire  [MXLEN   -1:0]    rvfi_mem_addr,
+   output   wire  [MXLEN   -1:0]    rvfi_mem_rdata,
+   output   wire  [MXLEN   -1:0]    rvfi_mem_wdata,
+   output   wire  [        63:0]    rvfi_order
+   `endif      //    RISCV_FORMAL      //
+
 );
 
    wire [31:0] core_ci_data0;
@@ -298,6 +327,43 @@ module Computer_System_NiosVg_hart
    wire [PLAT_IRQ_VEC_W-1:0] plat_irq_vec = irq_plat_vec;
    wire        ext_irq                    = irq_ext;
    wire        debug_irq                  = irq_debug;
+
+   /**
+    *Block description: //RISCV_FORMAL flag is used to expose the core's output formal interface signals for the design validation work flow at the unit level.
+    *                   With or without dual core lockstep enabled, the RVFI signals output port of the primary CPU instance represents the unit level RVFI.
+    *                   //The RVFI ports of the of the right CPU instance (secondary CPU) are left floating i.e. unconnected.
+    *                   //In case RISCV_FORMAL is defined at compile time, then the RVFI output ports from the main CPU instance are exposed.
+    *                   //(* keep *) attribute is applied to preserve only those RVFI signals that are needed for signal tap.
+    */
+
+   `ifndef RISCV_FORMAL
+   (* keep*)   logic                   rvfi_valid; 
+               logic                   rvfi_halt;
+               logic                   rvfi_trap;
+               logic                   rvfi_intr;
+               logic  [         1:0]   rvfi_mode;
+               logic  [         1:0]   rvfi_ixl;
+               logic  [MXLEN/8 -1:0]   rvfi_mem_rmask;
+               logic  [MXLEN/8 -1:0]   rvfi_mem_wmask;
+               logic  [         4:0]   rvfi_rs1_addr;
+               logic  [         4:0]   rvfi_rs2_addr;
+               logic  [         4:0]   rvfi_rd_addr;
+   (* keep *)  logic  [INSTR_W -1:0]   rvfi_insn;
+   (* keep *)  logic  [MXLEN   -1:0]   rvfi_pc_rdata;
+               logic  [MXLEN   -1:0]   rvfi_pc_wdata;
+               logic  [MXLEN   -1:0]   rvfi_rs1_rdata;
+               logic  [MXLEN   -1:0]   rvfi_rs2_rdata;
+               logic  [MXLEN   -1:0]   rvfi_rd_wdata;
+               logic  [MXLEN   -1:0]   rvfi_mem_addr;
+               logic  [MXLEN   -1:0]   rvfi_mem_rdata;
+               logic  [MXLEN   -1:0]   rvfi_mem_wdata;
+               logic  [        63:0]   rvfi_order;
+   `endif   //    RISCV_FORMAL      //
+
+
+
+
+
 
 
    niosv_g_core_Computer_System_NiosVg_hart # (

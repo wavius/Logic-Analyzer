@@ -1,26 +1,26 @@
-2026.03.23.22:58:09 Info: Doing: <b>qsys-script --script=../../common/scripts/gen_audio_subsystem.tcl</b>
-2026.03.23.22:58:13 Info: create_system Audio_Subsystem
-2026.03.23.22:58:14 Info: set_project_property DEVICE_FAMILY Cyclone V
-2026.03.23.22:58:14 Info: set_project_property DEVICE 5CSEMA5F31C6
-2026.03.23.22:58:14 Info: add_instance Sys_Clk clock_source 
-2026.03.23.22:58:15 Info: set_instance_parameter_value Sys_Clk clockFrequencyKnown false
-2026.03.23.22:58:15 Info: set_interface_property sys_clk EXPORT_OF Sys_Clk.clk_in
-2026.03.23.22:58:15 Info: set_interface_property sys_reset EXPORT_OF Sys_Clk.clk_in_reset
-2026.03.23.22:58:15 Info: add_instance Audio_PLL altera_up_avalon_audio_pll 
-2026.03.23.22:58:26 Info: set_instance_parameter_value Audio_PLL gui_refclk 50.0
-2026.03.23.22:58:26 Info: set_instance_parameter_value Audio_PLL audio_clk_freq 12.288
-2026.03.23.22:58:26 Info: set_interface_property audio_pll_ref_clk EXPORT_OF Audio_PLL.ref_clk
-2026.03.23.22:58:26 Info: set_interface_property audio_pll_ref_reset EXPORT_OF Audio_PLL.ref_reset
-2026.03.23.22:58:26 Info: set_interface_property audio_pll_clk EXPORT_OF Audio_PLL.audio_clk
-2026.03.23.22:58:26 Info: set_interface_property audio_pll_reset EXPORT_OF Audio_PLL.reset_source
-2026.03.23.22:58:26 Info: add_instance Audio altera_up_avalon_audio 
-2026.03.23.22:58:27 Info: set_instance_parameter_value Audio avalon_bus_type Memory Mapped
-2026.03.23.22:58:27 Info: set_instance_parameter_value Audio audio_in true
-2026.03.23.22:58:27 Info: set_instance_parameter_value Audio audio_out true
-2026.03.23.22:58:27 Info: set_instance_parameter_value Audio dw 32
-2026.03.23.22:58:27 Info: set_interface_property audio_slave EXPORT_OF Audio.avalon_audio_slave
-2026.03.23.22:58:27 Info: set_interface_property audio_irq EXPORT_OF Audio.interrupt
-2026.03.23.22:58:27 Info: set_interface_property audio EXPORT_OF Audio.external_interface
-2026.03.23.22:58:27 Info: add_connection Sys_Clk.clk Audio.clk
-2026.03.23.22:58:27 Info: add_connection Sys_Clk.clk_reset Audio.reset
-2026.03.23.22:58:27 Info: save_system Audio_Subsystem.qsys
+2026.03.31.01:47:19 Info: Doing: <b>qsys-script --script=../../common/scripts/gen_audio_subsystem.tcl</b>
+2026.03.31.01:47:21 Info: create_system Audio_Subsystem
+2026.03.31.01:47:21 Info: set_project_property DEVICE_FAMILY Cyclone V
+2026.03.31.01:47:21 Info: set_project_property DEVICE 5CSEMA5F31C6
+2026.03.31.01:47:21 Info: add_instance Sys_Clk clock_source 
+2026.03.31.01:47:21 Info: set_instance_parameter_value Sys_Clk clockFrequencyKnown false
+2026.03.31.01:47:21 Info: set_interface_property sys_clk EXPORT_OF Sys_Clk.clk_in
+2026.03.31.01:47:21 Info: set_interface_property sys_reset EXPORT_OF Sys_Clk.clk_in_reset
+2026.03.31.01:47:21 Info: add_instance Audio_PLL altera_up_avalon_audio_pll 
+2026.03.31.01:47:23 Info: set_instance_parameter_value Audio_PLL gui_refclk 50.0
+2026.03.31.01:47:23 Info: set_instance_parameter_value Audio_PLL audio_clk_freq 12.288
+2026.03.31.01:47:23 Info: set_interface_property audio_pll_ref_clk EXPORT_OF Audio_PLL.ref_clk
+2026.03.31.01:47:23 Info: set_interface_property audio_pll_ref_reset EXPORT_OF Audio_PLL.ref_reset
+2026.03.31.01:47:23 Info: set_interface_property audio_pll_clk EXPORT_OF Audio_PLL.audio_clk
+2026.03.31.01:47:23 Info: set_interface_property audio_pll_reset EXPORT_OF Audio_PLL.reset_source
+2026.03.31.01:47:23 Info: add_instance Audio altera_up_avalon_audio 
+2026.03.31.01:47:23 Info: set_instance_parameter_value Audio avalon_bus_type Memory Mapped
+2026.03.31.01:47:23 Info: set_instance_parameter_value Audio audio_in true
+2026.03.31.01:47:23 Info: set_instance_parameter_value Audio audio_out true
+2026.03.31.01:47:23 Info: set_instance_parameter_value Audio dw 32
+2026.03.31.01:47:23 Info: set_interface_property audio_slave EXPORT_OF Audio.avalon_audio_slave
+2026.03.31.01:47:23 Info: set_interface_property audio_irq EXPORT_OF Audio.interrupt
+2026.03.31.01:47:23 Info: set_interface_property audio EXPORT_OF Audio.external_interface
+2026.03.31.01:47:23 Info: add_connection Sys_Clk.clk Audio.clk
+2026.03.31.01:47:23 Info: add_connection Sys_Clk.clk_reset Audio.reset
+2026.03.31.01:47:23 Info: save_system Audio_Subsystem.qsys

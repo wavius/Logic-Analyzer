@@ -17,8 +17,16 @@
 `timescale 1 ns / 1 ns
 
 module niosv_g_core_Computer_System_NiosVg_hart 
-   import niosv_opcode_def::*, 
-          niosv_g_fp_def::*;
+   import   niosv_opcode_def::*, 
+            niosv_g_fp_def::*,
+            riscv_pkg::LB,
+            riscv_pkg::LH,
+            riscv_pkg::LW,
+            riscv_pkg::LBU,
+            riscv_pkg::LHU,
+            riscv_pkg::SB,
+            riscv_pkg::SH,
+            riscv_pkg::SW;
 # (
    parameter DBG_EXPN_VECTOR          = 32'h80000000,
    parameter RESET_VECTOR             = 32'h00000000,
@@ -289,7 +297,37 @@ module niosv_g_core_Computer_System_NiosVg_hart
    output wire [31:0]                 dtcs2_rdata,
    output wire                        dtcs2_rvalid,
    output wire [1:0]                  dtcs2_rresp,
-   input  wire                        dtcs2_rready
+   input  wire                        dtcs2_rready,
+
+   // ===================== RISC V FORMAL PORT INTRODUCTION =====================
+   //INSTRUCTION META DATA SIGNALS
+   output   logic                rvfi_valid,
+   output   logic                rvfi_halt,
+   output   logic                rvfi_trap,
+   output   logic                rvfi_intr,
+   output   logic [         1:0] rvfi_mode,
+   output   logic [         1:0] rvfi_ixl,
+   output   logic [INSTR_W -1:0] rvfi_insn,
+   output   logic [        63:0] rvfi_order,
+
+   //PC SIGNALS
+   output   logic [MXLEN   -1:0] rvfi_pc_rdata,
+   output   logic [MXLEN   -1:0] rvfi_pc_wdata,
+
+   //GPR SIGNALS
+   output   logic [         4:0] rvfi_rs1_addr,
+   output   logic [         4:0] rvfi_rs2_addr,
+   output   logic [         4:0] rvfi_rd_addr, 
+   output   logic [MXLEN   -1:0] rvfi_rs1_rdata,
+   output   logic [MXLEN   -1:0] rvfi_rs2_rdata,
+   output   logic [MXLEN   -1:0] rvfi_rd_wdata,
+
+   //MEM SIGNALS
+   output   logic [MXLEN/8 -1:0] rvfi_mem_rmask,
+   output   logic [MXLEN/8 -1:0] rvfi_mem_wmask,
+   output   logic [MXLEN   -1:0] rvfi_mem_addr,
+   output   logic [MXLEN   -1:0] rvfi_mem_rdata,
+   output   logic [MXLEN   -1:0] rvfi_mem_wdata
 );
 
    localparam RAM_TYPE = ((DEVICE_FAMILY == "Arria 10") || (DEVICE_FAMILY == "Arria V GZ")  || (DEVICE_FAMILY == "Stratix V")) ? "M20K" :
@@ -297,6 +335,7 @@ module niosv_g_core_Computer_System_NiosVg_hart
                          ((DEVICE_FAMILY == "Arria II GX" ) || (DEVICE_FAMILY == "Arria II GZ") || (DEVICE_FAMILY == "Cyclone 10 LP") || (DEVICE_FAMILY == "Cyclone IV E") ||
                           (DEVICE_FAMILY == "Cyclone IV GX") || (DEVICE_FAMILY == "MAX 10") || (DEVICE_FAMILY == "Stratix IV")) ? "M9K" : "AUTO";
 
+   localparam NUM_BANKS_CHK = $clog2(NUM_SRF_BANKS) == 0 ? 2 : NUM_SRF_BANKS;
    localparam NUM_REG = get_num_gpr(CORE_EXTN);
    localparam RF_ADDR_W = $clog2(NUM_REG);
    // localparam LOCAL_RST_DEPTH = 8;
@@ -816,8 +855,8 @@ module niosv_g_core_Computer_System_NiosVg_hart
    logic M0_branch_pred_taken;
 
    //ECC signals
-   ecc_result_t ecc_result;
-   ecc_result_t ecc_inject;
+   ecc_status_t csr_ecc_status;
+   ecc_status_t csr_ecc_inject;
 
 
    // Instruction Words carry forward chain from one stage to next
@@ -1049,6 +1088,16 @@ module niosv_g_core_Computer_System_NiosVg_hart
    wire       instr_fetch_rvalid;
    wire[31:0] instr_fetch_rdata;
 
+   //Cleanly instantiate wires needed for the newly added PC NEXT INFO port signals from the fetch / new PC modules.
+   wire           redir_pc_update_req, seq_pc_update_req, branch_pred_update_req;
+   wire  [31:0]   fetch_pc, predicted_pc;
+   generate
+      if (BRANCHPREDICTION_EN == 0) begin : pc_next_info_signals_without_branch_prediction
+         assign   branch_pred_update_req  =  1'b0; 
+         assign   predicted_pc            =  32'd0;
+      end
+   endgenerate
+
    generate
       if (BRANCHPREDICTION_EN == 0) begin : gen_without_branch_prediction
          //branch prediction is not enabled, tie the 'taken' signal to 0
@@ -1092,7 +1141,11 @@ module niosv_g_core_Computer_System_NiosVg_hart
             .prg_instr_ecc    (I_instr_ecc),
             .prg_itag_ecc     (I_itag_ecc),
       
-            .prg_data_valid   (I_instr_valid)
+            .prg_data_valid   (I_instr_valid),
+
+            .redir_pc_update_req_o   (redir_pc_update_req),
+            .seq_pc_update_req_o     (seq_pc_update_req  ),
+            .fetch_pc_o              (fetch_pc           )
          );
       end else begin : gen_branch_prediction
          niosv_g_new_pc # (
@@ -1135,7 +1188,13 @@ module niosv_g_core_Computer_System_NiosVg_hart
              .prg_data_valid   (I_instr_valid),        // Data Valid
              //.mispred_pc       (I_mispred_pc),
          
-             .branch_pred_taken(I_branch_pred_taken)   // Branch Prediction taken signal
+             .branch_pred_taken(I_branch_pred_taken),   // Branch Prediction taken signal
+
+             .redir_pc_update_req_o       (redir_pc_update_req    ),
+             .seq_pc_update_req_o         (seq_pc_update_req      ),
+             .branch_pred_update_req_o    (branch_pred_update_req ),
+             .fetch_pc_o                  (fetch_pc               ),
+             .predicted_pc_o              (predicted_pc           )
          );
       end
    endgenerate
@@ -1220,7 +1279,7 @@ module niosv_g_core_Computer_System_NiosVg_hart
             .to_cpu                    (instr_fetch_rdata),                 // Response Instruction from icache or itcm
             .from_cpu                  (32'h00000000),
       
-            .ecc_inject                (ecc_inject),
+            .ecc_inject                (csr_ecc_inject),
             .instr_ecc_to_cpu          (instr_ecc),
             .itag_ecc_to_cpu           (itag_ecc),
       
@@ -1318,11 +1377,6 @@ module niosv_g_core_Computer_System_NiosVg_hart
          // Set start address higher than end address to disable a region
          niosv_g_instr_cache # (
             .RAM_TYPE                  (RAM_TYPE),
-            .NCR1_START                (DBG_DATA_S_BASE / 4),
-            .NCR1_END                  ((DBG_DATA_S_BASE + 32'h0000ffff) / 4),
-            .NCR2_START                (0),
-            .NCR2_END                  (2000000),
-      
             .ICACHE_SIZE               (INST_CACHE_SIZE),
             .DEBUG_ENABLED             (DEBUG_ENABLED),
             .DBG_DATA_S_BASE           (DBG_DATA_S_BASE),
@@ -1358,7 +1412,7 @@ module niosv_g_core_Computer_System_NiosVg_hart
             .to_cpu                    (instr_fetch_rdata),                 // Response Instruction from icache or itcm
             .from_cpu                  (32'h00000000),
       
-            .ecc_inject                (ecc_inject),
+            .ecc_inject                (csr_ecc_inject),
             .instr_ecc_to_cpu          (instr_ecc),
             .itag_ecc_to_cpu           (itag_ecc),
       
@@ -2680,16 +2734,10 @@ module niosv_g_core_Computer_System_NiosVg_hart
 // mtval2 encoding scheme followed from SAS
    always @(posedge clk) begin
       if (D_ready & I_instr_valid) begin
-         if (I_itcm1_correctable_error)
-            D_i_mtval2 <= ECC_ITCM1_CORRECTABLE;          // 'd16
-         else if (I_itcm1_uncorrectable_error)
-            D_i_mtval2 <= ECC_ITCM1_UNCORRECTABLE;        // 'd17
-         else if (I_itcm2_correctable_error)
-            D_i_mtval2 <= ECC_ITCM2_CORRECTABLE;          // 'd18
-         else if (I_itcm2_uncorrectable_error)
-            D_i_mtval2 <= ECC_ITCM2_UNCORRECTABLE;        // 'd19
-         else          
-            D_i_mtval2 <= 6'd0;
+         if      (I_itcm1_uncorrectable_error || I_itcm2_uncorrectable_error)
+            D_i_mtval2 <= ECC_INSTR_LOAD_UNCORRECTABLE;
+         else if (I_itcm1_correctable_error   || I_itcm2_correctable_error  )
+            D_i_mtval2 <= ECC_INSTR_LOAD_CORRECTABLE;
       end
    end
 
@@ -2788,21 +2836,14 @@ module niosv_g_core_Computer_System_NiosVg_hart
    always @* begin 
       if (M1_itcm_expn | M1_gpr_incorrect | M1_fpr_incorrect)
          M1_mtval2 = M1_m0_mtval2;          
-      else if (M1_dcache_dtcm1_ecc == 2'b10)
-         M1_mtval2 = ECC_DTCM1_CORRECTABLE;                    // 'd24 
-      else if (M1_dcache_dtcm1_ecc == 2'b11)
-         M1_mtval2 = ECC_DTCM1_UNCORRECTABLE;                  // 'd25
-      else if (M1_dcache_dtcm2_ecc == 2'b10)
-         M1_mtval2 = ECC_DTCM2_CORRECTABLE;                    // 'd26
-      else if (M1_dcache_dtcm2_ecc == 2'b11)
-         M1_mtval2 = ECC_DTCM2_UNCORRECTABLE;                  // 'd27
+      else if (M1_dcache_dtcm1_ecc == 2'b11 || M1_dcache_dtcm2_ecc == 2'b11)
+         M1_mtval2 = M1_ld_op_done ? ECC_DATA_LOAD_UNCORRECTABLE : ECC_DATA_STORE_UNCORRECTABLE;
+      else if (M1_dcache_dtcm1_ecc == 2'b10 || M1_dcache_dtcm2_ecc == 2'b10)
+         M1_mtval2 = M1_ld_op_done ? ECC_DATA_LOAD_CORRECTABLE   : ECC_DATA_STORE_CORRECTABLE;
       else if (M1_dcache_dtag_ecc == 2'b11)
-         M1_mtval2 = ECC_DCACHE_TAG_UNCORRECTABLE;             // 'd41          
+         M1_mtval2 = ECC_DCACHE_TAG_UNCORRECTABLE;
       else if (M1_dcache_data_ecc == 2'b11)    
-         M1_mtval2 = ECC_DCACHE_DATA_UNCORRECTABLE;            // 'd43       
-// Following is for external memory ecc errors which is not supported in 24.3
-//         M1_mtval2 = ECC_DCACHE_LOAD_UNCORRECTABLE;            // 'd45       
-//         M1_mtval2 = ECC_DCACHE_STORE_UNCORRECTABLE;           // 'd47          
+         M1_mtval2 = ECC_DCACHE_DATA_UNCORRECTABLE;
       else          
          M1_mtval2 = 6'd0;
    end
@@ -3068,15 +3109,15 @@ module niosv_g_core_Computer_System_NiosVg_hart
    /** Read/Write shadow register file (bank)
     */
    wire rd_previous_srf = D_ready ? I_previous_srf : D_previous_srf;
-   wire [$clog2(NUM_SRF_BANKS)-1:0] rd_srf = rd_previous_srf ? csr_to_hart.msrfstatus.psrf : csr_to_hart.msrfstatus.asrf;
+   wire [$clog2(NUM_BANKS_CHK)-1:0] rd_srf = rd_previous_srf ? csr_to_hart.msrfstatus.psrf : csr_to_hart.msrfstatus.asrf;
 
    //do we need to fix rs1/rs2 due to an ECC issue?
    wire wr_previous_srf = M1_fix_gpr ? M1_rdpsrf : M1_wrpsrf;
-   wire [$clog2(NUM_SRF_BANKS)-1:0] wr_srf = wr_previous_srf ? csr_to_hart.msrfstatus.psrf : csr_to_hart.msrfstatus.asrf;
+   wire [$clog2(NUM_BANKS_CHK)-1:0] wr_srf = wr_previous_srf ? csr_to_hart.msrfstatus.psrf : csr_to_hart.msrfstatus.asrf;
 
    niosv_reg_file # (
       .RAM_TYPE                   ( RAM_TYPE                           ),
-      .NUM_BANKS                  ( NUM_SRF_BANKS                      ),
+      .NUM_BANKS                  ( NUM_BANKS_CHK                      ),
       .NUM_REG                    ( NUM_REG                            ),
       .NUM_RD                     ( 2                                  ),
       .DATA_W                     ( DATA_W                             ),
@@ -3099,7 +3140,8 @@ module niosv_g_core_Computer_System_NiosVg_hart
       .wr_reg                     ( wr_gpr                             ),
       .wr_data                    ( wr_gpr_data                        ),
 
-      .ecc_inject_uncorrectable_i ( ecc_inject.gpr_uncorrectable_error ),
+      .ecc_inject_correctable_i   ( csr_ecc_inject.gpr_correctable_error   ),
+      .ecc_inject_uncorrectable_i ( csr_ecc_inject.gpr_uncorrectable_error ),
       .eccstatus_reg_a            ( D_rs1_gpr_ecc                      ),
       .eccstatus_reg_b            ( D_rs2_gpr_ecc                      ),
       .eccstatus_reg_c            () );
@@ -3116,7 +3158,7 @@ module niosv_g_core_Computer_System_NiosVg_hart
       else begin : gen_fp_reg_file
          niosv_reg_file # (
             .RAM_TYPE                   ( RAM_TYPE                           ),
-            .NUM_BANKS                  ( NUM_SRF_BANKS                      ),
+            .NUM_BANKS                  ( NUM_BANKS_CHK                      ),
             .NUM_REG                    ( NUM_REG                            ),
             .NUM_RD                     ( 3                                  ),
             .DATA_W                     ( FP32_W                             ),
@@ -3139,7 +3181,8 @@ module niosv_g_core_Computer_System_NiosVg_hart
             .wr_reg                     ( wr_fpr                             ),
             .wr_data                    ( wr_fpr_data                        ),
 
-            .ecc_inject_uncorrectable_i ( ecc_inject.fpr_uncorrectable_error ),
+            .ecc_inject_correctable_i   ( csr_ecc_inject.fpr_correctable_error   ),
+            .ecc_inject_uncorrectable_i ( csr_ecc_inject.fpr_uncorrectable_error ),
 
             .eccstatus_reg_a            ( D_rs1_fpr_ecc                      ),
             .eccstatus_reg_b            ( D_rs2_fpr_ecc                      ),
@@ -3452,7 +3495,7 @@ module niosv_g_core_Computer_System_NiosVg_hart
    //------------------------------------------------------//
 
    generate
-      if ((DATA_CACHE_SIZE == 0) && (ECC_EN == 0)) begin : gen_simple_lsu
+      if (DATA_CACHE_SIZE == 0) begin : gen_simple_lsu
          assign M1_dcache_data_ecc = 2'b00;
          assign M1_dcache_dtag_ecc = 2'b00;
          // The simple LSU reports all exceptions in M1
@@ -3685,7 +3728,7 @@ module niosv_g_core_Computer_System_NiosVg_hart
       
             .in_debug_mode             (C_debug_mode),
       
-            .ecc_inject                (ecc_inject),
+            .ecc_inject                (csr_ecc_inject),
             .dram_eccstatus            (M1_dcache_data_ecc),
             .dtag_eccstatus            (M1_dcache_dtag_ecc),
             .dtcm1_eccstatus           (M1_dcache_dtcm1_ecc),
@@ -3771,7 +3814,8 @@ module niosv_g_core_Computer_System_NiosVg_hart
    // FPU state is potentially dirtied by instructions that write to FP registers or have
    // non-zero FP exception flags (FCVT.W[U].S and FCMP have an integer result with FP flags).
    // It's okay to mark FPU state "dirty" in cases where it doesn't actually get dirtied
-   // e.g. write to an FPR that already contains the same value, FP load that fails, etc.
+   // e.g. write to an FPR that already contains the same value, FP operations flushed on
+   // interrupt, etc.
 
    always @(*) begin
       E_fpu_state_dirtied = E_fpr_wr_en |
@@ -3801,17 +3845,12 @@ module niosv_g_core_Computer_System_NiosVg_hart
    end
 
    // Instantiate CSRind interface
-   // Configured so that only the bottom 16 bits of XISELECT are interrogated; top 16 bits
-   // must always be written as zeroes. 
-   // Since the CLIC occupies 0x1000 - 0x149F of CSRind space, the number of significant bits
-   // could be reduced to 13 in the absence of any other extensions that use CSRind. 
    // Note: The CLIC accesses CSrind registers xireg and xireg2
 
    niosv_csrind_if #(
-      .MXLEN                   (MXLEN), 
-      .PRIV_S_EN               (0),
-      .SIGNIFICANT_SELECT_BITS (16),
-      .NUM_XIREGS              (CLIC_EN ? 2 : 1)  
+      .MXLEN      (MXLEN), 
+      .PRIV_S_EN  (0),
+      .NUM_XIREGS (CLIC_EN ? 2 : 1)  
    ) csrind_if ();
 
    // CLIC->CSR interfaces (bundles of signals)
@@ -3904,7 +3943,8 @@ module niosv_g_core_Computer_System_NiosVg_hart
   
       .trig_tdata2             (C_tdata2),
   
-      .ecc_inject_o            (ecc_inject),
+      .ecc_inject_o            (csr_ecc_inject),
+      .ecc_status_o            (csr_ecc_status),
 
       .clic_to_csr_i           (clic_to_csr),
       .csr_to_hart_o           (csr_to_hart)
@@ -3915,6 +3955,16 @@ module niosv_g_core_Computer_System_NiosVg_hart
    generate
       if (!CLIC_EN) begin : gen_clic_tieoffs   
          always_comb begin
+            csrind_if.miselect_in        = 0;
+            csrind_if.mireg_wren         = 0;
+            csrind_if.mireg_in           = 0;
+            csrind_if.mireg_out[0]       = 0;
+            csrind_if.miselect_error_out = 0;
+            csrind_if.siselect_in        = 0;
+            csrind_if.sireg_wren         = 0;
+            csrind_if.sireg_in           = 0;
+            csrind_if.sireg_out[0]       = 0;
+            csrind_if.siselect_error_out = 0;
             clic_to_csr = safe_clic_to_csr();
          end
       end
@@ -4405,6 +4455,158 @@ module niosv_g_core_Computer_System_NiosVg_hart
       assign W_dcache_dtcm1_ecc = 2'b0;
       assign W_dcache_dtcm2_ecc = 2'b0;
    end
+   endgenerate
+
+   /**
+    *
+    *
+    *@Block description:   //Begin mapping internal signals to the output RISC V FORMAL ports
+    *                      //Implementation done for the:
+    *                                                    (1)   PC signals
+    *                                                    (2)   GPR signals
+    *                                                    (3)   MEM signals
+    *                                                    (4)   CPU meta data signals
+    *                      //Pending implementation work:
+    *                                                    (1)   Floating point signals:
+    *                                                                                  (1.1) Need to add new pipeline registers for the current floating point instruction.
+    *                                                                                        This is to make sure that the correct set of SRC and DS registers, value and status bits
+    *                                                                                        travel through the pipeline along with its instruction word.
+    *                                                                                  (1.2) Have to be careful about the update logic as these instructions stall the previous stages
+    *                                                                                         for either a fixed or variable amount of clock cycles.
+    *                                                                                  (1.3) Be sure to make use of MXLEN and FP32_W constants while declaring dimensions.
+    *
+    */
+
+   logic                M1_ecall_instr;
+
+   always_ff @ (posedge clk, posedge internal_reset) begin
+      if(internal_reset)   M1_ecall_instr <= 'd0;
+      else                 M1_ecall_instr <= M0_ecall_instr;
+   end
+
+   wire                 instr_retire  = M1_instr_done & ~((M1_fix_gpr | M1_fix_fpr) & ~M1_ecall_instr);
+   logic [MXLEN  -1:0]  first_pc_at_trap;
+
+   //Static assignments: IXL, MODE & HALT
+   assign   rvfi_halt   = 1'b0;
+   assign   rvfi_mode   = 2'b11;
+   assign   rvfi_ixl    = (MXLEN == 32) ? 2'b01 : 2'b10;
+
+   always_ff @ (posedge clk, posedge internal_reset) begin
+      if(internal_reset)                     first_pc_at_trap  <= 'd0;
+      else if(M1_expn_ret)                   first_pc_at_trap  <= 'd0;
+      else if(core_irq && C_expn_taken)      first_pc_at_trap  <= C_expn_redirect_pc;
+   end
+
+   always_ff @ (posedge clk, posedge internal_reset) begin
+      if(internal_reset)      rvfi_valid  <= 'b0;
+      else                    rvfi_valid  <= instr_retire;
+   end
+
+   always_ff @ (posedge clk, posedge internal_reset) begin
+      if(internal_reset)      rvfi_order  <= 'd0;
+      else if(instr_retire)   rvfi_order  <= rvfi_order + 64'd1;
+   end
+
+   always_ff @ (posedge clk, posedge internal_reset) begin
+      if(internal_reset) begin
+         //rvfi signals to indicate first instruction in the ISR and whether retired instruction caused an exception
+         rvfi_intr            <= 'd0;
+         rvfi_trap            <= 'd0;
+
+         //rvfi_pc_*: PC of retiring instruction
+         rvfi_pc_rdata        <= 'd0;
+
+         //rvfi_insn: current retiring instruction's instruction word
+         rvfi_insn            <= 'd0;
+
+         //rvfi_r*: integer GPR read and write information
+         rvfi_rs1_addr        <= 'd0;
+         rvfi_rs1_rdata       <= 'd0;
+
+         rvfi_rs2_addr        <= 'd0;
+         rvfi_rs2_rdata       <= 'd0;
+
+         rvfi_rd_addr         <= 'd0;
+         rvfi_rd_wdata        <= 'd0;
+
+         //rvfi_mem_*: memory access information
+         rvfi_mem_addr        <= 'd0;
+         rvfi_mem_rdata       <= 'd0;
+         rvfi_mem_wdata       <= 'd0;
+      end
+      else begin
+         rvfi_intr            <= ~|(M1_instr_pc ^ first_pc_at_trap) & core_irq; 
+         rvfi_trap            <= M1_expn & ~C_expn_is_interrupt;
+
+         rvfi_insn            <= M1_instr_word;
+
+         rvfi_rs1_addr        <= M1_instr_word[19:15];
+         rvfi_rs1_rdata       <= M1_rs1_gpr_val;
+
+         rvfi_rs2_addr        <= M1_instr_word[24:20];
+         rvfi_rs2_rdata       <= M1_rs2_gpr_val;
+
+         rvfi_rd_addr         <= wr_gpr;
+         rvfi_rd_wdata        <= wr_gpr_data;
+
+         rvfi_pc_rdata        <= M1_instr_pc;
+
+         rvfi_mem_addr        <= M1_ls_addr;
+         rvfi_mem_wdata       <= data_wdata;
+         rvfi_mem_rdata       <= M1_load_data;
+      end
+   end
+
+   always_ff @ (posedge clk, posedge internal_reset) begin
+      if(internal_reset) begin
+         rvfi_mem_rmask <= 'd0;
+         rvfi_mem_wmask <= 'd0;
+      end
+      else begin
+         //Updating rvfi_mem_rmask below.
+         if (instr_retire && (M1_instr_word[6:0] == LOAD_OP))  begin
+            unique case(M1_instr_word[14:12])
+               LB:      rvfi_mem_rmask <= 4'h1;
+               LBU:     rvfi_mem_rmask <= 4'h1;
+               LH:      rvfi_mem_rmask <= 4'h3;
+               LHU:     rvfi_mem_rmask <= 4'h3;
+               LW:      rvfi_mem_rmask <= 4'hF;
+               default: rvfi_mem_rmask <= 4'h0;
+            endcase
+         end
+         else
+            rvfi_mem_rmask <= 'd0;
+
+         //Updating rvfi_mem_wmask below.
+         if (instr_retire && (M1_instr_word[6:0] == STORE_OP)) begin
+            unique case(M1_instr_word[14:12])
+               SB:      rvfi_mem_wmask <= 4'h1;
+               SH:      rvfi_mem_wmask <= 4'h3;
+               SW:      rvfi_mem_wmask <= 4'hF;
+               default: rvfi_mem_wmask <= 4'h0;
+            endcase
+         end
+         else
+            rvfi_mem_wmask <= 4'd0;
+      end
+   end
+
+   generate
+      if(BRANCHPREDICTION_EN == 0) begin : rvfi_pc_wdata_without_branch_prediction_setup
+         always_ff @ (posedge clk, posedge internal_reset) begin
+            if(internal_reset)            rvfi_pc_wdata  <= 'd0;
+            else if(redir_pc_update_req)  rvfi_pc_wdata  <= fetch_pc;
+            else if(seq_pc_update_req)    rvfi_pc_wdata  <= rvfi_pc_wdata + 32'd4;
+         end
+      end
+      else begin : rvfi_pc_wdata_with_branch_prediction_setup
+         always_ff @ (posedge clk, posedge internal_reset) begin
+            if(internal_reset)            rvfi_pc_wdata  <= 'd0;
+            else if(redir_pc_update_req)  rvfi_pc_wdata  <= (branch_pred_update_req) ? predicted_pc : fetch_pc;
+            else if(seq_pc_update_req)    rvfi_pc_wdata  <= rvfi_pc_wdata + 32'd4;
+         end
+      end
    endgenerate
 
 endmodule

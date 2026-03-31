@@ -1,54 +1,54 @@
-2026.03.23.22:59:06 Info: Doing: <b>qsys-script --script=../../common/scripts/gen_video_in_edge_detection_subsystem.tcl</b>
-2026.03.23.22:59:10 Info: create_system Video_In_Edge_Detection_Subsystem
-2026.03.23.22:59:12 Info: set_project_property DEVICE_FAMILY Cyclone V
-2026.03.23.22:59:12 Info: set_project_property DEVICE 5CSEMA5F31C6
-2026.03.23.22:59:13 Info: add_instance Sys_Clk clock_source 
-2026.03.23.22:59:14 Info: set_instance_parameter_value Sys_Clk clockFrequencyKnown false
-2026.03.23.22:59:14 Info: set_interface_property sys_clk EXPORT_OF Sys_Clk.clk_in
-2026.03.23.22:59:14 Info: set_interface_property sys_reset EXPORT_OF Sys_Clk.clk_in_reset
-2026.03.23.22:59:14 Info: add_instance Video_Stream_Splitter altera_up_avalon_video_stream_router 
-2026.03.23.22:59:16 Info: set_instance_parameter_value Video_Stream_Splitter router_type Split
-2026.03.23.22:59:16 Info: set_instance_parameter_value Video_Stream_Splitter sync true
-2026.03.23.22:59:16 Info: set_instance_parameter_value Video_Stream_Splitter color_bits 8
-2026.03.23.22:59:16 Info: set_instance_parameter_value Video_Stream_Splitter color_planes 3
-2026.03.23.22:59:16 Info: set_interface_property video_stream_sink EXPORT_OF Video_Stream_Splitter.avalon_stream_router_sink
-2026.03.23.22:59:16 Info: add_connection Sys_Clk.clk Video_Stream_Splitter.clk
-2026.03.23.22:59:16 Info: add_connection Sys_Clk.clk_reset Video_Stream_Splitter.reset
-2026.03.23.22:59:16 Info: add_instance Edge_Detection_Router_Controller altera_avalon_pio 
-2026.03.23.22:59:16 Info: set_instance_parameter_value Edge_Detection_Router_Controller direction Output
-2026.03.23.22:59:16 Info: set_instance_parameter_value Edge_Detection_Router_Controller width 1
-2026.03.23.22:59:17 Info: set_instance_parameter_value Edge_Detection_Router_Controller bitModifyingOutReg false
-2026.03.23.22:59:17 Info: set_interface_property edge_detection_control_slave EXPORT_OF Edge_Detection_Router_Controller.s1
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk Edge_Detection_Router_Controller.clk
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk_reset Edge_Detection_Router_Controller.reset
-2026.03.23.22:59:17 Info: add_connection Video_Stream_Splitter.external_interface Edge_Detection_Router_Controller.external_connection
-2026.03.23.22:59:17 Info: add_instance Chroma_Filter altera_up_avalon_video_chroma_resampler 
-2026.03.23.22:59:17 Info: set_instance_parameter_value Chroma_Filter input_type YCrCb 444
-2026.03.23.22:59:17 Info: set_instance_parameter_value Chroma_Filter output_type Y only
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk Chroma_Filter.clk
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk_reset Chroma_Filter.reset
-2026.03.23.22:59:17 Info: add_connection Video_Stream_Splitter.avalon_stream_router_source_1 Chroma_Filter.avalon_chroma_sink
-2026.03.23.22:59:17 Info: add_instance Edge_Detection altera_up_avalon_video_edge_detection 
-2026.03.23.22:59:17 Info: set_instance_parameter_value Edge_Detection width 720
-2026.03.23.22:59:17 Info: set_instance_parameter_value Edge_Detection intensity 1
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk Edge_Detection.clk
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk_reset Edge_Detection.reset
-2026.03.23.22:59:17 Info: add_connection Chroma_Filter.avalon_chroma_source Edge_Detection.avalon_edge_detection_sink
-2026.03.23.22:59:17 Info: add_instance Chroma_Upsampler altera_up_avalon_video_chroma_resampler 
-2026.03.23.22:59:17 Info: set_instance_parameter_value Chroma_Upsampler input_type Y only
-2026.03.23.22:59:17 Info: set_instance_parameter_value Chroma_Upsampler output_type YCrCb 444
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk Chroma_Upsampler.clk
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk_reset Chroma_Upsampler.reset
-2026.03.23.22:59:17 Info: add_connection Edge_Detection.avalon_edge_detection_source Chroma_Upsampler.avalon_chroma_sink
-2026.03.23.22:59:17 Info: add_instance Video_Stream_Merger altera_up_avalon_video_stream_router 
-2026.03.23.22:59:17 Info: set_instance_parameter_value Video_Stream_Merger router_type Merge
-2026.03.23.22:59:17 Info: set_instance_parameter_value Video_Stream_Merger sync true
-2026.03.23.22:59:17 Info: set_instance_parameter_value Video_Stream_Merger color_bits 8
-2026.03.23.22:59:17 Info: set_instance_parameter_value Video_Stream_Merger color_planes 3
-2026.03.23.22:59:17 Info: set_interface_property video_stream_source EXPORT_OF Video_Stream_Merger.avalon_stream_router_source
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk Video_Stream_Merger.clk
-2026.03.23.22:59:17 Info: add_connection Sys_Clk.clk_reset Video_Stream_Merger.reset
-2026.03.23.22:59:17 Info: add_connection Video_Stream_Splitter.avalon_stream_router_source_0 Video_Stream_Merger.avalon_stream_router_sink_0
-2026.03.23.22:59:17 Info: add_connection Chroma_Upsampler.avalon_chroma_source Video_Stream_Merger.avalon_stream_router_sink_1
-2026.03.23.22:59:17 Info: add_connection Video_Stream_Splitter.avalon_sync_source Video_Stream_Merger.avalon_sync_sink
-2026.03.23.22:59:17 Info: save_system Video_In_Edge_Detection_Subsystem.qsys
+2026.03.31.01:47:29 Info: Doing: <b>qsys-script --script=../../common/scripts/gen_video_in_edge_detection_subsystem.tcl</b>
+2026.03.31.01:47:31 Info: create_system Video_In_Edge_Detection_Subsystem
+2026.03.31.01:47:31 Info: set_project_property DEVICE_FAMILY Cyclone V
+2026.03.31.01:47:31 Info: set_project_property DEVICE 5CSEMA5F31C6
+2026.03.31.01:47:31 Info: add_instance Sys_Clk clock_source 
+2026.03.31.01:47:31 Info: set_instance_parameter_value Sys_Clk clockFrequencyKnown false
+2026.03.31.01:47:31 Info: set_interface_property sys_clk EXPORT_OF Sys_Clk.clk_in
+2026.03.31.01:47:31 Info: set_interface_property sys_reset EXPORT_OF Sys_Clk.clk_in_reset
+2026.03.31.01:47:31 Info: add_instance Video_Stream_Splitter altera_up_avalon_video_stream_router 
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Splitter router_type Split
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Splitter sync true
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Splitter color_bits 8
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Splitter color_planes 3
+2026.03.31.01:47:31 Info: set_interface_property video_stream_sink EXPORT_OF Video_Stream_Splitter.avalon_stream_router_sink
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk Video_Stream_Splitter.clk
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk_reset Video_Stream_Splitter.reset
+2026.03.31.01:47:31 Info: add_instance Edge_Detection_Router_Controller altera_avalon_pio 
+2026.03.31.01:47:31 Info: set_instance_parameter_value Edge_Detection_Router_Controller direction Output
+2026.03.31.01:47:31 Info: set_instance_parameter_value Edge_Detection_Router_Controller width 1
+2026.03.31.01:47:31 Info: set_instance_parameter_value Edge_Detection_Router_Controller bitModifyingOutReg false
+2026.03.31.01:47:31 Info: set_interface_property edge_detection_control_slave EXPORT_OF Edge_Detection_Router_Controller.s1
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk Edge_Detection_Router_Controller.clk
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk_reset Edge_Detection_Router_Controller.reset
+2026.03.31.01:47:31 Info: add_connection Video_Stream_Splitter.external_interface Edge_Detection_Router_Controller.external_connection
+2026.03.31.01:47:31 Info: add_instance Chroma_Filter altera_up_avalon_video_chroma_resampler 
+2026.03.31.01:47:31 Info: set_instance_parameter_value Chroma_Filter input_type YCrCb 444
+2026.03.31.01:47:31 Info: set_instance_parameter_value Chroma_Filter output_type Y only
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk Chroma_Filter.clk
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk_reset Chroma_Filter.reset
+2026.03.31.01:47:31 Info: add_connection Video_Stream_Splitter.avalon_stream_router_source_1 Chroma_Filter.avalon_chroma_sink
+2026.03.31.01:47:31 Info: add_instance Edge_Detection altera_up_avalon_video_edge_detection 
+2026.03.31.01:47:31 Info: set_instance_parameter_value Edge_Detection width 720
+2026.03.31.01:47:31 Info: set_instance_parameter_value Edge_Detection intensity 1
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk Edge_Detection.clk
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk_reset Edge_Detection.reset
+2026.03.31.01:47:31 Info: add_connection Chroma_Filter.avalon_chroma_source Edge_Detection.avalon_edge_detection_sink
+2026.03.31.01:47:31 Info: add_instance Chroma_Upsampler altera_up_avalon_video_chroma_resampler 
+2026.03.31.01:47:31 Info: set_instance_parameter_value Chroma_Upsampler input_type Y only
+2026.03.31.01:47:31 Info: set_instance_parameter_value Chroma_Upsampler output_type YCrCb 444
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk Chroma_Upsampler.clk
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk_reset Chroma_Upsampler.reset
+2026.03.31.01:47:31 Info: add_connection Edge_Detection.avalon_edge_detection_source Chroma_Upsampler.avalon_chroma_sink
+2026.03.31.01:47:31 Info: add_instance Video_Stream_Merger altera_up_avalon_video_stream_router 
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Merger router_type Merge
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Merger sync true
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Merger color_bits 8
+2026.03.31.01:47:31 Info: set_instance_parameter_value Video_Stream_Merger color_planes 3
+2026.03.31.01:47:31 Info: set_interface_property video_stream_source EXPORT_OF Video_Stream_Merger.avalon_stream_router_source
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk Video_Stream_Merger.clk
+2026.03.31.01:47:31 Info: add_connection Sys_Clk.clk_reset Video_Stream_Merger.reset
+2026.03.31.01:47:31 Info: add_connection Video_Stream_Splitter.avalon_stream_router_source_0 Video_Stream_Merger.avalon_stream_router_sink_0
+2026.03.31.01:47:31 Info: add_connection Chroma_Upsampler.avalon_chroma_source Video_Stream_Merger.avalon_stream_router_sink_1
+2026.03.31.01:47:31 Info: add_connection Video_Stream_Splitter.avalon_sync_source Video_Stream_Merger.avalon_sync_sink
+2026.03.31.01:47:31 Info: save_system Video_In_Edge_Detection_Subsystem.qsys

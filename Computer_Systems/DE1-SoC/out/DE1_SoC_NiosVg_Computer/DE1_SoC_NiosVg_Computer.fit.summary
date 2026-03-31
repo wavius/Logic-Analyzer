@@ -1,20 +1,20 @@
-Fitter Status : Successful - Wed Mar 25 20:07:01 2026
-Quartus Prime Version : 24.1std.0 Build 1077 03/04/2025 SC Lite Edition
+Fitter Status : Successful - Tue Mar 31 03:16:05 2026
+Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
 Revision Name : DE1_SoC_NiosVg_Computer
 Top-level Entity Name : DE1_SoC_NiosVg_Computer
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 11,961 / 32,070 ( 37 % )
-Total registers : 15800
-Total pins : 152 / 457 ( 33 % )
+Logic utilization (in ALMs) : 15,508 / 32,070 ( 48 % )
+Total registers : 20352
+Total pins : 240 / 457 ( 53 % )
 Total virtual pins : 0
-Total block memory bits : 2,306,112 / 4,065,280 ( 57 % )
-Total RAM Blocks : 300 / 397 ( 76 % )
-Total DSP Blocks : 11 / 87 ( 13 % )
+Total block memory bits : 2,388,056 / 4,065,280 ( 59 % )
+Total RAM Blocks : 316 / 397 ( 80 % )
+Total DSP Blocks : 16 / 87 ( 18 % )
 Total HSSI RX PCSs : 0
 Total HSSI PMA RX Deserializers : 0
 Total HSSI TX PCSs : 0
 Total HSSI PMA TX Serializers : 0
-Total PLLs : 2 / 6 ( 33 % )
+Total PLLs : 3 / 6 ( 50 % )
 Total DLLs : 0 / 4 ( 0 % )

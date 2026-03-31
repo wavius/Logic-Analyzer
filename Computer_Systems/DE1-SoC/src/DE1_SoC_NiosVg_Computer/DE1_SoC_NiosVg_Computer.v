@@ -264,10 +264,13 @@ Computer_System The_System (
 	.pushbuttons_export						(~KEY[3:0]),
 
 	// Expansion JP1
-	.expansion_jp1_export					({GPIO_0[35:19], GPIO_0[17], GPIO_0[15:3], GPIO_0[1]}),
-
+	//.expansion_jp1_export					({GPIO_0[35:19], GPIO_0[17], GPIO_0[15:3], GPIO_0[1]}),
 	// Expansion JP2
-	.expansion_jp2_export					({GPIO_1[35:19], GPIO_1[17], GPIO_1[15:3], GPIO_1[1]}),
+	//.expansion_jp2_export					({GPIO_1[35:19], GPIO_1[17], GPIO_1[15:3], GPIO_1[1]}),
+
+	// Logic Analyzer Input Channels
+	.logic_analyzer_channels_data_in   ({GPIO_0[17:12], GPIO_0[9:0]}), // JP1
+	.logic_analyzer_channels_data_out  ({GPIO_1[17:12], GPIO_1[9:0]}), // JP2
 
 	// LEDs
 	.leds_export								(LEDR),
@@ -314,7 +317,13 @@ Computer_System The_System (
 	.sdram_dq									(DRAM_DQ),
 	.sdram_dqm									({DRAM_UDQM,DRAM_LDQM}),
 	.sdram_ras_n								(DRAM_RAS_N),
-	.sdram_we_n									(DRAM_WE_N)
+	.sdram_we_n									(DRAM_WE_N),
+
+    .adc_sclk                        (ADC_SCLK),
+	.adc_cs_n                        (ADC_CS_N),
+	.adc_dout                        (ADC_DOUT),
+	.adc_din                         (ADC_DIN)
+
 );
 
 

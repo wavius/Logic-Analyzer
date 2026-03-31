@@ -3,10 +3,12 @@
 
 #include "constants.h"
 #include "draw_screen.h"
-#include "logic_analyzer.h"
 #include "ps2_input.h"
 // #include "test_la_c.h"
 #include "visualizer_logic.h"
+
+// #include "logic_analyzer_sw.h"  // Software implementation
+#include "logic_analyzer_hdl.h" // Hardware implementation
 
 /********************************
  *  Global variables

@@ -11,9 +11,9 @@
 // agreement for further details.
 
 
-// $Id: //acds/rel/24.1std/ip/sopc/components/primitives/altera_std_synchronizer/altera_std_synchronizer_bundle.v#1 $
+// $Id: //acds/rel/25.1std/ip/sopc/components/primitives/altera_std_synchronizer/altera_std_synchronizer_bundle.v#1 $
 // $Revision: #1 $
-// $Date: 2023/12/11 $
+// $Date: 2025/03/10 $
 //----------------------------------------------------------------
 //
 // File: altera_std_synchronizer_bundle.v
