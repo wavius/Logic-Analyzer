@@ -132,7 +132,6 @@ module signal_capture #(
           post_trigger_count  <= '0;
           pre_trigger_count   <= '0;
           post_trigger_length <= '1; 
-          // FIX: Removed buffer_ptr <= '0 so the circular buffer stays intact
         end
 
         PRE_TRIGGER: begin
@@ -143,7 +142,6 @@ module signal_capture #(
             pre_trigger_count <= pre_trigger_count + 1'b1;
           end
 
-          // FIX: Snap the pointer ONLY when the edge happens
           if (rising_edge_detected) begin
             trigger_ptr <= buffer_ptr;
           end

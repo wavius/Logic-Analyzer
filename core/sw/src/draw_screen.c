@@ -499,7 +499,7 @@ void draw_signals(const ZoomState* state, const Channel* channels, const int sig
 static void text_clear_row(int row) {
     if (row < 0 || row >= CHAR_ROWS) return;
     for (int col = 0; col < CHAR_COLS; col++) {
-        text_plot_char(col, row, ' ');
+        text_plot_char(col, row, '  ');
     }
 }
 
@@ -509,8 +509,6 @@ void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trig
     
     draw_logic_ui_frame(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
     
-    // FIX: Only clear the two rows that have moving numbers!
-    // Do NOT call text_clear() here.
     text_clear_row(0); // Top info bar
     text_clear_row((top_bar_height - 1) / 4); // Time scale row
     
@@ -601,7 +599,8 @@ void channels_init(Channel* channels, const int total_signals) {
         channels[i].label[1] = 'H';
         if (i < 10) {
             channels[i].label[2] = '0' + i;
-            channels[i].label[3] = '\0';
+            channels[i].label[3] = ' ';
+            channels[i].label[4] = '\0';
         } else {
             channels[i].label[2] = '1';
             channels[i].label[3] = '0' + (i - 10);

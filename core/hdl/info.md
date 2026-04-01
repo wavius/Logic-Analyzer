@@ -12,13 +12,13 @@
 <th style="border: 1px solid #777; padding: 8px 12px; text-align: center; white-space: nowrap; background: transparent;">Registers</th>
 </tr>
 <tr style="background: transparent;">
-<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0xFF205000</strong></td>
+<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0x80400000</strong></td>
 <td colspan="4" style="border: 1px solid #777; padding: 14px; text-align: center; background-color: rgba(128, 128, 128, 0.15);"><em>Unused</em></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center;"><code>RUN</code></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center; white-space: nowrap; background: transparent;">Control</td>
 </tr>
 <tr style="background: transparent;">
-<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0xFF205004</strong></td>
+<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0x80400004</strong></td>
 <td colspan="2" style="border: 1px solid #777; padding: 14px; text-align: center; background-color: rgba(128, 128, 128, 0.15);"><em>Unused</em></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center;"><code>TRIG</code></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center;"><code>FULL</code></td>
@@ -26,25 +26,25 @@
 <td style="border: 1px solid #777; padding: 14px; text-align: center; white-space: nowrap; background: transparent;">Status</td>
 </tr>
 <tr style="background: transparent;">
-<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0xFF205008</strong></td>
+<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0x80400008</strong></td>
 <td colspan="1" style="border: 1px solid #777; padding: 14px; text-align: center; background-color: rgba(128, 128, 128, 0.15);"><em>Unused</em></td>
 <td colspan="4" style="border: 1px solid #777; padding: 14px; text-align: center;"><code>TRIGGER_CHANNEL [15:0]</code></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center; white-space: nowrap; background: transparent;">Trigger Config</td>
 </tr>
 <tr style="background: transparent;">
-<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0xFF20500C</strong></td>
+<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0x8040000C</strong></td>
 <td colspan="1" style="border: 1px solid #777; padding: 14px; text-align: center; background-color: rgba(128, 128, 128, 0.15);"><em>Unused</em></td>
 <td colspan="4" style="border: 1px solid #777; padding: 14px; text-align: center;"><code>BUFFER_DATA [15:0]</code></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center; white-space: nowrap; background: transparent;">Buffer Window</td>
 </tr>
 <tr style="background: transparent;">
-<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0xFF205010</strong></td>
+<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0x80400010</strong></td>
 <td colspan="1" style="border: 1px solid #777; padding: 14px; text-align: center; background-color: rgba(128, 128, 128, 0.15);"><em>Unused</em></td>
 <td colspan="4" style="border: 1px solid #777; padding: 14px; text-align: center;"><code>TRIGGER_PTR [15:0]</code></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center; white-space: nowrap; background: transparent;">Trigger Pointer</td>
 </tr>
 <tr style="background: transparent;">
-<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0xFF205014</strong></td>
+<td style="border: 1px solid #777; padding: 14px; text-align: center;"><strong>0x80400014</strong></td>
 <td colspan="1" style="border: 1px solid #777; padding: 14px; text-align: center;"><code>POST_COUNT [15:0]</code></td>
 <td colspan="4" style="border: 1px solid #777; padding: 14px; text-align: center;"><code>PRE_COUNT [15:0]</code></td>
 <td style="border: 1px solid #777; padding: 14px; text-align: center; white-space: nowrap; background: transparent;">Samples</td>

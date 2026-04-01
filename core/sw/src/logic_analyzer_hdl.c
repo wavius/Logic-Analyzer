@@ -5,7 +5,6 @@
 #ifdef USE_HW
 #include "logic_analyzer.h"
 
-// Ensure BUFFER_SIZE is defined to match the Verilog default (4096)
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 4096
 #endif
@@ -16,7 +15,8 @@ void la_set_trigger_channel(uint16_t channel) {
 
 void la_start(void) {
     LA->CONTROL = 0x0;  // Write 0 to ensure FSM is reset
-    LA->CONTROL = 0x1;  // Write 1 to start capture
+    LA->CONTROL = 0x1
+    ;  // Write 1 to start capture
 }
 
 void la_stop(void) {
