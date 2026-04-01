@@ -12,7 +12,7 @@
 /* --- Hardware Requirements --- */
 #ifdef USE_HW
 #include "address_map_niosV.h"
-#define LA_BASE 0x04000000// Logic Analyzer
+#define LA_BASE 0x08040000              // Logic Analyzer MM address
 
 typedef struct {
     volatile uint32_t CONTROL;          // Offset 0x00: [0] = Run

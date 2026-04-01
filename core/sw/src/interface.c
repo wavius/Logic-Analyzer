@@ -22,15 +22,6 @@ int key_channel = 0;
 bool la_is_running = false;
 
 /********************************
- *  Helper function declarations
- ********************************/
-void clear_signals();
-int get_current_selected_channel_value();
-bool get_signals(bool trigger_running);
-void enable_signal(int current_channel);
-char int_to_char(int val);
-
-/********************************
  *  Helper Functions
  ********************************/
 // turn an int from 0-9 into a char to pass into hex function
@@ -59,16 +50,18 @@ void increment_channel_selected(int dir) {
 
     int new_channel = key_channel + dir;
 
-    if (new_channel < -1) {
-        key_channel = -1;    // deselected state
-        hex_clear_digit(0);  // clear hex
-    } else if (new_channel >= TOTAL_SIGNALS_ON_SCREEN) {
-        key_channel = TOTAL_SIGNALS_ON_SCREEN;  // deselected state
-        hex_clear_digit(0);                     // clear hex
-    } else {
+    if (new_channel < 0) {
+        key_channel = 0;
+    } 
+    else if (new_channel >= TOTAL_SIGNALS_ON_SCREEN) {
+        key_channel = TOTAL_SIGNALS_ON_SCREEN - 1; 
+    } 
+    else {
         key_channel = new_channel;
-        hex_write_char(0, int_to_char(key_channel));  // show the channel on the hex display
     }
+
+    // Update the display with the current (clamped) channel
+    hex_write_char(0, int_to_char(key_channel));
 }
 
 // figure out which channel the user currently has selected
@@ -198,9 +191,36 @@ void trigger_logic_analyzer() {
 // draw to the screen every frame
 void draw() {
     clear_screen();
-    draw_ui_page(channels, &g_state, la_get_trigger_index());  // draw the entire page
-    draw_select_line(channels, key_channel);                   // show what was selected, overlay #1
-    draw_la_status_icon(la_is_running);                        // draw status, overlay #2
+
+    uint32_t trigger_pos = la_get_trigger_index();
+    int trig_ch = get_current_selected_channel_value();
+
+    // --- SOFTWARE EDGE SNAPPING ---
+    // Search a small window around the hardware trigger to find the exact visual edge
+    if (trig_ch >= 0 && trig_ch < TOTAL_SIGNALS) {
+        const int search_radius = 5; // Look +/- 5 samples around the hardware guess
+        int best_pos = trigger_pos;
+
+        for (int i = -search_radius; i <= search_radius; i++) {
+            int idx = (int)trigger_pos + i;
+            
+            // Bounds check
+            if (idx > 0 && idx < BUFFER_SIZE) {
+                // Find the exact sample where the signal transitions from 0 to 1
+                if (channels[trig_ch].samples[idx - 1] == 0 && channels[trig_ch].samples[idx] == 1) {
+                    best_pos = idx; 
+                    break;
+                }
+            }
+        }
+        trigger_pos = best_pos; // Overwrite the hardware guess with the TRUE visual edge
+    }
+    // ------------------------------
+
+    // Pass the perfectly snapped trigger position to the UI
+    draw_ui_page(channels, &g_state, trigger_pos);  
+    draw_select_line(channels, key_channel);        
+    draw_la_status_icon(la_is_running);             
     wait_for_vsync();
 }
 

@@ -5,8 +5,12 @@
 #ifdef USE_HW
 #include "logic_analyzer.h"
 
+// Ensure BUFFER_SIZE is defined to match the Verilog default (4096)
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 4096
+#endif
+
 void la_set_trigger_channel(uint16_t channel) {
-    // Pass channel - 1 to account for Verilog [15:0] indexing
     LA->TRIGGER_CFG = (uint32_t)channel;
 }
 
@@ -31,16 +35,36 @@ void la_reset_read_pointer(void) {
 }
 
 void la_download_buffer(uint16_t* dest, int size) {
+    // get raw hardware trigger data
+    uint32_t trigger_idx = LA->TRIGGER_PTR;
+    uint16_t post_count, pre_count;
+    la_get_trigger_samples(&post_count, &pre_count);
+
+    // calculate the exact hardware stop index in the circular buffer
+    uint32_t stop_ptr = (trigger_idx + post_count) % size;
+
+    // reset hardware read pointer and download raw data
     la_reset_read_pointer();
+    
+    static uint16_t temp_raw[4096]; 
     for (int i = 0; i < size; i++) {
-        // Verilog: readdata = {16'b0, buffer[read_pointer]};
         // The read_pointer increments automatically on every read of address 0xC.
-        dest[i] = (uint16_t)(LA->DATA_WINDOW & 0xFFFF);
+        temp_raw[i] = (uint16_t)(LA->DATA_WINDOW & 0xFFFF);
+    }
+
+    // linearize the buffer
+    for (int i = 0; i < size; i++) {
+        uint32_t circular_idx = (stop_ptr + 1 + i) % size;
+        dest[i] = temp_raw[circular_idx];
     }
 }
 
 uint32_t la_get_trigger_index(void) {
-    return LA->TRIGGER_PTR;
+    uint16_t post_count, pre_count;
+    la_get_trigger_samples(&post_count, &pre_count);
+    uint32_t software_trigger_idx = BUFFER_SIZE - post_count - 1;
+
+    return software_trigger_idx;
 }
 
 void la_get_trigger_samples(uint16_t* post_trigger, uint16_t* pre_trigger) {

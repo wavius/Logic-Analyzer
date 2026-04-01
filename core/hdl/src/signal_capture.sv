@@ -1,11 +1,11 @@
 module signal_capture #(
-  parameter BUFFER_SIZE = 1024
+  parameter BUFFER_SIZE = 4096
 )(
   input  logic        clk,
   input  logic        nreset,
 
   // Avalon-MM slave 
-  input  logic [2:0]  address,      // 3-bit address for up to 8 registers
+  input  logic [2:0]  address,      
   input  logic        write,
   input  logic [31:0] writedata,
   input  logic        read,
@@ -16,29 +16,24 @@ module signal_capture #(
   input  logic [15:0] channel_in
 );
 
-  // Internal registers
-  logic [31:0] control_reg;     // Address 0
-  logic [31:0] trigger_config;  // Address 2
+  logic [31:0] control_reg;     
+  logic [31:0] trigger_config;  
 
-  // Internal pointers
   logic [15:0] post_trigger_length;            
   logic [15:0] post_trigger_count;             
   logic [15:0] pre_trigger_count;              
   logic [$clog2(BUFFER_SIZE)-1:0] buffer_ptr;  
   logic [$clog2(BUFFER_SIZE)-1:0] trigger_ptr; 
-  logic [$clog2(BUFFER_SIZE)-1:0] read_pointer; // Auto-incrementing read pointer
+  logic [$clog2(BUFFER_SIZE)-1:0] read_pointer; 
 
-  // Memory buffer
   logic [15:0] buffer [0:BUFFER_SIZE-1];
 
-  // Status flags 
   logic run;
   logic buffer_full;
   logic triggered;
   
   assign run = control_reg[0];
 
-  // Rising edge trigger 
   logic [15:0] trigger_channel;
   logic        trigger_current_data;
   logic        trigger_past_data;
@@ -64,20 +59,17 @@ module signal_capture #(
       trigger_config <= 32'h0;
       read_pointer   <= '0;
     end else begin
-      // Writes
       if (write) begin
         case (address)
           3'h0: control_reg    <= writedata;
           3'h2: trigger_config <= writedata;
-          3'h3: read_pointer   <= '0; // Write to Address 3 resets the read pointer
+          3'h3: read_pointer   <= '0; 
         endcase
       end
       
-      // Auto-incerement pointer on read
+      // FIX: Allow pointer to wrap naturally, removing the hard stop
       if (read && address == 3'h3) begin
-        if (read_pointer < BUFFER_SIZE - 1) begin
-          read_pointer <= read_pointer + 1'b1;
-        end
+        read_pointer <= read_pointer + 1'b1;
       end
     end
   end
@@ -92,16 +84,15 @@ module signal_capture #(
         3'h1: readdata <= {29'b0, triggered, buffer_full, run};
         3'h2: readdata <= trigger_config;
         3'h3: readdata <= {16'b0, buffer[read_pointer]};
-        3'h4: readdata <= {16'b0, trigger_ptr};
+        3'h4: readdata <= 32'(trigger_ptr); // FIX: Safe zero-extend for 12-bit ptr
         3'h5: readdata <= {post_trigger_count, pre_trigger_count};
         default: readdata <= 32'hDEADBEEF;
       endcase
     end else begin
-      readdata <= 32'h0; // Drive 0 when not selected to keep the bus quiet
+      readdata <= 32'h0; 
     end
   end
 
-  // FSM enum
   typedef enum logic [1:0] {
     IDLE         = 2'b00, 
     PRE_TRIGGER  = 2'b01, 
@@ -111,29 +102,16 @@ module signal_capture #(
   
   state_t current_state, next_state;
 
-  // FSM combinational logic
   always_comb begin
     next_state = current_state;
     case(current_state) 
-      IDLE: begin
-        if (run) next_state = PRE_TRIGGER; 
-      end
-
-      PRE_TRIGGER: begin
-        if (rising_edge_detected) next_state = POST_TRIGGER; 
-      end
-
-      POST_TRIGGER: begin
-        if (post_trigger_count >= post_trigger_length) next_state = DONE;
-      end
-
-      DONE: begin
-        if (!run) next_state = IDLE; // Wait for CPU to clear the run bit
-      end
+      IDLE:         if (run) next_state = PRE_TRIGGER; 
+      PRE_TRIGGER:  if (rising_edge_detected) next_state = POST_TRIGGER; 
+      POST_TRIGGER: if (post_trigger_count >= post_trigger_length) next_state = DONE;
+      DONE:         if (!run) next_state = IDLE; 
     endcase
   end
 
-  // FSM sequential logic
   always_ff @(posedge clk or negedge nreset) begin
     if (!nreset) begin
       current_state <= IDLE;
@@ -154,17 +132,20 @@ module signal_capture #(
           post_trigger_count  <= '0;
           pre_trigger_count   <= '0;
           post_trigger_length <= '1; 
-          buffer_ptr          <= '0; // Reset write pointer on new run
+          // FIX: Removed buffer_ptr <= '0 so the circular buffer stays intact
         end
 
         PRE_TRIGGER: begin
           buffer[buffer_ptr] <= channel_in;
           buffer_ptr         <= buffer_ptr + 1'b1;
-          trigger_ptr        <= buffer_ptr;  
           
-          // Limit pre trigger samples
           if (pre_trigger_count < (BUFFER_SIZE / 2)) begin
             pre_trigger_count <= pre_trigger_count + 1'b1;
+          end
+
+          // FIX: Snap the pointer ONLY when the edge happens
+          if (rising_edge_detected) begin
+            trigger_ptr <= buffer_ptr;
           end
         end
 

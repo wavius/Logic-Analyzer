@@ -496,11 +496,24 @@ void draw_signals(const ZoomState* state, const Channel* channels, const int sig
     draw_logic_view(state, channels, signals_per_page);
 }
 
+static void text_clear_row(int row) {
+    if (row < 0 || row >= CHAR_ROWS) return;
+    for (int col = 0; col < CHAR_COLS; col++) {
+        text_plot_char(col, row, ' ');
+    }
+}
+
 // draw given page
 void draw_ui_page(const Channel* channels, const ZoomState* state, uint32_t trigger_position) {
-    int start_index = current_page * TOTAL_SIGNALS_ON_SCREEN;  // either 0 or 8
+    int start_index = current_page * TOTAL_SIGNALS_ON_SCREEN;  
+    
     draw_logic_ui_frame(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
-    text_clear();
+    
+    // FIX: Only clear the two rows that have moving numbers!
+    // Do NOT call text_clear() here.
+    text_clear_row(0); // Top info bar
+    text_clear_row((top_bar_height - 1) / 4); // Time scale row
+    
     draw_top_info_bar(state);
     draw_channel_labels(&channels[start_index], TOTAL_SIGNALS_ON_SCREEN);
     draw_time_scale(state);
