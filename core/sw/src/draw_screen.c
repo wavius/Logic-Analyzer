@@ -8,6 +8,7 @@
 #define SCREEN_H 240
 
 // ----- Char buffer ----- //
+// see here for char buffer: https://www-ug.eecg.utoronto.ca/desl/nios_devices_SoC/dev_vga.html
 #define CHAR_COLS 80
 #define CHAR_ROWS 60
 
@@ -21,7 +22,6 @@ static const int bottom_bar_height = 7;
 static const int channel_area_height = 218;  // 240 - 15 - 7
 
 //-- waveform / grid layout variables --//
-
 static const int grid_spacing_x = 36;  // (320 - 32) / 8
 static const int waveform_margin_divisor = 4;
 static const int waveform_min_margin = 1;
@@ -47,23 +47,27 @@ uint8_t channel_buffers[TOTAL_SIGNALS][BUFFER_SIZE];  // sample buffers for each
 uint8_t zero_samples[4096];
 
 /********************************
- *  Helper Function Declarations (idk if we need )
+ *  Helper Function Declarations
  ********************************/
 // ----- Basic Drawing Stuff ----- //
 static void draw_hline(int x_start, int x_end, int y, uint16_t color);
 static void draw_vline(int x, int y_start, int y_end, uint16_t color);
 static void fill_rect(int x_cord, int y_cord, int w, int h, uint16_t color);
 static uint16_t dim_color(uint16_t color);
-static void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
-static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position);
-static void draw_page_tabs();
-static void draw_top_info_bar(const ZoomState* state);
+
+// ----- Text with char buffer stuff ----- //
 static int text_draw_label_uint(int col, int row, const char* label, uint32_t value);
 static void text_plot_char(int col, int row, char c);
 static void text_draw_string(int col, int row, const char* text);
 static void text_draw_uint(int col, int row, uint32_t value);
-static void draw_time_scale(const ZoomState* state);
+
+// ----- Signal/Page drawing ----- //
+static void draw_logic_view(const ZoomState* state, const Channel* channels, int lanes);
+static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_position);
+static void draw_page_tabs();
+static void draw_top_info_bar(const ZoomState* state);
 static void draw_channel_labels(const Channel* channels, int lanes);
+static void draw_time_scale(const ZoomState* state);
 
 /********************************
  *  Helper Functions
@@ -148,7 +152,7 @@ static void draw_page_tabs(void) {
 
 // store a single char in a string buffer
 static void text_plot_char(int col, int row, char c) {
-    if (col < 0 || col >= CHAR_COLS || row < 0 || row >= CHAR_ROWS)
+    if (col < 0 || col >= CHAR_COLS || row < 0 || row >= CHAR_ROWS)  // bounds checking
         return;
 
     volatile char* char_buf = (volatile char*)FPGA_CHAR_BASE;
@@ -185,7 +189,7 @@ static void text_draw_string(int col, int row, const char* text) {
     }
 }
 
-// draw an unsigned integer into the character buffer without snprintf
+// draw a (multi-digit) unsigned integer into the character buffer
 static void text_draw_uint(int col, int row, uint32_t value) {
     char digits[10];  // max uint32_t = 4294967295
     int count = 0;
@@ -215,7 +219,7 @@ static void text_draw_uint(int col, int row, uint32_t value) {
     }
 }
 
-// <>
+// function to draw ASCII based text AND intergers a label. Wrapper of text_draw_string and text_draw_uint
 static int text_draw_label_uint(int col, int row, const char* label, uint32_t value) {
     text_draw_string(col, row, label);
 
@@ -233,15 +237,15 @@ static int text_draw_label_uint(int col, int row, const char* label, uint32_t va
         value /= 10;
     }
 
-    return col + 2;  // spacing
+    return col + 1;  // spacing
 }
 
-// <>
+// draw labels on the top of the screen based off of zoom state
 static void draw_top_info_bar(const ZoomState* state) {
     if (state == 0)
         return;
 
-    const int row = 0;  // top row
+    const int row = 0;  // draw on absolute top row
     int col = 3;
 
     // --- Time/div --- //
@@ -249,8 +253,8 @@ static void draw_top_info_bar(const ZoomState* state) {
     text_draw_string(col, row, "ns ");
     col += 10;
 
-    // --- Sample rate (convert to MHz) --- //
-    uint32_t fs_mhz = state->sample_rate / 1000000;
+    // --- Sample rate --- //
+    uint32_t fs_mhz = state->sample_rate / 1000000;  // convert to MHz
     col = text_draw_label_uint(col, row, "Fs:", fs_mhz);
     text_draw_string(col, row, "MHz ");
     col += 10;
@@ -267,9 +271,7 @@ static void draw_top_info_bar(const ZoomState* state) {
     uint32_t whole_divs = state->scroll_offset / samples_per_div;
     uint32_t rem = state->scroll_offset % samples_per_div;
 
-    uint32_t offset_ns =
-        whole_divs * state->time_div +
-        (rem * state->time_div) / samples_per_div;
+    uint32_t offset_ns = whole_divs * state->time_div + (rem * state->time_div) / samples_per_div;
 
     col = text_draw_label_uint(col, row, "Off:", offset_ns);
     text_draw_string(col, row, "ns");
@@ -290,9 +292,7 @@ static void draw_time_scale(const ZoomState* state) {
     uint32_t whole_divs = state->scroll_offset / samples_per_div;
     uint32_t rem_samples = state->scroll_offset % samples_per_div;
 
-    uint32_t left_time_ns =
-        whole_divs * state->time_div +
-        (rem_samples * state->time_div) / samples_per_div;
+    uint32_t left_time_ns = whole_divs * state->time_div + (rem_samples * state->time_div) / samples_per_div;
 
     for (int i = 0; i < divisions; i++) {
         int x = left_bar_width + i * grid_spacing_x;
@@ -404,8 +404,10 @@ static void draw_trigger_marker(const ZoomState* state, uint32_t trigger_positio
 /********************************
  *  Function Implementations
  ********************************/
-// clear buffer
+// clear char buffer
 void text_clear() {
+    // to clear the char buffer, fill with the ASCII space character
+    // memset can't do this, so can't use that version unlike the pixel buffer
     volatile char* char_buf = (volatile char*)FPGA_CHAR_BASE;
 
     for (int row = 0; row < CHAR_ROWS; row++) {

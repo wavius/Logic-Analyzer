@@ -103,6 +103,7 @@ void enable_signal(int current_channel) {
 
     channels[current_channel].enabled = !channels[current_channel].enabled;
 }
+
 // once downloaded from LA buffer populate channels samples buffer
 bool populate_channels(bool successful_read) {
     if (!successful_read)

@@ -152,6 +152,7 @@ void visualizer_set_zoom(ZoomState* g_state, uint32_t time_div, uint32_t trigger
 
     center_view_on_trigger(g_state, trigger_position);
 }
+
 /********************************
  *  Function Implementations
  ********************************/
