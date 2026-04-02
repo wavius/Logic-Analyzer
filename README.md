@@ -103,6 +103,9 @@ The logic analyzer communicates via memory-mapped registers on the DE1-SoC.
 - Upper 16 bits → post-trigger samples  
 - Lower 16 bits → pre-trigger samples  
 
+## Bugs
+- The trigger marker is not always aligned with the trigger point (supposed to be aligned to a rising edge); could be an issue with how the trigger index is stored in hardware.
+- Time division is off by a factor of 2 (a 1 MHz clock is shown to have a period of 500ns instead of 1000ns); likely a mismatch between hardware sampling rate and software time division calculations.
 
 ## Other Notes
 - Uses VGA frame buffer + character buffer for rendering  
