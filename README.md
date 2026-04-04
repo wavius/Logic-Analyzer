@@ -118,7 +118,6 @@ Logic Analyzer that samples digital signals on 16 channels from the GPIO expansi
 
 ### Register behaviour
 
-<br>
 <strong>Control:</strong> Write a 1 to the RUN bit in the idle state to start sampling. Write a 0 to the RUN bit after the FULL bit goes high to reset to the idle state.
 <br>
 <br>
