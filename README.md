@@ -2,8 +2,21 @@
 
 Logic Analyzer that samples digital signals on 16 channels from the GPIO expansion header. It polls the input pins to capture signal data and stores it in a circular buffer. The signals are plotted on the VGA and the display is controlled with a PS2 keyboard. Features include adjustable time division and vertical scale, time measurement cursor, and selectable trigger channel. The channel capture logic was implemented on the FPGA hardware and the display logic runs on the Nios V processor.
 
+<div align="left">
+  <img src="images/la_monitor.jpg" alt="Logic Analyzer in Lab" width="900px">
+</div>
+
+<div align="left">
+  <img src="images/la_inlab1.jpg" alt="Logic Analyzer in Lab" width="900px">
+</div>
+
+<br>
+
 ## Block Diagram
-![Block Diagram](images/block_diagram.png)
+
+<div align="left">
+  <img src="images/block_diagram.png" alt="Block Diagram" width="900px">
+</div>
 
 ## Overview
 
@@ -20,7 +33,6 @@ Logic Analyzer that samples digital signals on 16 channels from the GPIO expansi
 
 ### Interaction
 - Fully keyboard-controlled (PS/2 interface)
-
 
 ## Controls
 
@@ -138,7 +150,9 @@ Logic Analyzer that samples digital signals on 16 channels from the GPIO expansi
 
 ## JTAG Header Assignments
 
-![JTAG Header](images/jtag_header.png)
+<div align="left">
+  <img src="images/jtag_header.png" alt="JTAG Header" width="900px">
+</div>
 
 ## Bugs
 - The trigger marker is not always aligned with the trigger point (supposed to be aligned to a rising edge); could be an issue with how the trigger index is stored in hardware.
