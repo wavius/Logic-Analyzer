@@ -67,7 +67,6 @@ module signal_capture #(
         endcase
       end
       
-      // FIX: Allow pointer to wrap naturally, removing the hard stop
       if (read && address == 3'h3) begin
         read_pointer <= read_pointer + 1'b1;
       end
@@ -84,7 +83,7 @@ module signal_capture #(
         3'h1: readdata <= {29'b0, triggered, buffer_full, run};
         3'h2: readdata <= trigger_config;
         3'h3: readdata <= {16'b0, buffer[read_pointer]};
-        3'h4: readdata <= 32'(trigger_ptr); // FIX: Safe zero-extend for 12-bit ptr
+        3'h4: readdata <= 32'(trigger_ptr); 
         3'h5: readdata <= {post_trigger_count, pre_trigger_count};
         default: readdata <= 32'hDEADBEEF;
       endcase
